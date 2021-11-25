@@ -71,14 +71,12 @@
 
 @section('custom_scripts')
 
-<script src="<?php echo base_url(); ?>assets/js/helpers/common_helper.js"></script>
-
-<script src="<?php echo base_url(); ?>assets/js/guest_custom_scripts.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/backend_custom_scripts.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		// jquery events & methods from "guest_custom_scripts.js" & "common_helper"
-
+    //jQuery Events
+    MODULENAME.testFunc();
 	});
 </script>
 

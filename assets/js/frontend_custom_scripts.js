@@ -1,4 +1,3 @@
-// import modules or API helpers here!
 
 const baseUrl = $('#txt_baseUrl').val();
 
@@ -7,7 +6,7 @@ const MODULENAME = (function(){
 	let thisModuleName = {};
 
 	//============================================================================>
-	//write your global properties here
+	//write your properties here
 	//example: myProp
 	let myProp = null;
 
@@ -22,5 +21,3 @@ const MODULENAME = (function(){
 	return thisModuleName;
 
 })();
-
-export { MODULENAME };

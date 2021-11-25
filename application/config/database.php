@@ -77,7 +77,7 @@ $query_builder = TRUE;
 $dev_db['hostname'] = 'localhost';
 $dev_db['username'] = 'root';
 $dev_db['password'] = '';
-$dev_db['database'] = 'rebap_gh_v4';
+$dev_db['database'] = 'ci_template';
 
 //prod database
 $prod_db['hostname'] = '';
