@@ -14,7 +14,7 @@ const MODULENAME = (function(){
 	//example: testFunc
 	thisModuleName.testFunc = function()
 	{
-		alert(baseUrl);
+		// alert(baseUrl);
 	}
 	//============================================================================>
 

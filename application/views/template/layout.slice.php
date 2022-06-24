@@ -9,8 +9,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<title>@yield('page_title')</title>
 	@include('template.includes.header')	
 </head>
-<body>
-	<div class="container">
+<body class="sidebar-mini layout-navbar-fixed layout-fixed sidebar-collapse text-sm">
+	<div class="wrapper">
 		@include('template.includes.navbar')
 
 		@include('template.includes.sidebar')

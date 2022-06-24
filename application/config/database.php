@@ -74,23 +74,23 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 //local database
-$dev_db['hostname'] = 'localhost';
-$dev_db['username'] = 'root';
-$dev_db['password'] = '';
-$dev_db['database'] = 'ci_template';
+$local_db['hostname'] = 'localhost';
+$local_db['username'] = 'root';
+$local_db['password'] = '';
+$local_db['database'] = 'ci_template';
 
 //prod database
-$prod_db['hostname'] = '';
-$prod_db['username'] = '';
-$prod_db['password'] = '';
-$prod_db['database'] = '';
+$dev_db['hostname'] = '';
+$dev_db['username'] = '';
+$dev_db['password'] = '';
+$dev_db['database'] = '';
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => (empty($_SERVER['HTTPS']))? $dev_db['hostname'] : $prod_db['hostname'],
-	'username' => (empty($_SERVER['HTTPS']))? $dev_db['username'] : $prod_db['username'],
-	'password' => (empty($_SERVER['HTTPS']))? $dev_db['password'] : $prod_db['password'],
-	'database' => (empty($_SERVER['HTTPS']))? $dev_db['database'] : $prod_db['database'],
+	'hostname' => (empty($_SERVER['HTTPS']))? $local_db['hostname'] : $dev_db['hostname'],
+	'username' => (empty($_SERVER['HTTPS']))? $local_db['username'] : $dev_db['username'],
+	'password' => (empty($_SERVER['HTTPS']))? $local_db['password'] : $dev_db['password'],
+	'database' => (empty($_SERVER['HTTPS']))? $local_db['database'] : $dev_db['database'],
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

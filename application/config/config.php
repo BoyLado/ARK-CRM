@@ -28,7 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $config['host_dev'] = array('localhost', '127.0.0.1', '::1');
 
 // Fill in the folder name of your project here when you develop locally.
-$host_dev = 'ci-template';
+$host_dev = 'arkonorllc-crm';
 
 // Fill in the domain name here when your project is online.
 // Example : www.sample.com
