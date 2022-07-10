@@ -31,6 +31,10 @@
 <script src="<?php echo base_url(); ?>assets/AdminLTE/plugins/summernote/summernote-bs4.min.js"></script>
 <!-- overlayScrollbars -->
 <script src="<?php echo base_url(); ?>assets/AdminLTE/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- Sweet Alert -->
+<script src="<?php echo base_url(); ?>assets/AdminLTE/plugins/sweetalert2/sweetalert2.min.js"></script>
+<!-- Toaster -->
+<script src="<?php echo base_url(); ?>assets/AdminLTE/plugins/toastr/toastr.min.js"></script>
 <!-- AdminLTE App -->
 <script src="<?php echo base_url(); ?>assets/AdminLTE/dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->

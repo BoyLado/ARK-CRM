@@ -11,6 +11,10 @@
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/AdminLTE/plugins/fontawesome-free/css/all.min.css">
   <!-- icheck bootstrap -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/AdminLTE/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- Sweet alert -->
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/AdminLTE/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+  <!-- Toaster -->
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/AdminLTE/plugins/toastr/toastr.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/AdminLTE/dist/css/adminlte.min.css">
 </head>
@@ -24,9 +28,9 @@
     <div class="card-body login-card-body">
       <p class="login-box-msg">You forgot your password? Here you can easily retrieve a new password.</p>
 
-      <form action="recover-password.html" method="post">
+      <form id="form_forgotPassword">
         <div class="input-group mb-3">
-          <input type="email" class="form-control form-control-sm" placeholder="Email">
+          <input type="email" class="form-control form-control-sm" id="txt_userEmail" name="txt_userEmail" placeholder="Email">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -35,11 +39,13 @@
         </div>
         <div class="row">
           <div class="col-12">
-            <button type="submit" class="btn btn-primary btn-sm btn-block">Request new password</button>
+            <button type="submit" id="btn_forgotPassword" class="btn btn-primary btn-sm btn-block">Request new password</button>
           </div>
           <!-- /.col -->
         </div>
       </form>
+
+      <input type="hidden" id="txt_baseUrl" value="<?php echo base_url(); ?>">
 
     </div>
     <!-- /.login-card-body -->
@@ -51,7 +57,23 @@
 <script src="<?php echo base_url(); ?>assets/AdminLTE/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="<?php echo base_url(); ?>assets/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Sweet Alert -->
+<script src="<?php echo base_url(); ?>assets/AdminLTE/plugins/sweetalert2/sweetalert2.min.js"></script>
+<!-- Toaster -->
+<script src="<?php echo base_url(); ?>assets/AdminLTE/plugins/toastr/toastr.min.js"></script>
 <!-- AdminLTE App -->
 <script src="<?php echo base_url(); ?>assets/AdminLTE/dist/js/adminlte.min.js"></script>
+<!-- Custom Script -->
+<script src="<?php echo base_url(); ?>assets/js/index.js"></script>
+<!-- Events -->
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#form_forgotPassword').on('submit',function(e){
+      e.preventDefault();
+      INDEX.forgotPassword(this);
+    });
+  });
+</script>
+
 </body>
 </html>

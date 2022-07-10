@@ -14,6 +14,10 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/AdminLTE/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 <!-- JQVMap -->
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/AdminLTE/plugins/jqvmap/jqvmap.min.css">
+<!-- Sweet alert -->
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/AdminLTE/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+<!-- Toaster -->
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/AdminLTE/plugins/toastr/toastr.min.css">
 <!-- Theme style -->
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/AdminLTE/dist/css/adminlte.min.css">
 <!-- overlayScrollbars -->
@@ -30,4 +34,25 @@
 <!-- ==========================================================================================> -->
 
 <!-- Custom Internal Styles -->
+
+<style type="text/css">
+	
+	/* Header fixed to the top of the modal */
+	.modal-header--sticky {
+	  position: sticky;
+	  top: 0;
+	  background-color: inherit; /* [1] */
+	  z-index: 1055; /* [2] */
+	}
+
+	/* Footer fixed to the bottom of the modal */
+	.modal-footer--sticky {
+	  position: sticky;
+	  bottom: 0;
+	  background-color: inherit; /* [1] */
+	  z-index: 1055; /* [2] */
+	}
+
+</style>
+
 @yield('custom_styles')

@@ -77,7 +77,7 @@ $query_builder = TRUE;
 $local_db['hostname'] = 'localhost';
 $local_db['username'] = 'root';
 $local_db['password'] = '';
-$local_db['database'] = 'ci_template';
+$local_db['database'] = 'arkonorllc';
 
 //prod database
 $dev_db['hostname'] = '';

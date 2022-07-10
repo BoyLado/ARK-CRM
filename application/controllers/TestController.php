@@ -15,6 +15,11 @@ class TestController extends CI_Controller
 		$this->load->database();
 	}
 
+	public function index()
+	{
+		echo json_encode(decrypt_code('AwcsaaLsE6DXQ5Z2tbpOHA=='));
+	}
+
 	public function sampleEmail()
 	{
 		$params = getParams();

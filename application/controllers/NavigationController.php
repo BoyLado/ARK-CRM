@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+date_default_timezone_set('Asia/Manila');
+
 class NavigationController extends CI_Controller
 {
 	public function __construct()
@@ -15,8 +17,11 @@ class NavigationController extends CI_Controller
 
 	public function index()
 	{
-		$data['pageTitle'] = "Arkonor LLC | Sample Index";
-		$this->slice->view('sample', $data);
+		// $data['pageTitle'] = "Arkonor LLC | Sample Index";
+		// $this->slice->view('sample', $data);
+		$data['pageTitle'] = "Arkonor LLC | Login";
+		$data['userAuthCode'] = "";
+		$this->slice->view('login', $data);
 	}
 
 	public function dashboard()
@@ -34,14 +39,14 @@ class NavigationController extends CI_Controller
 	public function login()
 	{
 		$data['pageTitle'] = "Arkonor LLC | Login";
-		$data['authCode'] = "";
+		$data['userAuthCode'] = "";
 		$this->slice->view('login', $data);
 	}
 
-	public function loginWithAuth($authCode)
+	public function loginWithAuth($userAuthCode)
 	{
 		$data['pageTitle'] = "Arkonor LLC | Login";
-		$data['authCode'] = $authCode;
+		$data['userAuthCode'] = $userAuthCode;
 		$this->slice->view('login', $data);
 	}
 
@@ -51,11 +56,21 @@ class NavigationController extends CI_Controller
 		$this->slice->view('forgot_password', $data);
 	}
 
-	public function changePassword($authCode)
+	public function changePassword($userId, $userAuthCode, $passwordAuthCode)
 	{
 		$data['pageTitle'] = "Arkonor LLC | Change Password";
-		$data['authCode'] = $authCode;
+		$data['userId'] = $userId;
+		$data['userAuthCode'] = $userAuthCode;
+		$data['passwordAuthCode'] = $passwordAuthCode;
 		$this->slice->view('change_password', $data);
+	}
+
+	public function signUp($userId, $userAuthCode)
+	{
+		$data['pageTitle'] = "Arkonor LLC | Sign Up";
+		$data['userId'] = $userId;
+		$data['userAuthCode'] = $userAuthCode;
+		$this->slice->view('sign_up', $data);
 	}
 
 	//place your navigation links here

@@ -26,10 +26,27 @@
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
-      <p class="login-box-msg">Sign in to start your session</p>
+      <p class="login-box-msg">Register a new membership</p>
 
-      <form id="form_login">
+      <form id="form_signUp">
+        <input type="hidden" id="txt_userId" name="txt_userId" value="{{ $userId }}">
         <input type="hidden" id="txt_userAuthCode" name="txt_userAuthCode" value="{{ $userAuthCode }}">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control form-control-sm" id="txt_firstName" name="txt_firstName" placeholder="First name" required>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-user"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control form-control-sm" id="txt_lastName" name="txt_lastName" placeholder="Last name">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-user"></span>
+            </div>
+          </div>
+        </div>
         <div class="input-group mb-3">
           <input type="email" class="form-control form-control-sm" id="txt_userEmail" name="txt_userEmail" placeholder="Email" required>
           <div class="input-group-append">
@@ -46,15 +63,26 @@
             </div>
           </div>
         </div>
+        <div class="input-group mb-3">
+          <input type="password" class="form-control form-control-sm" id="txt_confirmPassword" name="txt_confirmPassword" placeholder="Retype password" required>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
         <div class="row">
           <div class="col-8">
-            <a href="<?php echo base_url(); ?>forgot-password">Forgot password?</a>
+            <div class="icheck-primary">
+              <input type="checkbox" id="agreeTerms" name="terms" value="agree">
+              <label for="agreeTerms">
+              I agree to the <a href="#">terms</a>
+              </label>
+            </div>
           </div>
-          <!-- /.col -->
           <div class="col-4">
-            <button type="submit" id="btn_signIn" class="btn btn-primary btn-sm btn-block">Sign In</button>
+            <button type="submit" id="btn_signUp" class="btn btn-primary btn-sm btn-block">Register</button>
           </div>
-          <!-- /.col -->
         </div>
       </form>
 
@@ -81,9 +109,9 @@
 <!-- Events -->
 <script type="text/javascript">
   $(document).ready(function(){
-    $('#form_login').on('submit',function(e){
+    $('#form_signUp').on('submit',function(e){
       e.preventDefault();
-      INDEX.login(this);
+      INDEX.signUp(this);
     });
   });
 </script>

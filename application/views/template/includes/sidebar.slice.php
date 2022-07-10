@@ -37,42 +37,116 @@
       <ul class="nav nav-pills nav-sidebar nav-child-indent nav-flat nav-legacy flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
-        <!-- <li class="nav-item menu-open">
-          <a href="#" class="nav-link active">
-            <i class="nav-icon fas fa-tachometer-alt"></i>
+        <li class="nav-item">
+          <a href="#" id="nav_marketing" class="nav-link">
+            <i class="nav-icon fas fa-users"></i>
             <p>
-              Starter Pages
+              MARKETING
               <i class="right fas fa-angle-left"></i>
             </p>
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="#" class="nav-link active">
+              <a href="#" id="nav_campaigns" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Active Page</p>
+                <p>Campaigns</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="<?php echo base_url(); ?>contacts" id="nav_contacts" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Inactive Page</p>
+                <p>Contacts</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" id="nav_organizations" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Organizations</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" id="nav_thirdParties" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Third Parties</p>
               </a>
             </li>
           </ul>
-        </li> -->
+        </li>
         <li class="nav-item">
-          <a href="<?php echo base_url(); ?>customers" class="nav-link active">
-            <i class="nav-icon fas fa-users"></i>
+          <a href="#" id="nav_employees" class="nav-link">
+            <i class="nav-icon fas fa-user-tie"></i>
             <p>
-              Customers
+              EMPLOYEES
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="#" id="nav_hired" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Hired</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" id="nav_interns" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Interns</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="#" id="nav_agenda" class="nav-link">
+            <i class="nav-icon fas fa-list"></i>
+            <p>
+              AGENDA
             </p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-user"></i>
+          <a href="#" id="nav_calendar" class="nav-link">
+            <i class="nav-icon fas fa-calendar"></i>
             <p>
-              Users
+              CALENDAR
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" id="nav_documents" class="nav-link">
+            <i class="nav-icon fas fa-folder-open"></i>
+            <p>
+              DOCUMENTS
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" id="nav_tools" class="nav-link">
+            <i class="nav-icon fas fa-tools"></i>
+            <p>
+              TOOLS
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="<?php echo base_url(); ?>email-template" id="nav_emailTemplate" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Email Template</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" id="nav_ourSites" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Our Sites</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="<?php echo base_url(); ?>users" id="nav_users" class="nav-link">
+            <i class="nav-icon fas fa-user-check"></i>
+            <p>
+              USERS
             </p>
           </a>
         </li>
