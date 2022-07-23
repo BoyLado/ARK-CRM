@@ -239,12 +239,12 @@ function sendSliceMail($type,$senderEmail,$receiverEmail,&$data)
 {
 	$config = [
 		'protocol' 	=> 'smtp',
-	   'smtp_host' => 'ssl://smtp.googlemail.com',
-	   'smtp_port' => 465,
-     	'smtp_user' => 'ajhay.dev@gmail.com',
-     	'smtp_pass' => 'moznmnthwmdefziy',
-	   'mailtype'  => 'html', 
-	   'charset'   => 'iso-8859-1'
+		'smtp_host' => 'ssl://smtp.googlemail.com',
+		'smtp_port' => 465,
+		'smtp_user' => 'ajhay.dev@gmail.com',
+		'smtp_pass' => 'moznmnthwmdefziy',
+		'mailtype'  => 'html', 
+		'charset'   => 'iso-8859-1'
 	];
 
 	$CI =& get_instance();
@@ -295,4 +295,14 @@ function decrypt_code($encrypted_code)
     $result = openssl_decrypt(base64_decode($encrypted_code), $method, $sSalt, OPENSSL_RAW_DATA, $iv);
     
     return $result;
+}
+
+function load_substitutions($arrData, $emailTemplate)
+{
+	foreach ($arrData as $key => $value) 
+	{
+		$emailTemplate = str_ireplace($key,$value,$emailTemplate);
+	}
+
+	return $emailTemplate;
 }

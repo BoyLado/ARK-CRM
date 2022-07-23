@@ -287,13 +287,33 @@
 
     $('#lnk_createTemplate').on('click',function(){
       EMAIL_TEMPLATE.loadCategories('slc','#slc_category');
-      $('#txt_content').summernote({height: 300});
+      $('#txt_content').summernote({
+        toolbar: [
+          ['style', ['bold', 'italic', 'underline', 'clear']],
+          ['font', ['strikethrough', 'superscript', 'subscript']],
+          ['fontsize', ['fontname','fontsize']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['height', ['height']]
+        ],
+        height: 300
+      });
       $('#modal_createTemplate').modal('show');
     });
 
     $('#btn_createTemplate').on('click',function(){
       EMAIL_TEMPLATE.loadCategories('slc','#slc_category');
-      $('#txt_content').summernote({height: 300});
+      $('#txt_content').summernote({
+        toolbar: [
+          ['style', ['bold', 'italic', 'underline', 'clear']],
+          ['font', ['strikethrough', 'superscript', 'subscript']],
+          ['fontsize', ['fontname','fontsize']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['height', ['height']]
+        ],
+        height: 300
+      });
       $('#modal_createTemplate').modal('show');
     });
 

@@ -3,6 +3,9 @@
 // Email subjects
 $lang['arkonorllc_forgot_password'] = 'Forgot Password';
 $lang['arkonorllc_invite_user'] = 'Invite New User';
+$lang['arkonorllc_contact_email'] = '%s';
+$lang['arkonorllc_unsubscribe_confirmation'] = 'Unsubscribe Confirmation';
+$lang['arkonorllc_unsubscribe_notification'] = 'Unsubscribe Notification';
 // $lang['arkonorllc_product_inquiry'] = 'Product Inquiry - [%s]';
 // $lang['arkonorllc_store_inquiry'] = 'Store Inquiry - [%s]';
 // $lang['arkonorllc_client_registration'] = 'Welcome to ORAGON! Lets get started.';

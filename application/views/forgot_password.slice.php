@@ -40,6 +40,9 @@
         <div class="row">
           <div class="col-12">
             <button type="submit" id="btn_forgotPassword" class="btn btn-primary btn-sm btn-block">Request new password</button>
+            <center>
+              <a href="<?php echo base_url(); ?>login">Log in</a>
+            </center>
           </div>
           <!-- /.col -->
         </div>
@@ -77,3 +80,10 @@
 
 </body>
 </html>
+
+
+<div class="row"> 
+  <div class="col-12">
+    <!-- blank -->
+  </div>
+</div>

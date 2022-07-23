@@ -53,6 +53,10 @@
 	  z-index: 1055; /* [2] */
 	}
 
+	.note-dropdown-menu {
+    z-index: 1056;
+	}
+
 </style>
 
 @yield('custom_styles')

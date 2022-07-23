@@ -88,4 +88,11 @@ class EmailTemplateController extends CI_Controller
     $this->output->set_content_type('application/json')->set_output(json_encode($msgResult));
 	}
 
+	public function selectTemplate()
+	{
+		$params = getParams();
+		$data = $this->email_template->selectTemplate($params['templateId']);
+		$this->output->set_content_type('application/json')->set_output(json_encode($data));
+	}
+
 }

@@ -59,7 +59,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" id="nav_organizations" class="nav-link">
+              <a href="<?php echo base_url(); ?>organizations" id="nav_organizations" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Organizations</p>
               </a>

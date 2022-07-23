@@ -51,4 +51,27 @@
 <!-- ==========================================================================================> -->
 
 <!-- Custom JS [JQuery Events] -->
+
+<script type="text/javascript">
+  let summernoteConfig = {
+    toolbar: [
+      // ['style', ['bold', 'italic', 'underline', 'clear']],
+      // ['font', ['strikethrough', 'superscript', 'subscript']],
+      // ['fontsize', ['fontname','fontsize']],
+      // ['color', ['color']],
+      // ['para', ['ul', 'ol', 'paragraph']],
+      // ['height', ['height']],
+      // ['insert', ['table','picture','link','video','hr']]
+      ['style', ['style']],
+      ['font', ['bold', 'italic', 'underline', 'clear']],
+      ['fontname', ['fontname']],
+      ['color', ['color']],
+      ['para', ['ul', 'ol', 'paragraph']],
+      ['table', ['table']],
+      // ['insert', ['link', 'picture', 'video']],
+    ],
+    height: 300
+  };
+</script>
+
 @yield('custom_scripts')
