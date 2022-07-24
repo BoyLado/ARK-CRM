@@ -227,6 +227,23 @@ const CONTACTS = (function(){
 		});
 	}
 
+	thisContacts.selectContactDetails = function(contactId)
+	{
+		$.ajax({
+			/* ContactController->selectContactDetails() */
+		  url : `${baseUrl}marketing/select-contact-details`,
+		  method : 'get',
+		  dataType: 'json',
+		  data : {contactId : contactId},
+		  success : function(data)
+		  {
+		    console.log(data);
+    		// Details
+    		
+		  }
+		});
+	}
+
 	thisContacts.selectContactEmail = function(contactId, contactEmail)
 	{
 		CONTACTS.loadEmailTemplates();

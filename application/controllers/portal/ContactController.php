@@ -137,6 +137,14 @@ class ContactController extends CI_Controller
 		$this->output->set_content_type('application/json')->set_output(json_encode($data));
 	}
 
+	public function selectContactDetails()
+	{
+		$params = getParams();
+
+		$data = $this->contacts->selectContactDetails($params['contactId']);
+		$this->output->set_content_type('application/json')->set_output(json_encode($data));
+	}
+
 	public function selectEmailTemplate()
 	{
 		$params = getParams();

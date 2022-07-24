@@ -32,7 +32,7 @@ $host_dev = 'arkonorllc-crm';
 
 // Fill in the domain name here when your project is online.
 // Example : www.sample.com
-$host_prod = 'www.sample.com';
+$host_prod = 'crm.great-site.net';
 
 // WARNING: Do not modify the lines below
 $domain = (in_array($_SERVER['HTTP_HOST'], $config['host_dev'], TRUE)) ? $_SERVER['HTTP_HOST'] . '/' . $host_dev : $host_prod;

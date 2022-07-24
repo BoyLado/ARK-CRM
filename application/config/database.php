@@ -80,10 +80,10 @@ $local_db['password'] = '';
 $local_db['database'] = 'arkonorllc';
 
 //prod database
-$dev_db['hostname'] = '';
-$dev_db['username'] = '';
-$dev_db['password'] = '';
-$dev_db['database'] = '';
+$dev_db['hostname'] = 'sql200.epizy.com';
+$dev_db['username'] = 'epiz_32185203';
+$dev_db['password'] = '3gpmzfNDklU';
+$dev_db['database'] = 'epiz_32185203_arkonorllc_crm';
 
 $db['default'] = array(
 	'dsn'	=> '',

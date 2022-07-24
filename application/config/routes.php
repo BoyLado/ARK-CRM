@@ -75,6 +75,7 @@ $route['marketing/load-contacts'] = 'portal/ContactController/loadContacts';
 $route['marketing/add-contact'] = 'portal/ContactController/addContact';
 $route['marketing/select-contact'] = 'portal/ContactController/selectContact';
 $route['marketing/select-contact-summary'] = 'portal/ContactController/selectContactSummary';
+$route['marketing/select-contact-details'] = 'portal/ContactController/selectContactDetails';
 $route['marketing/select-email-template'] = 'portal/ContactController/selectEmailTemplate';
 $route['marketing/send-contact-email'] = 'portal/ContactController/sendContactEmail';
 

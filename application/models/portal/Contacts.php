@@ -115,7 +115,30 @@ class Contacts extends CI_Model
     return $data;
 	}
 
+	public function selectContactDetails($contactId)
+	{
+		$columns = [
+			'a.id',
+			'a.salutation',
+			'a.first_name',
+			'a.last_name',
+			'a.position',
+			'a.organization_id',
+			'(SELECT organization_name FROM organizations WHERE id = a.organization_id) as organization_name',
+			'a.assigned_to',
+			'(SELECT CONCAT(first_name, " ", last_name) FROM users WHERE id = a.assigned_to) as assigned_to',
+			'b.mailing_city',
+			'b.mailing_country'
+		];
 
+		$this->db->where('a.id',$contactId);
+		$this->db->select($columns);
+		$this->db->from('contacts a');
+		$this->db->join('contact_address_details b','a.id = b.contact_id','left');
+		$this->db->join('contact_description_details c','a.id = c.contact_id','left');
+		$data = $this->db->get()->row_array();
+    return $data;
+	}
 
 	/* 
 	=======================================================================>

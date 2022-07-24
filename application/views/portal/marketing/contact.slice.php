@@ -508,9 +508,7 @@
                                 <tr>
                                   <td class="p-1 text-muted" width="40%;" valign="middle">Do not Call</td>
                                   <td class="p-1">
-                                    <div class="fo---rm-check">
-                                      
-                                    </div>
+                                    ---
                                   </td>
                                 </tr>
                               </tbody>
@@ -653,7 +651,92 @@
                         </div>
                       </div>
                       <div class="card-body p-0" style="display: block;">
-                        
+                        <div class="row mt-2">
+                          <div class="col-lg-6 col-sm-12">
+                            <table class="table tbl mb-1">
+                              <tbody>
+                                <tr>
+                                  <td class="p-1 text-muted" width="40%;" valign="middle">Mailing Street</td>
+                                  <td class="p-1">
+                                    ---
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td class="p-1 text-muted" width="40%;" valign="middle">Mailing P.O. Box</td>
+                                  <td class="p-1">
+                                    ---
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td class="p-1 text-muted" width="40%;" valign="middle">Mailing City</td>
+                                  <td class="p-1">
+                                    ---
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td class="p-1 text-muted" width="40%;" valign="middle">Mailing State</td>
+                                  <td class="p-1">
+                                    ---
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td class="p-1 text-muted" width="40%;" valign="middle">Mailing Zip</td>
+                                  <td class="p-1">
+                                    ---
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td class="p-1 text-muted" width="40%;" valign="middle">Mailing Country</td>
+                                  <td class="p-1">
+                                    ---
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <div class="col-lg-6 col-sm-12">
+                            <table class="table tbl mb-1">
+                              <tbody>
+                                <tr>
+                                  <td class="p-1 text-muted" width="40%;" valign="middle">Other Street</td>
+                                  <td class="p-1">
+                                    ---
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td class="p-1 text-muted" width="40%;" valign="middle">Other P.O. Box</td>
+                                  <td class="p-1">
+                                    ---
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td class="p-1 text-muted" width="40%;" valign="middle">Other City</td>
+                                  <td class="p-1">
+                                    ---
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td class="p-1 text-muted" width="40%;" valign="middle">Other State</td>
+                                  <td class="p-1">
+                                    ---
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td class="p-1 text-muted" width="40%;" valign="middle">Other Zip</td>
+                                  <td class="p-1">
+                                    ---
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td class="p-1 text-muted" width="40%;" valign="middle">Other Country</td>
+                                  <td class="p-1">
+                                    ---
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <div class="card shadow-none">
@@ -1472,6 +1555,7 @@
 
         CONTACTS.selectContact('load',contactId);
         CONTACTS.selectContactSummary(contactId);
+        CONTACTS.selectContactDetails(contactId);
 
         $('#btn_editContact').on('click',function(){
           CONTACTS.selectContact('edit',contactId);
