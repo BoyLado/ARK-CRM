@@ -46,10 +46,10 @@
           <div class="col-sm-12">
             <h6 class="mt-1 float-left">
               <span>
-                <a href="<?php echo base_url(); ?>contacts" class="text-muted">Contacts</a> -
+                <a href="<?php echo base_url(); ?>index.php/contacts" class="text-muted">Contacts</a> -
               </span> 
               <small>
-                <a href="<?php echo base_url(); ?>contacts" class="text-muted">All</a>
+                <a href="<?php echo base_url(); ?>index.php/contacts" class="text-muted">All</a>
               </small> 
               @if($contactId != "")
               <small> - 
@@ -132,7 +132,7 @@
                     <div class="info-box shadow-none bg-light mb-0">
                       <span class="info-box-icon">
                         <!-- <i class="far fa-image"></i> -->
-                        <img class="img-square elevation-1" src="<?php echo base_url(); ?>assets/img/avatar.jpg" alt="User Avatar">
+                        <img class="img-square elevation-1" src="<?php echo base_url(); ?>assets/img/user-placeholder.png" alt="User Avatar">
                       </span>
                       <div class="info-box-content" style="line-height:1.7">
                         <span class="info-box-text" id="lbl_contactName" style="font-size: 1.5em;">
@@ -294,8 +294,8 @@
                         <hr>
 
                         <h6>Comments</h6>
-                        <form id="form_comments">
-                          <textarea class="form-control mb-1" rows="3" id="txt_description" name="txt_description" placeholder="Post your comments here"></textarea>
+                        <form id="form_summaryComments">
+                          <textarea class="form-control mb-1" rows="3" id="txt_comments" name="txt_comments" placeholder="Post your comments here"></textarea>
                           <div class="row">
                             <div class="col-lg-4 col-sm-12"></div>
                             <div class="col-lg-4 col-sm-12"></div>
@@ -614,7 +614,7 @@
                             <table class="table tbl mb-1">
                               <tbody>
                                 <tr>
-                                  <td class="p-1 text-muted" width="40%;" valign="middle">Assigned To *</td>
+                                  <td class="p-1 text-muted" width="40%;" valign="middle">Assigned To</td>
                                   <td class="p-1">
                                     ---
                                   </td>
@@ -749,7 +749,20 @@
                         </div>
                       </div>
                       <div class="card-body p-0" style="display: block;">
-                        
+                        <div class="row">
+                          <div class="col-lg-6 col-sm-12">
+                            <table class="table tbl mb-1">
+                              <tbody>
+                                <tr>
+                                  <td class="p-1">
+                                    ---
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <div class="col-lg-6 col-sm-12"></div>
+                        </div>
                       </div>
                     </div>
                     <div class="card shadow-none">
@@ -767,13 +780,106 @@
                     </div>
                   </div>
                   <div class="tab-pane fade" id="div_updates" role="tabpanel" aria-labelledby="lnk_updates">
-                    Updates
+                    <div class="timeline timeline-inverse">
+
+                      <div class="time-label">
+                        <span class="bg-danger">
+                          10 Feb. 2014
+                        </span>
+                      </div>
+
+                      <div>
+                        <i class="fas fa-envelope bg-primary"></i>
+                        <div class="timeline-item">
+                          <span class="time"><i class="far fa-clock"></i> 12:05</span>
+                          <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
+                          <div class="timeline-body">
+                              Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
+                            weebly ning heekya handango imeem plugg dopplr jibjab, movity
+                            jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
+                            quora plaxo ideeli hulu weebly balihoo...
+                          </div>
+                          <div class="timeline-footer">
+                            <a href="#" class="btn btn-primary btn-sm">Read more</a>
+                            <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <i class="fas fa-user bg-info"></i>
+                        <div class="timeline-item">
+                          <span class="time"><i class="far fa-clock"></i> 5 mins ago</span>
+                          <h3 class="timeline-header border-0">
+                            <a href="#">Sarah Young</a> accepted your friend request
+                          </h3>
+                        </div>
+                      </div>
+
+                      <div>
+                        <i class="fas fa-comments bg-warning"></i>
+                        <div class="timeline-item">
+                          <span class="time"><i class="far fa-clock"></i> 27 mins ago</span>
+                          <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
+                          <div class="timeline-body">
+                            Take me to your leader!
+                            Switzerland is small and neutral!
+                            We are more like Germany, ambitious and misunderstood!
+                          </div>
+                          <div class="timeline-footer">
+                            <a href="#" class="btn btn-warning btn-flat btn-sm">View comment</a>
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <div class="time-label">
+                        <span class="bg-success">
+                          3 Jan. 2014
+                        </span>
+                      </div>
+
+
+                      <div>
+                        <i class="fas fa-camera bg-purple"></i>
+                        <div class="timeline-item">
+                          <span class="time"><i class="far fa-clock"></i> 2 days ago</span>
+                          <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
+                          <div class="timeline-body">
+                            <!-- <img src="https://placehold.it/150x100" alt="...">
+                            <img src="https://placehold.it/150x100" alt="...">
+                            <img src="https://placehold.it/150x100" alt="...">
+                            <img src="https://placehold.it/150x100" alt="..."> -->
+                          </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <i class="far fa-clock bg-gray"></i>
+                      </div>
+                    </div>
                   </div>
                   <div class="tab-pane fade" id="div_activities" role="tabpanel" aria-labelledby="lnk_activities">
                     Activities
                   </div>
                   <div class="tab-pane fade" id="div_emails" role="tabpanel" aria-labelledby="lnk_emails">
-                    Emails
+                    <table id="tbl_contactEmails" class="table display nowrap" style="border: .5px solid #DEE2E6;" width="100%">
+                      <thead>
+                        <tr>
+                          <th class="p-2">ID</th>
+                          <th class="p-2" data-priority="1">Sender Name</th>
+                          <th class="p-2" data-priority="2">Subject</th>
+                          <th class="p-2" data-priority="3">Parent Record</th>
+                          <th class="p-2">Date Sent</th>
+                          <th class="p-2">Time Sent</th>
+                          <th class="p-2">Status</th>
+                          <th class="p-2">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        
+                      </tbody>
+                    </table>
                   </div>
                   <div class="tab-pane fade" id="div_documents" role="tabpanel" aria-labelledby="lnk_documents">
                     Documents
@@ -782,9 +888,93 @@
                     Campaigns
                   </div>
                   <div class="tab-pane fade" id="div_comments" role="tabpanel" aria-labelledby="lnk_comments">
-                    Comments
+                    <form id="form_comments">
+                      <input type="hidden" id="txt_commentIndex" name="txt_commentIndex" value="0">
+                      <textarea class="form-control mb-1" rows="3" id="txt_comments" name="txt_comments" placeholder="Post your comments here"></textarea>
+                      <div class="row">
+                        <div class="col-lg-4 col-sm-12"></div>
+                        <div class="col-lg-4 col-sm-12"></div>
+                        <div class="col-lg-4 col-sm-12">
+                          <button type="submit" class="btn btn-primary btn-block btn-xs">Post Comment</button>
+                        </div>
+                      </div>
+                    </form>
+                    <hr>
+                    <div>
+                      <h6>Comments</h6>
+                      <div class="card-comments p-2" id="div_loadComments" style="background: none;">
+                        <div class="card-comment p-1">
+                          <img class="img-circle img-sm" src="<?php echo base_url(); ?>assets/img/avatar.jpg" alt="User Image">
+                          <div class="comment-text">
+                            <span class="username">
+                            Maria Gonzales
+                            <span class="text-muted float-right">8:03 PM Today</span>
+                            </span>
+                            It is a long established fact that a reader will be distracted
+                            by the readable content of a page when looking at its layout.
+                            <br>
+                            <a href="javascript:void(0)" onclick="CONTACTS.replyComment(this,1,1)" class="mr-2">Reply</a>
+                            <a href="#" class="mr-2">Edit</a>
+                            <div class="div-reply-to-comment"></div>
+                          </div>
+                          <div class="ml-3 pt-1">
+                            <div class="card-comment p-0">
+                              <img class="img-circle img-sm" src="<?php echo base_url(); ?>assets/img/avatar.jpg" alt="User Image">
+                              <div class="comment-text">
+                                <span class="username">
+                                Maria Gonzales
+                                <span class="text-muted float-right">8:03 PM Today</span>
+                                </span>
+                                It is a long established fact that a reader will be distracted
+                                by the readable content of a page when looking at its layout.
+                                <br>
+                                <a href="javascript:void(0)" onclick="CONTACTS.replyComment(this,2,1)" class="mr-2">Reply</a>
+                                <a href="#" class="mr-2">Edit</a>
+                                <div class="div-reply-to-comment"></div>
+                              </div>
+                              <div class="ml-3 pt-1">
+                                <div class="card-comment p-0">
+                                  <img class="img-circle img-sm" src="<?php echo base_url(); ?>assets/img/avatar.jpg" alt="User Image">
+                                  <div class="comment-text">
+                                    <span class="username">
+                                    Maria Gonzales
+                                    <span class="text-muted float-right">8:03 PM Today</span>
+                                    </span>
+                                    It is a long established fact that a reader will be distracted
+                                    by the readable content of a page when looking at its layout.
+                                    <br>
+                                    <a href="#" class="mr-2">Reply</a>
+                                    <a href="#" class="mr-2">Edit</a>
+                                    <div class="div-reply-to-comment"></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="card-comment p-1">
+                          <img class="img-circle img-sm" src="<?php echo base_url(); ?>assets/img/avatar.jpg" alt="User Image">
+                          <div class="comment-text">
+                            <span class="username">
+                            Luna Stark
+                            <span class="text-muted float-right">8:03 PM Today</span>
+                            </span>
+                            It is a long established fact that a reader will be distracted
+                            by the readable content of a page when looking at its layout.
+                            <br>
+                            <a href="javascript:void(0)" onclick="CONTACTS.replyComment(this,3,1)" class="mr-2">Reply</a>
+                            <a href="#" class="mr-2">Edit</a>
+                            <div class="div-reply-to-comment"></div>
+                          </div>
+                        </div>
+                      </div>
+
+                      
+
+                    </div>
                   </div>
-                </div>
+                </div> 
               </div>
 
             </div>
@@ -795,7 +985,7 @@
         
       </div><!-- container-fluid -->
 
-      <div class="modal fade" id="modal_addContacts" role="dialog">
+      <div class="modal fade" id="modal_contact" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header modal-header--sticky">
@@ -1102,19 +1292,19 @@
                             <tr>
                               <td class="p-1" width="120px;" valign="middle">Lead Source</td>
                               <td class="p-1">
-                                <select class="form-control select2" id="slc_leadSource" name="slc_leadSource" style="width:100%;">
+                                <select class="form-control form-control-sm" id="slc_leadSource" name="slc_leadSource" style="width:100%;">
                                   <option value="" selected>--Select an option--</option>
-                                  <option value="Cold Call">Cold Call</option>
-                                  <option value="Existing Customer">Existing Customer</option>
-                                  <option value="Self Generated">Self Generated</option>
+                                  <option value="Cold-Call">Cold Call</option>
+                                  <option value="Existing-Customer">Existing Customer</option>
+                                  <option value="Self-Generated">Self Generated</option>
                                   <option value="Employee">Employee</option>
                                   <option value="Partner">Partner</option>
-                                  <option value="Public Relations">Public Relations</option>
-                                  <option value="Direct Mail">Direct Mail</option>
+                                  <option value="Public-Relations">Public Relations</option>
+                                  <option value="Direct-Mail">Direct Mail</option>
                                   <option value="Conference">Conference</option>
-                                  <option value="Trade Show">Trade Show</option>
-                                  <option value="Web Site">Web Site</option>
-                                  <option value="Word of Mouth">Word of Mouth</option>
+                                  <option value="Trade-Show">Trade Show</option>
+                                  <option value="Web-Site">Web Site</option>
+                                  <option value="Word-of-Mouth">Word of Mouth</option>
                                   <option value="Other">Other</option>
                                 </select>
                               </td>
@@ -1288,7 +1478,7 @@
                   </div>
                   <div class="card-body">
                     <span>Description</span>
-                    <textarea class="form-control" rows="5" id="txt_description" name="txt_description"></textarea>
+                    <textarea class="form-control" rows="5" id="txt_description" name="txt_description">sads</textarea>
                   </div>
                 </div>
                 <div class="card card-primary card-outline">
@@ -1513,7 +1703,7 @@
         $('#lbl_stateContact span').text('Add Contact');
         $('#lbl_stateContact i').removeClass('fa-pen');
         $('#lbl_stateContact i').addClass('fa-plus');
-        $('#modal_addContacts').modal('show');
+        $('#modal_contact').modal('show');
       });
 
       $('#btn_importContacts').on('click',function(){
@@ -1521,12 +1711,13 @@
       });
 
       $('#lnk_addContacts').on('click',function(){
-        CONTACTS.loadUsers(['#slc_reportsTo','#slc_assignedTo']);
+        CONTACTS.loadUsers('#slc_reportsTo');
+        CONTACTS.loadUsers('#slc_assignedTo');
         CONTACTS.loadOrganizations('#slc_companyName');
         $('#lbl_stateContact span').text('Add Contact');
         $('#lbl_stateContact i').removeClass('fa-pen');
         $('#lbl_stateContact i').addClass('fa-plus');
-        $('#modal_addContacts').modal('show');
+        $('#modal_contact').modal('show');
       });
 
       $('#lnk_importContacts').on('click',function(){
@@ -1535,7 +1726,7 @@
 
       $('#form_contacts').on('submit',function(e){
         e.preventDefault();
-        CONTACTS.addContact(this);
+        ($('#txt_contactId').val() == "")? CONTACTS.addContact(this) : CONTACTS.editContact(this);
       });
 
       let contactId = $('#txt_contactId').val();
@@ -1554,9 +1745,8 @@
         $('#lnk_summary').addClass('active');
 
         CONTACTS.selectContact('load',contactId);
-        CONTACTS.selectContactSummary(contactId);
-        CONTACTS.selectContactDetails(contactId);
-
+        CONTACTS.loadContactSummary(contactId);
+        
         $('#btn_editContact').on('click',function(){
           CONTACTS.selectContact('edit',contactId);
         });
@@ -1566,6 +1756,50 @@
           $('#txt_to').val($('#lbl_contactEmail').text());
           $('#txt_content').summernote(summernoteConfig);
           $('#modal_sendContactEmail').modal('show');
+        });
+
+        $('#lnk_summary').on('click',function(){
+          CONTACTS.loadContactSummary(contactId);
+        });
+
+        $('#lnk_details').on('click',function(){
+          CONTACTS.loadContactDetails(contactId);
+        });
+
+        $('#lnk_updates').on('click',function(){
+
+        });
+
+        $('#lnk_activities').on('click',function(){
+
+        });
+
+        $('#lnk_emails').on('click',function(){
+          CONTACTS.loadContactEmails(contactId);
+        });
+
+        $('#lnk_documents').on('click',function(){
+
+        });
+
+        $('#lnk_campaigns').on('click',function(){
+
+        });
+
+        $('#lnk_comments').on('click',function(){
+          CONTACTS.loadContactComments(contactId);
+        });
+
+
+        // comments
+        $('#form_comments').on('submit',function(e){
+          e.preventDefault();
+          CONTACTS.addContactComment(this);
+        });
+
+        $('#form_replyToComment').on('submit',function(e){
+          e.preventDefault();
+          CONTACTS.replyContactComment(this);
         });
       }
 
@@ -1609,7 +1843,7 @@
         let formData = new FormData(this);
         $.ajax({
           /*  */
-          url : `${baseUrl}submit-sample-email`,
+          url : `${baseUrl}index.php/submit-sample-email`,
           method : 'post',
           dataType: 'json',
           processData: false, // important

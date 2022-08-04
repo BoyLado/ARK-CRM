@@ -18,6 +18,7 @@ class NavigationController extends CI_Controller
 		}
 
 		$this->load->database();
+		$this->load->model('portal/Campaigns','campaigns');
 		$this->load->model('portal/Contacts','contacts');
 		$this->load->model('portal/Organizations','organizations');
 	}
@@ -32,6 +33,31 @@ class NavigationController extends CI_Controller
 	{
 		$data['pageTitle'] = "Arkonor LLC | Dashboard";
 		$this->slice->view('dashboard', $data);
+	}
+
+	public function campaigns()
+	{
+		$data['pageTitle'] = "Arkonor LLC | Contacts";
+		$data['customScripts'] = 'campaign';
+		$data['campaignId'] = "";
+		$this->slice->view('portal.marketing.campaign', $data);
+	}
+
+	public function campaignPreview($campaignId)
+	{
+		$result = $this->campaigns->selectCampaign($campaignId);
+		if($result != null)
+		{
+			$data['pageTitle'] = "Arkonor LLC | Contacts Preview";
+			$data['customScripts'] = 'campaign';
+			$data['campaignId'] = $campaignId;
+			$this->slice->view('portal.marketing.campaign', $data);
+		}
+		else
+		{
+			$data['pageTitle'] = "Arkonor LLC | 404 Page";
+			$this->slice->view('404', $data);
+		}
 	}
 
 	public function contacts()

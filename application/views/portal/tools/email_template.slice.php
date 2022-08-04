@@ -46,14 +46,14 @@
         <div class="col-sm-12">
           <h6 class="mt-1 float-left">
             <span>
-              <a href="<?php echo base_url(); ?>email-template" class="text-muted">Email Templates</a> -
+              <a href="<?php echo base_url(); ?>index.php/email-template" class="text-muted">Email Templates</a> -
             </span> 
             <small>
-              <a href="<?php echo base_url(); ?>email-template" class="text-muted">All</a>
+              <a href="<?php echo base_url(); ?>index.php/email-template" class="text-muted">All</a>
             </small> 
-            <small> - 
+            <!-- <small> - 
               <a href="#" class="text-muted" id="lnk_contact">Anton Jay</a>
-            </small>
+            </small> -->
           </h6>
           <div class="float-right">
             <div class="d-inline d-lg-none">
@@ -172,16 +172,16 @@
               <div class="row">
                 <div class="col-lg-4 col-sm-12">
                   <label class="col-form-label text-muted" for="inputError">
+                    <i class="fa fa-info-circle"></i> Template Name/Code *
+                  </label>
+                  <input type="text" class="form-control form-control-sm" id="txt_templateName" name="txt_templateName" required> 
+                </div>
+                <div class="col-lg-4 col-sm-12">
+                  <label class="col-form-label text-muted" for="inputError">
                     <i class="fa fa-info-circle"></i> Category * 
                   </label>
                   <select class="form-control form-control-sm" id="slc_category" name="slc_category" required>
                   </select>
-                </div>
-                <div class="col-lg-4 col-sm-12">
-                  <label class="col-form-label text-muted" for="inputError">
-                    <i class="fa fa-info-circle"></i> Template Name/Code *
-                  </label>
-                  <input type="text" class="form-control form-control-sm" id="txt_templateName" name="txt_templateName" required> 
                 </div>
                 <div class="col-lg-4 col-sm-12">
                   <label class="col-form-label text-muted" for="inputError">

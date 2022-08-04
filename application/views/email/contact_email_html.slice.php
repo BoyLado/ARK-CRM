@@ -12,7 +12,7 @@
 	{{ $emailContent }}
 
 	@if($unsubscribeLink != "")
-	<a href="<?php echo base_url(); ?>{{ $unsubscribeLink }}">Unsubscribe</a>
+	<a href="<?php echo base_url(); ?>index.php/{{ $unsubscribeLink }}">Unsubscribe</a>
 	@endif
 </body>
 </html>

@@ -15,7 +15,7 @@ const EMAIL_TEMPLATE = (function(){
   {
     $.ajax({
       /* EmailTemplateController->loadCategories() */
-      url : `${baseUrl}tools/load-categories`,
+      url : `${baseUrl}index.php/tools/load-categories`,
       method : 'get',
       dataType: 'json',
       success : function(data)
@@ -61,7 +61,7 @@ const EMAIL_TEMPLATE = (function(){
 
     $.ajax({
       /* EmailTemplateController->addCategory() */
-      url : `${baseUrl}tools/add-category`,
+      url : `${baseUrl}index.php/tools/add-category`,
       method : 'post',
       dataType: 'json',
       processData: false, // important
@@ -92,7 +92,7 @@ const EMAIL_TEMPLATE = (function(){
   {
     $.ajax({
       /* EmailTemplateController->loadTemplates() */
-      url : `${baseUrl}tools/load-templates`,
+      url : `${baseUrl}index.php/tools/load-templates`,
       method : 'get',
       dataType: 'json',
       success : function(data)
@@ -101,11 +101,13 @@ const EMAIL_TEMPLATE = (function(){
         let tbody = '';
         data.forEach(function(value,key){
           let templateStatus = (value['template_status'] == "1")? 'Active' : 'Inactive';
+          let strLen = value['template_subject'].length;
+          let templateSubject = (strLen > 20)? value['template_subject'].substring(0,20) + '...' : value['template_subject']; 
           tbody += `<tr>
                       <td class="p-1 pl-4">${value['template_name']}</td>
                       <td class="p-1">${value['category_name']}</td>
                       <td class="p-1">${value['created_by']}</td>
-                      <td class="p-1">${value['template_subject']}</td>
+                      <td class="p-1">${templateSubject}</td>
                       <td class="p-1">${value['template_visibility']}</td>
                       <td class="p-1">${templateStatus}</td>
                       <td class="p-1">${value['created_date']}</td>
@@ -144,7 +146,7 @@ const EMAIL_TEMPLATE = (function(){
 
     $.ajax({
       /* EmailTemplateController->addTemplate() */
-      url : `${baseUrl}tools/add-template`,
+      url : `${baseUrl}index.php/tools/add-template`,
       method : 'post',
       dataType: 'json',
       processData: false, // important

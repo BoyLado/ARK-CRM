@@ -52,6 +52,8 @@ $route['contact-confirmation/(:num)/(:any)/(:any)'] = 'UnsubscribeController/con
 */
 
 // marketing
+$route['campaigns'] = 'portal/NavigationController/campaigns';
+$route['campaign-preview/(:num)'] = 'portal/NavigationController/campaignPreview/$1';
 $route['contacts'] = 'portal/NavigationController/contacts';
 $route['contact-preview/(:num)'] = 'portal/NavigationController/contactPreview/$1';
 $route['organizations'] = 'portal/NavigationController/organizations';
@@ -70,18 +72,24 @@ $route['users'] = 'portal/NavigationController/users';
 |
 |
 */
+$route['marketing/load-campaigns'] = 'portal/CampaignController/loadCampaigns';
 
 $route['marketing/load-contacts'] = 'portal/ContactController/loadContacts';
 $route['marketing/add-contact'] = 'portal/ContactController/addContact';
 $route['marketing/select-contact'] = 'portal/ContactController/selectContact';
-$route['marketing/select-contact-summary'] = 'portal/ContactController/selectContactSummary';
-$route['marketing/select-contact-details'] = 'portal/ContactController/selectContactDetails';
-$route['marketing/select-email-template'] = 'portal/ContactController/selectEmailTemplate';
+$route['marketing/edit-contact'] = 'portal/ContactController/editContact';
+$route['marketing/load-contact-summary'] = 'portal/ContactController/loadContactSummary';
+$route['marketing/load-contact-details'] = 'portal/ContactController/loadContactDetails';
+$route['marketing/load-contact-emails'] = 'portal/ContactController/loadContactEmails';
+$route['marketing/load-contact-comments'] = 'portal/ContactController/loadContactComments';
+$route['marketing/add-contact-comment'] = 'portal/ContactController/addContactComment';
+$route['marketing/select-contact-email-template'] = 'portal/ContactController/selectEmailTemplate';
 $route['marketing/send-contact-email'] = 'portal/ContactController/sendContactEmail';
 
 $route['marketing/load-organizations'] = 'portal/OrganizationController/loadOrganizations';
 $route['marketing/add-organization'] = 'portal/OrganizationController/addOrganization';
 $route['marketing/select-organization'] = 'portal/OrganizationController/selectOrganization';
+$route['marketing/select-organization-email-template'] = 'portal/OrganizationController/selectEmailTemplate';
 
 
 //test code for uploading pdf

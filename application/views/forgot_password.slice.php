@@ -21,7 +21,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../index2.html"><b>Arkonor</b> LLC</a>
+    <a href="<?php echo base_url(); ?>"><b>Arkonor</b> LLC</a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
@@ -41,7 +41,7 @@
           <div class="col-12">
             <button type="submit" id="btn_forgotPassword" class="btn btn-primary btn-sm btn-block">Request new password</button>
             <center>
-              <a href="<?php echo base_url(); ?>login">Log in</a>
+              <a href="<?php echo base_url(); ?>index.php/login">Log in</a>
             </center>
           </div>
           <!-- /.col -->

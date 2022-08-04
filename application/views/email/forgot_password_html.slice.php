@@ -10,6 +10,6 @@
 	<label>Username: {{ $userName }}</label>
 	<label>Password Auth: {{ $passwordAuthCode }}</label>
 	<br>
-	<a href="<?php echo base_url(); ?>change-password/{{ $userId }}/{{ $userAuthCode }}/{{ $passwordAuthCode }}">Change Password</a>
+	<a href="<?php echo base_url(); ?>index.php/change-password/{{ $userId }}/{{ $userAuthCode }}/{{ $passwordAuthCode }}">Change Password</a>
 </body>
 </html>

@@ -15,7 +15,7 @@ const USERS = (function(){
   {
 		$.ajax({
 			/* UserController->loadUsers() */
-		  url : `${baseUrl}load-pending-invites`,
+		  url : `${baseUrl}index.php/load-pending-invites`,
 		  method : 'get',
 		  dataType: 'json',
 		  success : function(data)
@@ -52,7 +52,7 @@ const USERS = (function(){
 
   	$.ajax({
   		/* UserController->inviteNewUser() */
-  	  url : `${baseUrl}invite-new-user`,
+  	  url : `${baseUrl}index.php/invite-new-user`,
   	  method : 'post',
   	  dataType: 'json',
   	  processData: false, // important
@@ -88,7 +88,7 @@ const USERS = (function(){
   {
 		$.ajax({
 			/* UserController->loadUsers() */
-		  url : `${baseUrl}load-users`,
+		  url : `${baseUrl}index.php/load-users`,
 		  method : 'get',
 		  dataType: 'json',
 		  success : function(data)

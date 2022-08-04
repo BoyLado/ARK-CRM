@@ -20,7 +20,7 @@ const INDEX = (function(){
 
     $.ajax({
       // IndexController->login();
-      url : `${baseUrl}user-login`,
+      url : `${baseUrl}index.php/user-login`,
       method : 'post',
       dataType: 'json',
       processData: false, // important
@@ -39,7 +39,7 @@ const INDEX = (function(){
 		      });
 
           setTimeout(function(){
-            window.location.replace(`${baseUrl}contacts`);
+            window.location.replace(`${baseUrl}index.php/contacts`);
           }, 1000);
         }
         else
@@ -65,7 +65,7 @@ const INDEX = (function(){
 
     $.ajax({
       // IndexController->forgotPassword();
-      url : `${baseUrl}user-forgot-password`,
+      url : `${baseUrl}index.php/user-forgot-password`,
       method : 'post',
       dataType: 'json',
       processData: false, // important
@@ -107,7 +107,7 @@ const INDEX = (function(){
 
       $.ajax({
         // IndexController->changePassword();
-        url : `${baseUrl}user-change-password`,
+        url : `${baseUrl}index.php/user-change-password`,
         method : 'post',
         dataType: 'json',
         processData: false, // important
@@ -126,7 +126,7 @@ const INDEX = (function(){
             });
 
             setTimeout(function(){
-              window.location.replace(`${baseUrl}login/${$('#txt_userAuthCode').val()}`);
+              window.location.replace(`${baseUrl}index.php/login/${$('#txt_userAuthCode').val()}`);
             }, 1000);
           }
           else
@@ -162,7 +162,7 @@ const INDEX = (function(){
 
       $.ajax({
         // IndexController->signUp();
-        url : `${baseUrl}user-sign-up`,
+        url : `${baseUrl}index.php/user-sign-up`,
         method : 'post',
         dataType: 'json',
         processData: false, // important
@@ -188,7 +188,7 @@ const INDEX = (function(){
           }
 
           setTimeout(function(){
-            window.location.replace(`${baseUrl}login/${$('#txt_authCode').val()}`);
+            window.location.replace(`${baseUrl}index.php/login/${$('#txt_authCode').val()}`);
           }, 1000);
 
           $('#btn_signUp').prop('disabled',false);

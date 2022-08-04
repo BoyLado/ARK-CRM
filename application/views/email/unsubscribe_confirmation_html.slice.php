@@ -7,7 +7,7 @@
 </head>
 <body>
 
-	<a href="<?php echo base_url(); ?>{{ $unsubscribeConfirmationLink }}">Confirm</a>
+	<a href="<?php echo base_url(); ?>index.php/{{ $unsubscribeConfirmationLink }}">Confirm</a>
 
 </body>
 </html>

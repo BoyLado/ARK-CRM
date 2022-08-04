@@ -65,4 +65,25 @@ class OrganizationController extends CI_Controller
 		$this->output->set_content_type('application/json')->set_output(json_encode($data));
 	}
 
+	public function selectEmailTemplate()
+	{
+		$params = getParams();
+
+		$templateData = $this->email_template->selectTemplate($params['templateId']);
+
+		$data = $templateData;
+
+		$contactData = $this->organizations->selectOrganization($params['organizationId']);
+
+		foreach ($contactData as $key => $value) 
+		{
+			$newContactData['__'.$key.'__'] = $value; 
+		}	
+
+		$data['template_subject'] = load_substitutions($newContactData, $templateData['template_subject']);
+		$data['template_content'] = load_substitutions($newContactData, $templateData['template_content']);
+
+		$this->output->set_content_type('application/json')->set_output(json_encode($data));
+	}
+
 }

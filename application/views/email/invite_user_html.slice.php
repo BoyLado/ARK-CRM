@@ -9,6 +9,6 @@
 	<label>User ID: {{ $userId }}</label>
 	<label>User Auth: {{ $userAuthCode }}</label>
 	<br>
-	<a href="<?php echo base_url(); ?>sign-up/{{ $userId }}/{{ $userAuthCode }}">Sign Up</a>
+	<a href="<?php echo base_url(); ?>index.php/sign-up/{{ $userId }}/{{ $userAuthCode }}">Sign Up</a>
 </body>
 </html>

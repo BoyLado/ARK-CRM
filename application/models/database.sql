@@ -282,3 +282,82 @@ ALTER TABLE `contacts` ADD FOREIGN KEY (`organization_id`) REFERENCES `organizat
 ALTER TABLE `contacts`
 ADD COLUMN `updated_by` int(11) DEFAULT NULL AFTER `created_date`;
 ALTER TABLE `contacts` ADD FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+-- 2022-07-28
+
+CREATE TABLE `contact_comments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `contact_id` int(11) NOT NULL,
+  `comment_id` int(11) DEFAULT NULL,
+  `comment` text DEFAULT NULL,
+  `comment_index` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_date` datetime DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `contact_comments` ADD FOREIGN KEY (`contact_id`) REFERENCES `contacts` (`id`) ON DELETE CASCADE;
+ALTER TABLE `contact_comments` ADD FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+ALTER TABLE `contact_comments` ADD FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+-- 2022-07-31
+
+CREATE TABLE `campaigns` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `campaign_name` varchar(255) NOT NULL,
+  `campaign_status` varchar(50) DEFAULT NULL,
+  `product` varchar(255) DEFAULT NULL,
+  `expected_close_date` date DEFAULT NULL,
+  `target_size` int(11) DEFAULT NULL,
+  `campaign_type` varchar(50) DEFAULT NULL,
+  `target_audience` int(11) DEFAULT NULL,
+  `sponsor` varchar(255) DEFAULT NULL,
+  `num_sent` decimal(20,2) DEFAULT NULL,
+  `assigned_to` int(11) DEFAULT NULL,
+  `budget_cost` decimal(20,2) DEFAULT NULL,
+  `expected_response` varchar(50) DEFAULT NULL,
+  `expected_sales_count` decimal(20,2) DEFAULT NULL,
+  `expected_response_count` int(11) DEFAULT NULL,
+  `expected_roi` decimal(20,2) DEFAULT NULL,
+  `actual_cost` decimal(20,2) DEFAULT NULL,
+  `expected_revenue` decimal(20,2) DEFAULT NULL,
+  `actual_sales_count` decimal(20,2) DEFAULT NULL,
+  `actual_response_count` int(11) DEFAULT NULL,
+  `actual_roi` decimal(20,2) DEFAULT NULL,
+  `campaign_description` text DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_date` datetime DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `campaigns` ADD FOREIGN KEY (`assigned_to`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+ALTER TABLE `campaigns` ADD FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+
+campaign_activities
+
+contact_activities
+contact_documents
+contact_campaigns
+ ->id
+ ->contact_id
+ ->campaign_id
+ ->created_by
+ ->created_date 
+contact_comments
+ -> id
+ -> contact_id
+ -> comment_id
+ -> comment
+ -> comment_index
+ -> created_by
+ -> created_date
+
+organization_activities
+organization_documents
+organization_campaigns
+organization_comments

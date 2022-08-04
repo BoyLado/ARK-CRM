@@ -46,14 +46,14 @@
         <div class="col-sm-12">
           <h6 class="mt-1 float-left">
             <span>
-              <a href="<?php echo base_url(); ?>index.php/organizations" class="text-muted">Organizations</a> -
+              <a href="<?php echo base_url(); ?>index.php/organizations" class="text-muted">Campaigns</a> -
             </span> 
             <small>
               <a href="<?php echo base_url(); ?>index.php/organizations" class="text-muted">All</a>
             </small> 
-            @if($organizationId != "")
+            @if($campaignId != "")
             <small> - 
-              <a href="javascript:void(0)" class="text-muted" id="lnk_organization"></a>
+              <a href="javascript:void(0)" class="text-muted" id="lnk_campaign"></a>
             </small>
             @endif
           </h6>
@@ -63,19 +63,19 @@
                 <i class="nav-icon fas fa-ellipsis-v"></i>
               </button>
               <div class="dropdown-menu" style="">
-                <a class="dropdown-item" href="javascript:void(0)" id="lnk_addOrganization">
-                  <i class="fa fa-plus mr-1"></i>Add Organization
+                <a class="dropdown-item" href="javascript:void(0)" id="lnk_addCampaign">
+                  <i class="fa fa-plus mr-1"></i>Add Campaign
                 </a>
-                <a class="dropdown-item" href="javascript:void(0)" id="lnk_importOrganizations">
+                <a class="dropdown-item" href="javascript:void(0)" id="lnk_importCampaigns">
                   <i class="fa fa-upload mr-1"></i>Import
                 </a>
               </div>
             </div>
             <div class="d-none d-lg-block">
-              <button type="button" class="btn btn-default btn-sm" id="btn_addOrganization">
-                <i class="fa fa-plus mr-1"></i> Add Organization
+              <button type="button" class="btn btn-default btn-sm" id="btn_addCampaign">
+                <i class="fa fa-plus mr-1"></i> Add Campaign
               </button>
-              <button type="button" class="btn btn-default btn-sm" id="btn_importOrganizations">
+              <button type="button" class="btn btn-default btn-sm" id="btn_importCampaigns">
                 <i class="fa fa-upload mr-1"></i> Import
               </button>
             </div>
@@ -90,22 +90,21 @@
   <div class="content">
     <div class="container-fluid">
 
-      <input type="hidden" id="txt_organizationId" name="txt_organizationId" value="{{ $organizationId }}">
+      <input type="hidden" id="txt_campaignId" name="txt_campaignId" value="{{ $campaignId }}">
 
-      @if($organizationId == "")
+      @if($campaignId == "")
       <div class="row">
         <div class="col-12">
           <div class="card card-primary card-outline">
             <div class="card-body">
-              <table id="tbl_organizations" class="table display nowrap" style="border: .5px solid #DEE2E6;" width="100%">
+              <table id="tbl_campaigns" class="table display nowrap" style="border: .5px solid #DEE2E6;" width="100%">
                 <thead>
                   <tr>
-                    <th class="p-2" data-priority="1">Organization Name</th>
-                    <th class="p-2" data-priority="2">Primary Email</th>
-                    <th class="p-2" data-priority="3">Website</th>
-                    <th class="p-2">State</th>
-                    <th class="p-2">City</th>
-                    <th class="p-2">Leads</th>
+                    <th class="p-2" data-priority="1">Campaign Name</th>
+                    <th class="p-2" data-priority="2">Campaign Type</th>
+                    <th class="p-2" data-priority="3">Campaign Status</th>
+                    <th class="p-2">Expected Revenue</th>
+                    <th class="p-2">Expected Close Date</th>
                     <th class="p-2">Assigned To</th>
                     <th class="p-2">Action</th>
                   </tr>
@@ -131,10 +130,10 @@
                   <div class="info-box shadow-none bg-light mb-0">
                     <span class="info-box-icon">
                       <!-- <i class="far fa-image"></i> -->
-                      <img class="img-square elevation-1" src="<?php echo base_url(); ?>assets/img/organization-placeholder.png" alt="User Avatar">
+                      <img class="img-square elevation-1" src="<?php echo base_url(); ?>assets/img/campaign-placeholder.png" alt="User Avatar">
                     </span>
                     <div class="info-box-content" style="line-height:1.7">
-                      <span class="info-box-text" id="lbl_organizationName" style="font-size: 1.5em;">
+                      <span class="info-box-text" id="lbl_campaignName" style="font-size: 1.5em;">
                         <!-- Mr. Anton Jay Hermo -->
                       </span>
                       <span class="info-box-text" style="font-size: .9em;">
@@ -154,11 +153,11 @@
                 <div class="col-lg-4 col-sm-12">
                   <div class="d-inline d-lg-none"><hr></div>
                   <div class="form-group mb-0">
-                    <button class="btn btn-sm btn-default" id="btn_editOrganization">
+                    <button class="btn btn-sm btn-default" id="btn_editCampaign">
                       <i class="fa fa-pen mr-2"></i>Edit
                     </button>
-                    <button class="btn btn-sm btn-default" id="btn_sendEmail">
-                      <i class="fa fa-paper-plane mr-2"></i>Send Email
+                    <button class="btn btn-sm btn-default" id="btn_deleteCampaign">
+                      <i class="fa fa-trash mr-2"></i>Delete Campaign
                     </button>
                     <!-- <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown">
                       More <i class="nav-icon fas fa-caret-down ml-1"></i> 
@@ -185,9 +184,6 @@
             <div class="card-header p-1 border-bottom-0">
               <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
                 <li class="nav-item">
-                  <a class="nav-link" id="lnk_summary" data-toggle="pill" href="#div_summary" role="tab" aria-controls="div_summary" aria-selected="true">Summary</a>
-                </li>
-                <li class="nav-item">
                   <a class="nav-link" id="lnk_details" data-toggle="pill" href="#div_details" role="tab" aria-controls="div_details" aria-selected="false">Details</a>
                 </li>
                 <li class="nav-item">
@@ -200,28 +196,13 @@
                   <a class="nav-link" id="lnk_activities" data-toggle="pill" href="#div_activities" role="tab" aria-controls="div_activities" aria-selected="false">Activities</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" id="lnk_emails" data-toggle="pill" href="#div_emails" role="tab" aria-controls="div_emails" aria-selected="false">Emails</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" id="lnk_documents" data-toggle="pill" href="#div_documents" role="tab" aria-controls="div_documents" aria-selected="false">Documents</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" id="lnk_campaigns" data-toggle="pill" href="#div_campaigns" role="tab" aria-controls="div_campaigns" aria-selected="false">Campaigns</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" id="lnk_comments" data-toggle="pill" href="#div_comments" role="tab" aria-controls="div_comments" aria-selected="false">
-                    Comments
-                    <span class="badge badge-danger ml-1">3</span>
-                  </a>
-                </li>
+                  <a class="nav-link" id="lnk_organizations" data-toggle="pill" href="#div_organizations" role="tab" aria-controls="div_organizations" aria-selected="false">Organizations</a>
+                </li>                
               </ul>
             </div>
             <div class="card-body">
               <div class="tab-content">
-                <div class="tab-pane fade active show" id="div_summary" role="tabpanel" aria-labelledby="lnk_summary">
-                  Summary
-                </div>
-                <div class="tab-pane fade" id="div_details" role="tabpanel" aria-labelledby="lnk_details">
+                <div class="tab-pane fade active show" id="div_details" role="tabpanel" aria-labelledby="lnk_details">
                   Details
                 </div>
                 <div class="tab-pane fade" id="div_updates" role="tabpanel" aria-labelledby="lnk_updates">
@@ -233,17 +214,8 @@
                 <div class="tab-pane fade" id="div_activities" role="tabpanel" aria-labelledby="lnk_activities">
                   Activities
                 </div>
-                <div class="tab-pane fade" id="div_emails" role="tabpanel" aria-labelledby="lnk_emails">
-                  Emails
-                </div>
-                <div class="tab-pane fade" id="div_documents" role="tabpanel" aria-labelledby="lnk_documents">
-                  Documents
-                </div>
-                <div class="tab-pane fade" id="div_campaigns" role="tabpanel" aria-labelledby="lnk_campaigns">
-                  Campaigns
-                </div>
-                <div class="tab-pane fade" id="div_comments" role="tabpanel" aria-labelledby="lnk_comments">
-                  Comments
+                <div class="tab-pane fade" id="div_organizations" role="tabpanel" aria-labelledby="lnk_organizations">
+                  Organizations
                 </div>
               </div>
             </div>
@@ -256,13 +228,13 @@
       
     </div><!-- container-fluid -->
 
-    <div class="modal fade" id="modal_organization" role="dialog">
+    <div class="modal fade" id="modal_campaign" role="dialog">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header modal-header--sticky">
             <h5 class="modal-title" id="lbl_stateOrganization">
               <i class="fa fa-plus mr-1"></i> 
-              <span>Add Organization</span>
+              <span>Add Campaign</span>
             </h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -270,7 +242,7 @@
           </div>
           <div class="modal-body">
 
-            <form id="form_organization">
+            <form id="form_campaign">
               
               <!-- <input type="hidden" id="txt_contactId" name="txt_contactId">   -->
 
@@ -720,25 +692,25 @@
           </div>
           <div class="modal-footer modal-footer--sticky">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" form="form_organization">Save Organization</button>
+            <button type="submit" class="btn btn-primary" form="form_campaign">Save Organization</button>
           </div>
 
         </div>
       </div>
     </div>
 
-    <div class="modal fade" id="modal_importOrganizations" role="dialog">
+    <div class="modal fade" id="modal_importCampaigns" role="dialog">
       <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
           <div class="modal-header modal-header--sticky">
-            <h5 class="modal-title"><i class="fa fa-plus mr-1"></i> Import Contacts</h5>
+            <h5 class="modal-title"><i class="fa fa-plus mr-1"></i> Import Campaigns</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
 
-            <form id="form_importOrganizations">
+            <form id="form_importCampaigns">
               <center><h4 class="text-red">! Under construction</h4></center>
               <input type="file" class="form-control" style="padding: 3px 3px 3px 3px !important;" name="file_pdf" accept=".pdf">
               <a href="javascript:void(0)"><i>Download file format</i></a>
@@ -747,111 +719,7 @@
           </div>
           <div class="modal-footer modal-footer--sticky">
             <button type="reset" class="btn btn-secondary">clear</button>
-            <button type="submit" class="btn btn-primary" form="form_importOrganizations">Upload File</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal fade" id="modal_sendOrganizationEmail" role="dialog">
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header modal-header--sticky">
-            <h5 class="modal-title"><i class="fa fa-paper-plane mr-2"></i>Send Email</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-
-            <form id="form_sendOrganizationEmail">
-              <div class="row">
-                <div class="col-lg-6 col-sm-12">
-                  <label class="col-form-label text-muted" for="inputError">
-                    <i class="fa fa-info-circle"></i> Choose Email Template 
-                  </label>
-                  <select class="form-control select2" id="slc_emailTemplate" style="width:100%;">
-                    <option value="">--Optional--</option>
-                  </select>
-                </div>
-                <div class="col-lg-6 col-sm-12">
-                  <label class="col-form-label text-muted" for="inputError">
-                    <i class="fa fa-info-circle"></i> Choose Signature
-                  </label>
-                  <select class="form-control select2" id="slc_emailSignature" style="width:100%;">
-                    <option value="">--Optional--</option>
-                  </select>
-                </div>
-              </div>
-
-              <label class="col-form-label text-muted" for="inputError">
-                <i class="fa fa-info-circle"></i> To *
-              </label>
-              <div class="input-group">
-                <!-- <div class="input-group-prepend">
-                  <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                  Add
-                  </button>
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Add Cc</a>
-                    <a class="dropdown-item" href="#">Add Bcc</a>
-                  </div>
-                </div> -->
-                <input type="text" id="txt_to" name="txt_to" class="form-control form-control-sm" placeholder="Required" required>
-              </div>
-              <!-- <div class="input-group mt-1">
-                <div class="input-group-prepend">
-                  <button type="button" class="btn btn-default btn-sm">
-                  Cc
-                  </button>
-                </div>
-                <input type="text" class="form-control form-control-sm" placeholder="Required" required>
-                <div class="input-group-append">
-                  <button type="button" class="btn btn-default btn-sm">
-                  <i class="fa fa-times text-red"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="input-group mt-1">
-                <div class="input-group-prepend">
-                  <button type="button" class="btn btn-default btn-sm">
-                  Bcc
-                  </button>
-                </div>
-                <input type="text" class="form-control form-control-sm" placeholder="Required" required>
-                <div class="input-group-append">
-                  <button type="button" class="btn btn-default btn-sm">
-                  <i class="fa fa-times text-red"></i>
-                  </button>
-                </div>
-              </div> -->
-
-              <label class="col-form-label text-muted" for="inputError">
-                <i class="fa fa-info-circle"></i> Subject *
-              </label>
-              <input type="text" class="form-control form-control-sm" id="txt_subject" name="txt_subject" placeholder="Required" required>
-              <label class="col-form-label text-muted" for="inputError">
-                <i class="fa fa-info-circle"></i> Content *
-              </label>
-              <textarea id="txt_content" name="txt_content" required></textarea>
-
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="chk_unsubscribe" name="chk_unsubscribe">
-                <label class="form-check-label" for="chk_unsubscribe">Include unsubscribe link</label>
-              </div>
-
-              <hr>
-              <label class="col-form-label text-muted" for="inputError">
-                <i class="fa fa-info-circle"></i> Possible Subtitutions 
-              </label>
-            </form>
-
-          </div>
-          <div class="modal-footer modal-footer--sticky">
-            <button type="button" class="btn btn-secondary">clear</button>
-            <button type="submit" class="btn btn-primary" id="btn_sendOrganizationEmail" form="form_sendOrganizationEmail">
-              <i class="fa fa-paper-plane mr-1"></i> Send Email
-            </button>
+            <button type="submit" class="btn btn-primary" form="form_importCampaigns">Upload File</button>
           </div>
         </div>
       </div>
@@ -896,7 +764,7 @@
     $('#nav_marketing').parent('li').addClass('menu-open');
     $('.nav-link').removeClass('active');
     $('#nav_marketing').addClass('active'); // menu
-    $('#nav_organizations').addClass('active');  // sub-menu
+    $('#nav_campaigns').addClass('active');  // sub-menu
 
     //topNav icon & label
 
@@ -908,60 +776,59 @@
 
     $('.select2').select2();
 
-    $('#btn_addOrganization').on('click',function(){
-      ORGANIZATION.loadUsers('#slc_assignedTo');
-      ORGANIZATION.loadOrganizations('select');
+    $('#btn_addCampaign').on('click',function(){
+      CAMPAIGN.loadUsers('#slc_assignedTo');
+      CAMPAIGN.loadCampaigns('select');
       $('#lbl_stateOrganization span').text('Add Organization');
       $('#lbl_stateOrganization i').removeClass('fa-pen');
       $('#lbl_stateOrganization i').addClass('fa-plus');
       $('#modal_organization').modal('show');
     });
 
-    $('#btn_importOrganizations').on('click',function(){
-      $('#modal_importOrganizations').modal('show');
+    $('#btn_importCampaigns').on('click',function(){
+      $('#modal_importCampaigns').modal('show');
     });
 
     $('#lnk_addOrganization').on('click',function(){
-      ORGANIZATION.loadUsers('#slc_assignedTo');
-      ORGANIZATION.loadOrganizations('select');
+      CAMPAIGN.loadUsers('#slc_assignedTo');
+      CAMPAIGN.loadCampaigns('select');
       $('#lbl_stateOrganization span').text('Add Organization');
       $('#lbl_stateOrganization i').removeClass('fa-pen');
       $('#lbl_stateOrganization i').addClass('fa-plus');
       $('#modal_organization').modal('show');
     });
 
-    $('#lnk_importOrganizations').on('click',function(){
-      $('#modal_importOrganizations').modal('show');
+    $('#lnk_importCampaigns').on('click',function(){
+      $('#modal_importCampaigns').modal('show');
     });
 
     $('#form_organization').on('submit',function(e){
       e.preventDefault();
-      ORGANIZATION.addOrganization(this);
+      CAMPAIGN.addOrganization(this);
     });
 
-    let organizationId = $('#txt_organizationId').val();
-    if(organizationId == "")
+    let campaignId = $('#txt_campaignId').val();
+    if(campaignId == "")
     {
       // ===========================================================>
       // load Organizations
-
-      ORGANIZATION.loadOrganizations('table');
+      CAMPAIGN.loadCampaigns('table');
     }
     else
     {
       // ===========================================================>
       // select Organization
 
-      $('#lnk_summary').addClass('active');
+      $('#lnk_details').addClass('active');
 
-      ORGANIZATION.selectOrganization('load',organizationId);
+      CAMPAIGN.selectOrganization('load',campaignId);
 
       $('#btn_editOrganization').on('click',function(){
-        ORGANIZATION.selectOrganization('edit',organizationId);
+        CAMPAIGN.selectOrganization('edit',campaignId);
       });
 
       $('#btn_sendEmail').on('click',function(){
-        ORGANIZATION.loadEmailTemplates();
+        CAMPAIGN.loadEmailTemplates();
         $('#txt_to').val($('#lbl_organizationEmail').text());
         $('#txt_content').summernote(summernoteConfig);
         $('#modal_sendOrganizationEmail').modal('show');
@@ -969,14 +836,14 @@
     }
 
     $('#slc_emailTemplate').on('change',function(){
-      let organizationId = $('#txt_organizationId').val();
+      let campaignId = $('#txt_campaignId').val();
       let templateId = $(this).val();
-      ORGANIZATION.selectEmailTemplate(organizationId,templateId);
+      CAMPAIGN.selectEmailTemplate(campaignId,templateId);
     });
 
     $('#form_sendOrganizationEmail').on('submit',function(e){
       e.preventDefault();
-      ORGANIZATION.sendOrganizationEmail(this);
+      CAMPAIGN.sendOrganizationEmail(this);
     });
 
 

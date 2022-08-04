@@ -47,19 +47,19 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="#" id="nav_campaigns" class="nav-link">
+              <a href="<?php echo base_url(); ?>index.php/campaigns" id="nav_campaigns" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Campaigns</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?php echo base_url(); ?>contacts" id="nav_contacts" class="nav-link">
+              <a href="<?php echo base_url(); ?>index.php/contacts" id="nav_contacts" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Contacts</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?php echo base_url(); ?>organizations" id="nav_organizations" class="nav-link">
+              <a href="<?php echo base_url(); ?>index.php/organizations" id="nav_organizations" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Organizations</p>
               </a>
@@ -129,7 +129,7 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="<?php echo base_url(); ?>email-template" id="nav_emailTemplate" class="nav-link">
+              <a href="<?php echo base_url(); ?>index.php/email-template" id="nav_emailTemplate" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Email Template</p>
               </a>
@@ -143,7 +143,7 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a href="<?php echo base_url(); ?>users" id="nav_users" class="nav-link">
+          <a href="<?php echo base_url(); ?>index.php/users" id="nav_users" class="nav-link">
             <i class="nav-icon fas fa-user-check"></i>
             <p>
               USERS

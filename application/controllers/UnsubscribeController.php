@@ -21,10 +21,10 @@ class UnsubscribeController extends CI_Controller
 	{
 		$arrData = $this->contacts->verifyContact($contactId, encrypt_code($authCode));
 
-		if($arrData != null && decrypt_code($contactEmail) != false)
+		if($arrData != null && $contactEmail != false)
 		{
 			$emailSender 		= 'ajhay.dev@gmail.com';
-			$emailReceiver  = decrypt_code($contactEmail);
+			$emailReceiver  = $contactEmail;
 
 			$data['subjectTitle'] = 'Unsubscribe Confirmation';
 			$unsubscribeConfirmationLink = "contact-confirmation/".$contactId."/".$authCode."/".$contactEmail;
@@ -45,7 +45,7 @@ class UnsubscribeController extends CI_Controller
 	{
 		$arrData = $this->contacts->verifyContact($contactId, encrypt_code($authCode));
 
-		if($arrData != null && decrypt_code($contactEmail) != false)
+		if($arrData != null && $contactEmail != false)
 		{
 			$emailSender 		= 'ajhay.dev@gmail.com';
 			$emailReceiver  = 'ajhay.work@gmail.com';
@@ -53,16 +53,21 @@ class UnsubscribeController extends CI_Controller
 			$data['subjectTitle'] = 'Unsubscribe Notification';
 			$data['contactName'] = $arrData['full_name'];
 			$data['contactPosition'] = $arrData['position'];
-			$data['contactEmail'] = decrypt_code($contactEmail);
+			$data['contactEmail'] = $contactEmail;
 
 			$emailResult = sendSliceMail('unsubscribe_notification',$emailSender,$emailReceiver,$data);
 
 			if($emailResult == 1)
 			{
-
+				$arrData = ['email_opt_out'=>1];
+				$result = $this->contacts->emailOptOut($contactId, $arrData);
+			}
+			else
+			{
+				$result = 0;
 			}
 
-			$msgResult = ($emailResult == 1)? "Success" : $emailResult;
+			$msgResult = ($result > 0)? "Success" : "Database Error";
 		}
 		else
 		{

@@ -38,7 +38,7 @@
           <i class="fas fa-file mr-2"></i> 3 new reports
         </a> -->
         <div class="dropdown-divider"></div>
-        <a href="<?php echo base_url(); ?>user-logout" class="dropdown-item dropdown-footer">
+        <a href="<?php echo base_url(); ?>index.php/user-logout" class="dropdown-item dropdown-footer">
           <i class="fa fa-lock mr-2"></i>Log out
         </a>
       </div>

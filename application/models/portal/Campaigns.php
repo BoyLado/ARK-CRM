@@ -1,25 +1,23 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Organizations extends CI_Model 
+class Campaigns extends CI_Model 
 {
 	/*
-		OrganizationController->loadOrganizations()
+		CampaignController->loadCampaigns()
 	*/
-	public function loadOrganizations()
+	public function loadCampaigns()
 	{
 		$columns = [
 			'id',
-			'organization_name',
-			'primary_email',
-			'main_website',
-			'(SELECT CONCAT(salutation, " ",first_name, " ", last_name) FROM users WHERE id = assigned_to) assigned_to',
+			'campaign_name',
+			'campaign_type',
 			'created_by',
 			'created_date'
 		];
 
 		$this->db->select($columns);
-		$this->db->from('organizations');
+		$this->db->from('campaigns');
 		$data = $this->db->get()->result();
     return $data;
 	}
@@ -27,7 +25,7 @@ class Organizations extends CI_Model
 	/*
 		OrganizationController->addOrganization()
 	*/
-	public function addOrganization($arrData)
+	public function addCampaign($arrData)
 	{
 		try {
 		  $this->db->trans_start();
@@ -44,7 +42,7 @@ class Organizations extends CI_Model
 		OrganizationController->selectEmailTemplate()
 		NavigationController->organizationPreview($organizationId)
 	*/
-	public function selectOrganization($organizationId)
+	public function selectCampaign($campaignId)
 	{
 		$columns = [
 			'id',
@@ -56,7 +54,7 @@ class Organizations extends CI_Model
 			'created_date'
 		];
 
-		$this->db->where('id',$organizationId);
+		$this->db->where('id',$campaignId);
 		$this->db->select($columns);
 		$this->db->from('organizations');
 		$data = $this->db->get()->row_array();

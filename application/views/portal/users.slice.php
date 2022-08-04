@@ -46,14 +46,14 @@
         <div class="col-sm-12">
           <h6 class="mt-1 float-left">
             <span>
-              <a href="<?php echo base_url(); ?>users" class="text-muted">Users</a> -
+              <a href="<?php echo base_url(); ?>index.php/users" class="text-muted">Users</a> -
             </span> 
             <small>
-              <a href="<?php echo base_url(); ?>users" class="text-muted">All</a>
+              <a href="<?php echo base_url(); ?>index.php/users" class="text-muted">All</a>
             </small> 
-            <small> - 
+            <!-- <small> - 
               <a href="#" class="text-muted" id="lnk_user">Anton Jay</a>
-            </small>
+            </small> -->
           </h6>
           <div class="float-right">
             <div class="d-inline d-lg-none">

@@ -1,8 +1,8 @@
 let baseUrl = $('#txt_baseUrl').val();
 
-const ORGANIZATION = (function(){
+const CAMPAIGN = (function(){
 
-	let thisOrganization = {};
+	let thisCampaign = {};
 
 	var Toast = Swal.mixin({
     toast: true,
@@ -11,11 +11,11 @@ const ORGANIZATION = (function(){
     timer: 3000
   });
 
-  thisOrganization.loadOrganizations = function(loadTo)
+  thisCampaign.loadCampaigns = function(loadTo)
   {
     $.ajax({
-      /* OrganizationController->loadOrganizations() */
-      url : `${baseUrl}index.php/marketing/load-organizations`,
+      /* CampaignController->loadCampaigns() */
+      url : `${baseUrl}index.php/marketing/load-campaigns`,
       method : 'get',
       dataType: 'json',
       success : function(data)
@@ -25,29 +25,27 @@ const ORGANIZATION = (function(){
         {
           let tbody = '';
           data.forEach(function(value,key){
-            let website = (value['main_website'] == null)? '---' : `<a href="${baseUrl}index.php/contact-preview/${value['id']}">${value['main_website']}</a>`;
             tbody += `<tr>
-                        <td class="p-1 pl-4"><a href="${baseUrl}index.php/organization-preview/${value['id']}">${value['organization_name']}</a></td>
-                        <td class="p-1"><a href="javascript:void(0)" onclick="CONTACTS.selectContactEmail(${value['id']},'${value['primary_email']}')">${value['primary_email']}</a></td>
-                        <td class="p-1">${website}</td>
+                        <td class="p-1 pl-4"><a href="${baseUrl}index.php/campaign-preview/${value['id']}">${value['campaign_name']}</a></td>
+                        <td class="p-1"></td>
+                        <td class="p-1"></td>
                         <td class="p-1">N/A</td>
                         <td class="p-1">N/A</td>
                         <td class="p-1">N/A</td>
-                        <td class="p-1">${value['assigned_to']}</td>
                         <td class="p-1">
-                          <a href="javascript:void(0)" onclick="CONTACTS.selectContact('edit',${value['id']})" class="mr-2">
+                          <a href="javascript:void(0)" onclick="CAMPAIGN.selectContact('edit',${value['id']})" class="mr-2">
                             <i class="fa fa-pen"></i>
                           </a>
-                          <a href="javascript:void(0)" onclick="CONTACTS.removeContact(${value['id']})">
+                          <a href="javascript:void(0)" onclick="CAMPAIGN.removeContact(${value['id']})">
                             <i class="fa fa-trash"></i>
                           </a>
                         </td>
                       </tr>`;
           });
 
-          $('#tbl_organizations').DataTable().destroy();
-          $('#tbl_organizations tbody').html(tbody);
-          $('#tbl_organizations').DataTable({
+          $('#tbl_campaigns').DataTable().destroy();
+          $('#tbl_campaigns tbody').html(tbody);
+          $('#tbl_campaigns').DataTable({
             "responsive": true,
             "columnDefs": [
               { responsivePriority: 1, targets: 0 },
@@ -59,9 +57,9 @@ const ORGANIZATION = (function(){
         }
         else if(loadTo == 'select')
         {
-          let options = '<option value="">--Select organization--</option>';
+          let options = '<option value="">--Select campaign--</option>';
           data.forEach(function(value,key){
-            options += `<option value="${value['id']}">${value['organization_name']}</option>`;
+            options += `<option value="${value['id']}">${value['campaign_name']}</option>`;
           });
           $('#slc_memberOf').html(options);
         }
@@ -69,7 +67,7 @@ const ORGANIZATION = (function(){
     });
   }
 
-  thisOrganization.loadUsers = function(elemId)
+  thisCampaign.loadUsers = function(elemId)
   {
     $.ajax({
       /* UserController->loadUsers() */
@@ -88,7 +86,7 @@ const ORGANIZATION = (function(){
     });
   }
 
-  thisOrganization.addOrganization = function(thisForm)
+  thisCampaign.addOrganization = function(thisForm)
   {
     let formData = new FormData(thisForm);
     $.ajax({
@@ -122,7 +120,7 @@ const ORGANIZATION = (function(){
     });
   }
 
-  thisOrganization.selectOrganization = function(action, organizationId)
+  thisCampaign.selectOrganization = function(action, organizationId)
   {
     $.ajax({
       /* OrganizationController->selectOrganization() */
@@ -160,7 +158,7 @@ const ORGANIZATION = (function(){
         
   }
 
-  thisOrganization.loadEmailTemplates = function()
+  thisCampaign.loadEmailTemplates = function()
   {
     $.ajax({
       /* EmailTemplateController->loadTemplates() */
@@ -180,7 +178,7 @@ const ORGANIZATION = (function(){
     });
   }
 
-  thisOrganization.selectEmailTemplate = function(organizationId,templateId)
+  thisCampaign.selectEmailTemplate = function(organizationId,templateId)
   {
     $.ajax({
       /* OrganizationController->selectEmailTemplate() */
@@ -199,6 +197,6 @@ const ORGANIZATION = (function(){
     });
   }
 
-  return thisOrganization;
+  return thisCampaign;
 
 })();

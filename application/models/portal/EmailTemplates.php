@@ -79,6 +79,7 @@ class EmailTemplates extends CI_Model
 	/*
 		EmailTemplateController->selectTemplate()
 		ContactController->selectEmailTemplate()
+		OrganizationController->selectEmailTemplate()
 	*/
 	public function selectTemplate($templateId)
 	{
