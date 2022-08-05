@@ -312,4 +312,26 @@ switch (ENVIRONMENT)
  *
  * And away we go...
  */
-require_once BASEPATH.'core/CodeIgniter.php';
+
+
+ini_set('display_errors', 'Off');
+
+function baseUrl()
+{
+  return sprintf(
+    "%s://%s%s",
+    isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http',
+    $_SERVER['SERVER_NAME'],
+    $_SERVER['REQUEST_URI']
+  );
+}
+
+clearstatcache();
+if(filesize(dirname(__FILE__).'/application/config/database.php') == 0)
+{
+  header('Location: '.baseUrl().'install');
+}
+else
+{
+	require_once BASEPATH.'core/CodeIgniter.php';
+}

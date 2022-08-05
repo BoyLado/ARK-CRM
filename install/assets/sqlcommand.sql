@@ -1,4 +1,6 @@
--- 2022-06-24
+--
+-- phpMyAdmin SQL Dump
+--
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -14,6 +16,8 @@ CREATE TABLE `users` (
   `updated_date` datetime DEFAULT NULL ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `users`(`salutation`, `first_name`, `last_name`, `user_email`, `user_password`, `user_auth_code`, `user_status`, `password_auth_code`, `created_date`, `updated_date`) VALUES ('%SALUTATION%','%FIRST_NAME%','%LAST_NAME%','%USER_EMAIL%','%USER_PASSWORD%','%AUTH_CODE%',1,NULL,'%CREATED_DATE%',NULL);
 
 CREATE TABLE `email_templates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -334,28 +338,3 @@ CREATE TABLE `campaigns` (
 
 ALTER TABLE `campaigns` ADD FOREIGN KEY (`assigned_to`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 ALTER TABLE `campaigns` ADD FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE;
-
-
-campaign_activities
-
-contact_activities
-contact_documents
-contact_campaigns
- ->id
- ->contact_id
- ->campaign_id
- ->created_by
- ->created_date 
-contact_comments
- -> id
- -> contact_id
- -> comment_id
- -> comment
- -> comment_index
- -> created_by
- -> created_date
-
-organization_activities
-organization_documents
-organization_campaigns
-organization_comments
