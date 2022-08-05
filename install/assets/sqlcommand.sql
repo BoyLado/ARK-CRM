@@ -17,7 +17,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `users`(`salutation`, `first_name`, `last_name`, `user_email`, `user_password`, `user_auth_code`, `user_status`, `password_auth_code`, `created_date`, `updated_date`) VALUES ('Mr.','Juan','Dela Cruz','ajhay.dev@gmail.com','ePYtRNleAdaav9YKOpM1Lw==','UMVz2ac63LAY0Za+SJsuGQ==',1,NULL,'2022-08-06 00:55:10',NULL);
+INSERT INTO `users`(`salutation`, `first_name`, `last_name`, `user_email`, `user_password`, `user_auth_code`, `user_status`, `password_auth_code`, `created_date`, `updated_date`) VALUES ('%SALUTATION%','%FIRST_NAME%','%LAST_NAME%','%USER_EMAIL%','%USER_PASSWORD%','%AUTH_CODE%',1,NULL,'%CREATED_DATE%',NULL);
 
 CREATE TABLE `email_templates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
