@@ -17,7 +17,7 @@ class TestController extends CI_Controller
 
 	public function index()
 	{
-		echo json_encode(urlencode(encrypt_code('hermo.antonjay.personal@gmail.com')));
+		echo decrypt_code('vOsMwdZ6VifCF5xZXNoOPQ==');
 	}
 
 	public function sampleEmail()
