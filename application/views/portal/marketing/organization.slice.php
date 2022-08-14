@@ -194,13 +194,17 @@
                   <a class="nav-link" id="lnk_updates" data-toggle="pill" href="#div_updates" role="tab" aria-controls="div_updates" aria-selected="false">Updates</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" id="lnk_contacts" data-toggle="pill" href="#div_contacts" role="tab" aria-controls="div_contacts" aria-selected="false">Contacts</a>
+                  <a class="nav-link" id="lnk_contacts" data-toggle="pill" href="#div_contacts" role="tab" aria-controls="div_contacts" aria-selected="false">Contacts
+                    <span class="badge badge-danger ml-1" id="lbl_contactCount">0</span>
+                  </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" id="lnk_activities" data-toggle="pill" href="#div_activities" role="tab" aria-controls="div_activities" aria-selected="false">Activities</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" id="lnk_emails" data-toggle="pill" href="#div_emails" role="tab" aria-controls="div_emails" aria-selected="false">Emails</a>
+                  <a class="nav-link" id="lnk_emails" data-toggle="pill" href="#div_emails" role="tab" aria-controls="div_emails" aria-selected="false">Emails
+                    <span class="badge badge-danger ml-1" id="lbl_emailCount">0</span>
+                  </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" id="lnk_documents" data-toggle="pill" href="#div_documents" role="tab" aria-controls="div_documents" aria-selected="false">Documents</a>
@@ -219,25 +223,541 @@
             <div class="card-body">
               <div class="tab-content">
                 <div class="tab-pane fade active show" id="div_summary" role="tabpanel" aria-labelledby="lnk_summary">
-                  Summary
+                  <div class="row">
+                    <div class="col-lg-4 col-sm-12">
+                      <h6>Key Fields</h6>
+                      <table class="table tbl mb-1">
+                        <tbody>
+                          <tr>
+                            <td class="p-1 text-muted" width="160px;" valign="middle">Organization Name</td>
+                            <td class="p-1">
+                              <span id="lbl_organizationName">---</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="p-1 text-muted" width="160px;" valign="middle">Assigned To</td>
+                            <td class="p-1">
+                              <span id="lbl_assignedTo">---</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="p-1 text-muted" width="160px;" valign="middle">Billing City</td>
+                            <td class="p-1">
+                              <span id="lbl_billingCity">---</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="p-1 text-muted" width="160px;" valign="middle">Billing Country</td>
+                            <td class="p-1">
+                              <span id="lbl_billingCountry">---</span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      
+                      <hr>
+
+                      <h6>Documents</h6>
+                      <table id="tbl_documents" class="table display nowrap" style="border: .5px solid #DEE2E6;" width="100%">
+                        <tbody>
+                          <tr>
+                            <td class="p-1"><center>No related documents</center></td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      <div class="d-inline d-lg-none"><hr></div>
+                    </div>
+                    <div class="col-lg-8 col-sm-12">
+                      <h6>Activities</h6>
+                      <table id="tbl_activities" class="table display nowrap" style="border: .5px solid #DEE2E6;" width="100%">
+                        <tbody>
+                          <tr>
+                            <td class="p-1"><center>No pending activities</center></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <hr>
+
+                      <h6>Comments</h6>
+                      <form id="form_summaryComments">
+                        <textarea class="form-control mb-1" rows="3" id="txt_comments" name="txt_comments" placeholder="Post your comments here"></textarea>
+                        <div class="row">
+                          <div class="col-lg-4 col-sm-12"></div>
+                          <div class="col-lg-4 col-sm-12"></div>
+                          <div class="col-lg-4 col-sm-12">
+                            <button type="submit" class="btn btn-primary btn-block btn-xs">Post Comment</button>
+                          </div>
+                        </div>
+                      </form>
+                      <div class="d-inline d-lg-none"><hr></div>
+                      <h6>Recent Comments</h6>
+                      <table id="tbl_recentComments" class="table display nowrap" style="border: .5px solid #DEE2E6;" width="100%">
+                        <tbody>
+                          <tr>
+                            <td class="p-1"><center>No recent comments</center></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </div>
                 <div class="tab-pane fade" id="div_details" role="tabpanel" aria-labelledby="lnk_details">
-                  Details
+                  <div class="card shadow-none">
+                    <div class="card-header p-0">
+                      <h3 class="card-title">Organization Details</h3>
+                      <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                      </button>
+                      </div>
+                    </div>
+                    <div class="card-body p-0" style="display: block;">
+                      <div class="row mt-2">
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Organization Name</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Assigned To</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Primary Email</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Secondary Email</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Main Website</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Other Website</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Phone Number</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Fax</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">LinkedIn</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Facebook</td>
+                                <td class="p-1">
+                                 ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Twitter</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Instagram</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Industry</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">NAICS Code</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Employee Count</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Annual Revenue</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Type</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Ticket Symbol</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Member Of</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Email Opt Out</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="card shadow-none">
+                    <div class="card-header p-0">
+                      <h3 class="card-title">Address Details</h3>
+                      <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                      </button>
+                      </div>
+                    </div>
+                    <div class="card-body p-0" style="display: block;">
+                      <div class="row mt-2">
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Billing Street</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Billing City</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Billing State</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Billing Zip</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Billing Country</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Shipping Street</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Shipping City</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Shipping State</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Shipping Zip</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Shipping Country</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card shadow-none">
+                    <div class="card-header p-0">
+                      <h3 class="card-title">Description Details</h3>
+                      <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                      </button>
+                      </div>
+                    </div>
+                    <div class="card-body p-0" style="display: block;">
+                      <div class="row">
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-lg-6 col-sm-12"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card shadow-none">
+                    <div class="card-header p-0">
+                      <h3 class="card-title">Profile Picture</h3>
+                      <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                      </button>
+                      </div>
+                    </div>
+                    <div class="card-body p-0" style="display: block;">
+                      
+                    </div>
+                  </div>
                 </div>
                 <div class="tab-pane fade" id="div_updates" role="tabpanel" aria-labelledby="lnk_updates">
-                  Updates
+                  Updates Coming Soon!
                 </div>
                 <div class="tab-pane fade" id="div_contacts" role="tabpanel" aria-labelledby="lnk_contacts">
-                  Contacts
+                  <table id="tbl_contacts" class="table display nowrap" style="border: .5px solid #DEE2E6;" width="100%">
+                    <thead>
+                      <tr>
+                        <th class="p-2">ID</th>
+                        <th class="p-2" data-priority="1">Salutation</th>
+                        <th class="p-2" data-priority="2">First Name</th>
+                        <th class="p-2" data-priority="3">Last Name</th>
+                        <th class="p-2">Position</th>
+                        <th class="p-2">Company Name</th>
+                        <th class="p-2">Primary Email</th>
+                        <th class="p-2">Assigned To</th>
+                        <th class="p-2">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      
+                    </tbody>
+                  </table>
                 </div>
                 <div class="tab-pane fade" id="div_activities" role="tabpanel" aria-labelledby="lnk_activities">
-                  Activities
+                  Activities Coming Soon!
                 </div>
                 <div class="tab-pane fade" id="div_emails" role="tabpanel" aria-labelledby="lnk_emails">
-                  Emails
+                  <table id="tbl_organizationEmails" class="table display nowrap" style="border: .5px solid #DEE2E6;" width="100%">
+                    <thead>
+                      <tr>
+                        <th class="p-2">ID</th>
+                        <th class="p-2" data-priority="1">Sender Name</th>
+                        <th class="p-2" data-priority="2">Subject</th>
+                        <th class="p-2" data-priority="3">Parent Record</th>
+                        <th class="p-2">Date Sent</th>
+                        <th class="p-2">Time Sent</th>
+                        <th class="p-2">Status</th>
+                        <th class="p-2">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      
+                    </tbody>
+                  </table>
                 </div>
                 <div class="tab-pane fade" id="div_documents" role="tabpanel" aria-labelledby="lnk_documents">
-                  Documents
+                  Documents Coming Soon!
                 </div>
                 <div class="tab-pane fade" id="div_campaigns" role="tabpanel" aria-labelledby="lnk_campaigns">
                   Campaigns
@@ -965,6 +1485,47 @@
         $('#txt_to').val($('#lbl_organizationEmail').text());
         $('#txt_content').summernote(summernoteConfig);
         $('#modal_sendOrganizationEmail').modal('show');
+      });
+
+      $('#lbl_contactCount').prop('hidden',true);
+      ORGANIZATION.loadOrganizationContacts(organizationId);
+      $('#lbl_emailCount').prop('hidden',true);
+      ORGANIZATION.loadOrganizationEmails(organizationId);
+
+      $('#lnk_summary').on('click',function(){
+        // CONTACTS.loadContactSummary(contactId);
+      });
+
+      $('#lnk_details').on('click',function(){
+        // CONTACTS.loadContactDetails(contactId);
+      });
+
+      $('#lnk_updates').on('click',function(){
+
+      });
+
+      $('#lnk_contacts').on('click',function(){
+        ORGANIZATION.loadOrganizationContacts(organizationId);
+      });
+
+      $('#lnk_activities').on('click',function(){
+
+      });
+
+      $('#lnk_emails').on('click',function(){
+        ORGANIZATION.loadOrganizationEmails(organizationId);
+      });
+
+      $('#lnk_documents').on('click',function(){
+
+      });
+
+      $('#lnk_campaigns').on('click',function(){
+        // CONTACTS.loadContactCampaigns(contactId);
+      });
+
+      $('#lnk_comments').on('click',function(){
+        // CONTACTS.loadContactComments(contactId);
       });
     }
 
