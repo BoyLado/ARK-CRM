@@ -20,6 +20,7 @@ class ContactController extends CI_Controller
 		$this->load->database();
 		$this->load->model('portal/Contacts','contacts');
 		$this->load->model('portal/EmailTemplates','email_template');
+		$this->load->model('portal/Campaigns','campaigns');
 	}
 
 	// test code for uploading pdf
@@ -220,6 +221,64 @@ class ContactController extends CI_Controller
 
 		$data = $this->contacts->loadContactEmails($params['contactId']);
 		$this->output->set_content_type('application/json')->set_output(json_encode($data));
+	}
+
+	public function loadContactCampaigns()
+	{
+		$params = getParams();
+
+		$data = $this->contacts->loadContactCampaigns($params['contactId']);
+		$this->output->set_content_type('application/json')->set_output(json_encode($data));
+	}
+
+	public function loadUnlinkContactCampaigns()
+	{
+		$params = getParams();
+
+		$arrData = $this->contacts->loadContactCampaigns($params['contactId']);
+
+		$arrCampaignIds = [];
+		foreach($arrData as $key => $value)
+		{
+			$arrCampaignIds[] = $value['campaign_id']; 
+		}
+
+		$data = $this->campaigns->loadUnlinkContactCampaigns($arrCampaignIds);
+		$this->output->set_content_type('application/json')->set_output(json_encode($data));
+	}
+
+	public function addContactCampaign()
+	{
+		$params = getParams();
+
+		$arrData = [];
+		if(isset($params['arrSelectedCampaigns']))
+		{
+			foreach(explode(',',$params['arrSelectedCampaigns']) as $key => $value)
+			{
+				$arrData[] = ['contact_id'=>$params['contactId'], 'campaign_id'=>$value];
+			}
+		}
+		else
+		{
+			foreach(explode(',',$params['arrSelectedContacts']) as $key => $value)
+			{
+				$arrData[] = ['contact_id'=>$value, 'campaign_id'=>$params['campaignId']];
+			}
+		}
+
+		$result = $this->contacts->addContactCampaign($arrData);
+		$msgResult = ($result > 0)? "Success" : "Database error";
+		$this->output->set_content_type('application/json')->set_output(json_encode($msgResult));
+	}
+
+	public function unlinkContactCampaign()
+	{
+		$params = getParams();
+
+		$result = $this->contacts->unlinkContactCampaign($params['contactCampaignId']);
+		$msgResult = ($result > 0)? "Success" : "Database error";
+		$this->output->set_content_type('application/json')->set_output(json_encode($msgResult));
 	}
 
 	public function loadContactComments()

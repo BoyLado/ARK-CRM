@@ -102,7 +102,7 @@ const ORGANIZATION = (function(){
       success : function(result)
       {
         console.log(result);
-        $('#modal_addOrganization').modal('hide');
+        $('#modal_organization').modal('hide');
         if(result == 'Success')
         {
           Toast.fire({
@@ -195,6 +195,177 @@ const ORGANIZATION = (function(){
         $('#txt_content').summernote('destroy');
         $('#txt_content').val(data['template_content']);
         $('#txt_content').summernote(summernoteConfig);
+      }
+    });
+  }
+
+  // start of details
+
+  //contacts
+  thisOrganization.loadOrganizationContacts = function(organizationId)
+  {
+    $.ajax({
+      /* OrganizationController->loadOrganizationContacts() */
+      url : `${baseUrl}index.php/marketing/load-organization-contacts`,
+      method : 'get',
+      dataType: 'json',
+      data : {organizationId:organizationId},
+      success : function(data)
+      {
+        console.log(data);
+        let tbody = '';
+        let count = 0;
+        data.forEach(function(value,key){
+          tbody += `<tr>
+                      <td class="p-1">${value['id']}</td>
+                      <td class="p-1 pl-4">${value['salutation']}</td>
+                      <td class="p-1"><a href="${baseUrl}index.php/contact-preview/${value['id']}">${value['first_name']}</a></td>
+                      <td class="p-1"><a href="${baseUrl}index.php/contact-preview/${value['id']}">${value['last_name']}</a></td>
+                      <td class="p-1">Leader</td>
+                      <td class="p-1"><a href="${baseUrl}index.php/organization-preview/${value['organization_id']}">${value['organization_name']}</a></td>
+                      <td class="p-1"><a href="javascript:void(0)" onclick="CONTACTS.selectContactEmail(${value['id']},'${value['primary_email']}')">${value['primary_email']}</a></td>
+                      <td class="p-1">Juan</td>
+                      <td class="p-1">
+                        <a href="javascript:void(0)" onclick="ORGANIZATION.selectContact('edit',${value['id']})" class="mr-2">
+                          <i class="fa fa-pen"></i>
+                        </a>
+                        <a href="javascript:void(0)" onclick="ORGANIZATION.unlinkOrganizationContact(${value['id']},${organizationId})">
+                          <i class="fa fa-unlink"></i>
+                        </a>
+                      </td>
+                    </tr>`;
+          count++;
+        });
+
+        $('#tbl_contacts').DataTable().destroy();
+        $('#tbl_contacts tbody').html(tbody);
+        $('#tbl_contacts').DataTable({
+          "responsive": true,
+          "columnDefs": [
+            { responsivePriority: 1, targets: 1 },
+            { responsivePriority: 2, targets: 2 },
+            { responsivePriority: 3, targets: 3 },
+            { responsivePriority: 10001, targets: 1 },
+            {
+              "targets": [0],
+              "visible": false,
+              "searchable": false
+            }
+          ],
+          "order": [[ 0, "desc" ]]
+        });
+
+        if(count > 0)
+        {
+          $('#lbl_contactCount').prop('hidden',false);
+          $('#lbl_contactCount').text(count);
+        }
+        else
+        {
+          $('#lbl_contactCount').prop('hidden',true);
+          $('#lbl_contactCount').text(count);
+        }
+      }
+    });
+  }
+
+  thisOrganization.unlinkOrganizationContact = function(contactId, organizationId)
+  {
+    if(confirm('Please confirm!'))
+    {
+      let formData = new FormData();
+
+      formData.set("contactId", contactId);
+
+      $.ajax({
+        /* OrganizationController->unlinkOrganizationContact() */
+        url : `${baseUrl}index.php/marketing/unlink-organization-contact`,
+        method : 'post',
+        dataType: 'json',
+        processData: false, // important
+        contentType: false, // important
+        data : formData,
+        success : function(result)
+        {
+          console.log(result);
+          $('#modal_organization').modal('hide');
+          if(result == 'Success')
+          {
+            Toast.fire({
+              icon: 'success',
+              title: 'Success! <br>Contact unlinked successfully.',
+            });
+            ORGANIZATION.loadOrganizationContacts(organizationId);
+          }
+          else
+          {
+            Toast.fire({
+              icon: 'error',
+              title: 'Error! <br>Database error!'
+            });
+          }
+        }
+      });  
+    }    
+  }
+
+  //emails
+  thisOrganization.loadOrganizationEmails = function(organizationId)
+  {
+    $.ajax({
+      /* OrganizationController->loadOrganizationEmails() */
+      url : `${baseUrl}index.php/marketing/load-organization-emails`,
+      method : 'get',
+      dataType: 'json',
+      data : {organizationId : organizationId},
+      success : function(data)
+      {
+        console.log(data);
+        // Emails
+        let tbody = '';
+        let count = 0;
+        data.forEach(function(value,key){
+          tbody += `<tr>
+                      <td class="p-1">${value['id']}</td>
+                      <td class="p-1 pl-4">${value['sent_by_name']}</td>
+                      <td class="p-1">${value['email_subject']}</td>
+                      <td class="p-1">${value['sent_to_name']}</td>
+                      <td class="p-1">${value['date_sent']}</td>
+                      <td class="p-1">${value['time_sent']}</td>
+                      <td class="p-1">${value['email_status']}</td>
+                      <td class="p-1">Action</td>
+                    </tr>`;
+          count++;
+        });
+
+        $('#tbl_organizationEmails').DataTable().destroy();
+        $('#tbl_organizationEmails tbody').html(tbody);
+        $('#tbl_organizationEmails').DataTable({
+          "responsive": true,
+          "columnDefs": [
+            { responsivePriority: 1, targets: 1 },
+            { responsivePriority: 2, targets: 2 },
+            { responsivePriority: 3, targets: 3 },
+            { responsivePriority: 10001, targets: 1 },
+            {
+              "targets": [0],
+              "visible": false,
+              "searchable": false
+            }
+          ],
+          "order": [[ 0, "desc" ]]
+        });
+
+        if(count > 0)
+        {
+          $('#lbl_emailCount').prop('hidden',false);
+          $('#lbl_emailCount').text(count);
+        }
+        else
+        {
+          $('#lbl_emailCount').prop('hidden',true);
+          $('#lbl_emailCount').text(count);
+        }
       }
     });
   }

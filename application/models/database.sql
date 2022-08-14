@@ -336,6 +336,42 @@ ALTER TABLE `campaigns` ADD FOREIGN KEY (`assigned_to`) REFERENCES `users` (`id`
 ALTER TABLE `campaigns` ADD FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 
+--2022-08-06
+
+INSERT INTO `users`(`salutation`, `first_name`, `last_name`, `user_email`, `user_password`, `user_auth_code`, `user_status`, `password_auth_code`, `created_date`, `updated_date`) VALUES ('%SALUTATION%','%FIRST_NAME%','%LAST_NAME%','%USER_EMAIL%','%USER_PASSWORD%','%AUTH_CODE%',1,NULL,'%CREATED_DATE%',NULL);
+
+
+--2022-08-06
+CREATE TABLE `contact_campaigns` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `contact_id` int(11) NOT NULL,
+  `campaign_id` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_date` datetime DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `contact_campaigns` ADD FOREIGN KEY (`contact_id`) REFERENCES `contacts` (`id`) ON DELETE CASCADE;
+ALTER TABLE `contact_campaigns` ADD FOREIGN KEY (`campaign_id`) REFERENCES `campaigns` (`id`) ON DELETE CASCADE;
+
+--2022-08-13
+CREATE TABLE `organization_campaigns` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `organization_id` int(11) NOT NULL,
+  `campaign_id` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_date` datetime DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `organization_campaigns` ADD FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE CASCADE;
+ALTER TABLE `organization_campaigns` ADD FOREIGN KEY (`campaign_id`) REFERENCES `campaigns` (`id`) ON DELETE CASCADE;
+
+
 campaign_activities
 
 contact_activities

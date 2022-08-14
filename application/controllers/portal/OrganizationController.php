@@ -65,6 +65,66 @@ class OrganizationController extends CI_Controller
 		$this->output->set_content_type('application/json')->set_output(json_encode($data));
 	}
 
+	public function loadOrganizationContacts()
+	{
+		$params = getParams();
+
+		$data = $this->organizations->loadOrganizationContacts($params['organizationId']);
+		$this->output->set_content_type('application/json')->set_output(json_encode($data));
+	}
+
+	public function unlinkOrganizationContact()
+	{
+		$params = getParams();
+
+		$result = $this->organizations->unlinkOrganizationContact($params['contactId']);
+		$msgResult = ($result > 0)? "Success" : "Database error";
+
+		$this->output->set_content_type('application/json')->set_output(json_encode($msgResult));
+	}
+
+	public function loadOrganizationEmails()
+	{
+		$params = getParams();
+
+		$data = $this->organizations->loadOrganizationEmails($params['organizationId']);
+		$this->output->set_content_type('application/json')->set_output(json_encode($data));
+	}
+
+	public function addOrganizationCampaign()
+	{
+		$params = getParams();
+
+		$arrData = [];
+		if(isset($params['arrSelectedCampaigns']))
+		{
+			foreach(explode(',',$params['arrSelectedCampaigns']) as $key => $value)
+			{
+				$arrData[] = ['organization_id'=>$params['organizationId'], 'campaign_id'=>$value];
+			}
+		}
+		else
+		{
+			foreach(explode(',',$params['arrSelectedOrganizations']) as $key => $value)
+			{
+				$arrData[] = ['organization_id'=>$value, 'campaign_id'=>$params['campaignId']];
+			}
+		}
+
+		$result = $this->organizations->addOrganizationCampaign($arrData);
+		$msgResult = ($result > 0)? "Success" : "Database error";
+		$this->output->set_content_type('application/json')->set_output(json_encode($msgResult));
+	}
+
+	public function unlinkOrganizationCampaign()
+	{
+		$params = getParams();
+
+		$result = $this->organizations->unlinkOrganizationCampaign($params['organizationCampaignId']);
+		$msgResult = ($result > 0)? "Success" : "Database error";
+		$this->output->set_content_type('application/json')->set_output(json_encode($msgResult));
+	}
+
 	public function selectEmailTemplate()
 	{
 		$params = getParams();

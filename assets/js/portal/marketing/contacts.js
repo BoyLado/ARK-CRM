@@ -4,6 +4,8 @@ const CONTACTS = (function(){
 
 	let thisContacts = {};
 
+	let _arrSelectedCampaigns = []; //global variable
+
 	var Toast = Swal.mixin({
     toast: true,
     position: 'top',
@@ -43,13 +45,14 @@ const CONTACTS = (function(){
 		    console.log(data);
 		    let tbody = '';
 		    data.forEach(function(value,key){
+		    	let organizationName = (value['organization_id'] != null)? `<a href="${baseUrl}index.php/organization-preview/${value['organization_id']}">${value['organization_name']}</a>` : '---';
 		    	tbody += `<tr>
 		    							<td class="p-1">${value['id']}</td>
                       <td class="p-1 pl-4">${value['salutation']}</td>
                       <td class="p-1"><a href="${baseUrl}index.php/contact-preview/${value['id']}">${value['first_name']}</a></td>
                       <td class="p-1"><a href="${baseUrl}index.php/contact-preview/${value['id']}">${value['last_name']}</a></td>
                       <td class="p-1">Leader</td>
-                      <td class="p-1"><a href="${baseUrl}index.php/organization-preview/${value['organization_id']}">${value['organization_name']}</a></td>
+                      <td class="p-1">${organizationName}</td>
                       <td class="p-1"><a href="javascript:void(0)" onclick="CONTACTS.selectContactEmail(${value['id']},'${value['primary_email']}')">${value['primary_email']}</a></td>
                       <td class="p-1">Juan</td>
                       <td class="p-1">
@@ -391,6 +394,7 @@ const CONTACTS = (function(){
 		    console.log(data);
     		// Emails
 		    let tbody = '';
+		    let count = 0;
 		    data.forEach(function(value,key){
 		    	tbody += `<tr>
 	                    <td class="p-1">${value['id']}</td>
@@ -402,6 +406,7 @@ const CONTACTS = (function(){
 	                    <td class="p-1">${value['email_status']}</td>
 	                    <td class="p-1">Action</td>
 	                  </tr>`;
+	        count++;
 		    });
 
 		    $('#tbl_contactEmails').DataTable().destroy();
@@ -421,8 +426,234 @@ const CONTACTS = (function(){
 	        ],
 	        "order": [[ 0, "desc" ]]
 		    });
+
+		    if(count > 0)
+		    {
+		      $('#lbl_emailCount').prop('hidden',false);
+		      $('#lbl_emailCount').text(count);
+		    }
+		    else
+		    {
+		      $('#lbl_emailCount').prop('hidden',true);
+		      $('#lbl_emailCount').text(count);
+		    }
 		  }
 		});
+	}
+
+	//campaigns
+	thisContacts.loadContactCampaigns = function(contactId)
+	{
+		$.ajax({
+			/* ContactController->loadContactCampaigns() */
+		  url : `${baseUrl}index.php/marketing/load-contact-campaigns`,
+		  method : 'get',
+		  dataType: 'json',
+		  data : {contactId : contactId},
+		  success : function(data)
+		  {
+		    console.log(data);
+    		// Emails
+		    let tbody = '';
+		    let count = 0;
+		    data.forEach(function(value,key){
+		    	tbody += `<tr>
+	                    <td class="p-1">${value['id']}</td>
+	                    <td class="p-1 pl-4">${value['campaign_name']}</td>
+	                    <td class="p-1">${value['assigned_to_name']}</td>
+	                    <td class="p-1">${value['campaign_status']}</td>
+	                    <td class="p-1">${value['campaign_type']}</td>
+	                    <td class="p-1">${value['expected_close_date']}</td>
+	                    <td class="p-1">$ ${value['expected_revenue']}</td>
+	                    <td class="p-1">
+	                    	<a href="javascript:void(0)" onclick="alert('Coming Soon')" class="mr-2" title="Edit">
+	                    	  <i class="fa fa-pen"></i>
+	                    	</a>
+	                    	<a href="javascript:void(0)" onclick="CONTACTS.unlinkContactCampaign(${value['id']})" title="Unlink">
+	                    	  <i class="fa fa-unlink"></i>
+	                    	</a>
+	                    </td>
+	                  </tr>`;
+	        count++;
+		    });
+
+		    $(`#tbl_campaigns`).DataTable().destroy();
+		    $(`#tbl_campaigns tbody`).html(tbody);
+		    $(`#tbl_campaigns`).DataTable({
+		    	"responsive": true,
+		    	"columnDefs": [
+            { responsivePriority: 1, targets: 1 },
+            { responsivePriority: 2, targets: 2 },
+            { responsivePriority: 3, targets: 3 },
+            { responsivePriority: 10001, targets: 1 },
+            {
+              "targets": [0],  
+              "visible": false,
+              "searchable": false
+            }
+	        ],
+	        "order": [[ 0, "desc" ]]
+		    });
+
+		    $(`#tbl_campaigns_length`).html(`<button type="button" onclick="CONTACTS.selectCampaignModal(${contactId})" class="btn btn-sm btn-default"><i class="fa fa-bullhorn mr-1"></i> Select Campaigns</button>`);
+		  
+		    if(count > 0)
+		    {
+		      $('#lbl_campaignCount').prop('hidden',false);
+		      $('#lbl_campaignCount').text(count);
+		    }
+		    else
+		    {
+		      $('#lbl_campaignCount').prop('hidden',true);
+		      $('#lbl_campaignCount').text(count);
+		    }
+		  }
+		});
+	}
+
+	thisContacts.loadUnlinkContactCampaigns = function(contactId)
+	{
+		$.ajax({
+			/* ContactController->loadUnlinkContactCampaigns() */
+		  url : `${baseUrl}index.php/marketing/load-unlink-contact-campaigns`,
+		  method : 'get',
+		  dataType: 'json',
+		  data : {contactId:contactId},
+		  success : function(data)
+		  {
+		    console.log(data);
+    		// Emails
+		    let tbody = '';
+		    data.forEach(function(value,key){
+		    	tbody += `<tr>
+	                    <td class="p-1"><input type="checkbox" onchange="CONTACTS.selectCampaigns(this)" value="${value['id']}"/></td>
+	                    <td class="p-1 pl-4">${value['campaign_name']}</td>
+	                    <td class="p-1">${value['assigned_to_name']}</td>
+	                    <td class="p-1">${value['campaign_status']}</td>
+	                    <td class="p-1">${value['campaign_type']}</td>
+	                    <td class="p-1">${value['expected_close_date']}</td>
+	                    <td class="p-1">$ ${value['expected_revenue']}</td>
+	                  </tr>`;
+		    });
+
+		    $(`#tbl_allCampaigns`).DataTable().destroy();
+		    $(`#tbl_allCampaigns tbody`).html(tbody);
+		    $(`#tbl_allCampaigns`).DataTable({
+		    	"responsive": true,
+		    	"columnDefs": [
+            { responsivePriority: 1, targets: 1 },
+            { responsivePriority: 2, targets: 2 },
+            { responsivePriority: 3, targets: 3 },
+            { responsivePriority: 10001, targets: 1 }
+	        ],
+	        "order": [[ 0, "desc" ]]
+		    });
+		  }
+		});
+	}
+
+	thisContacts.selectCampaignModal = function(contactId)
+	{
+		$('#modal_selectCampaigns').modal('show');
+		$('#btn_addSelectedCampaigns').prop('disabled',true);
+		_arrSelectedCampaigns = [];
+		CONTACTS.loadUnlinkContactCampaigns(contactId);
+	}
+
+	thisContacts.selectCampaigns = function(thisCheckBox)
+	{
+		if($(thisCheckBox).is(':checked'))
+		{
+			_arrSelectedCampaigns.push($(thisCheckBox).val());
+		}
+		else
+		{
+			let index = _arrSelectedCampaigns.indexOf($(thisCheckBox).val());
+			if (index > -1) 
+			{
+			  _arrSelectedCampaigns.splice(index, 1); 
+			}
+		}
+
+		$('#btn_addSelectedCampaigns').prop('disabled',(_arrSelectedCampaigns.length > 0)? false : true);
+		
+	}
+
+	thisContacts.addSelectedCampaign = function()
+	{
+		let formData = new FormData();
+
+		formData.set("contactId", $('#txt_contactId').val());
+		formData.set("arrSelectedCampaigns", _arrSelectedCampaigns);
+
+		$.ajax({
+			/* ContactController->addContactCampaign() */
+		  url : `${baseUrl}index.php/marketing/add-contact-campaign`,
+		  method : 'post',
+		  dataType: 'json',
+		  processData: false, // important
+		  contentType: false, // important
+		  data : formData,
+		  success : function(result)
+		  {
+		    console.log(result);
+		    $('#modal_selectCampaigns').modal('hide');
+		    if(result == 'Success')
+		    {
+          Toast.fire({
+		        icon: 'success',
+		        title: 'Success! <br>New contact added successfully.',
+		      });
+		      CONTACTS.loadContactCampaigns($('#txt_contactId').val());
+		    }
+		    else
+		    {
+          Toast.fire({
+		        icon: 'error',
+		        title: 'Error! <br>Database error!'
+		      });
+		    }
+		  }
+		});
+	}
+
+	thisContacts.unlinkContactCampaign = function(contactCampaignId)
+	{
+		if(confirm('Please confirm!'))
+		{
+			let formData = new FormData();
+
+			formData.set("contactCampaignId", contactCampaignId);
+
+			$.ajax({
+				/* ContactController->unlinkContactCampaign() */
+			  url : `${baseUrl}index.php/marketing/unlink-contact-campaign`,
+			  method : 'post',
+			  dataType: 'json',
+			  processData: false, // important
+			  contentType: false, // important
+			  data : formData,
+			  success : function(result)
+			  {
+			    console.log(result);
+			    if(result == 'Success')
+			    {
+	          Toast.fire({
+			        icon: 'success',
+			        title: 'Success! <br>Campaign unlinked successfully.',
+			      });
+			      CONTACTS.loadContactCampaigns($('#txt_contactId').val());
+			    }
+			    else
+			    {
+	          Toast.fire({
+			        icon: 'error',
+			        title: 'Error! <br>Database error!'
+			      });
+			    }
+			  }
+			});
+		}		
 	}
 
 	//comments

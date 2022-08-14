@@ -46,10 +46,10 @@
         <div class="col-sm-12">
           <h6 class="mt-1 float-left">
             <span>
-              <a href="<?php echo base_url(); ?>index.php/organizations" class="text-muted">Campaigns</a> -
+              <a href="<?php echo base_url(); ?>index.php/campaigns" class="text-muted">Campaigns</a> -
             </span> 
             <small>
-              <a href="<?php echo base_url(); ?>index.php/organizations" class="text-muted">All</a>
+              <a href="<?php echo base_url(); ?>index.php/campaigns" class="text-muted">All</a>
             </small> 
             @if($campaignId != "")
             <small> - 
@@ -137,12 +137,12 @@
                         <!-- Mr. Anton Jay Hermo -->
                       </span>
                       <span class="info-box-text" style="font-size: .9em;">
-                        <i class="fa fa-globe mr-1"></i>
-                        <span id="lbl_organizationWebSite"><!-- Web Developer --></span>
+                        <i class="fa fa-clone mr-1"></i>
+                        <span id="lbl_campaignStatus"><!-- Web Developer --></span>
                       </span>
                       <span class="info-box-text" style="font-size: .9em;">
-                        <i class="fa fa-envelope mr-1"></i>
-                        <span id="lbl_organizationEmail"><!-- ajhay.dev@gmail.com --></span>
+                        <i class="fa fa-calendar mr-1"></i>
+                        <span id="lbl_expectedCloseDate"><!-- ajhay.dev@gmail.com --></span>
                       </span>
                     </div>
                   </div>
@@ -190,32 +190,355 @@
                   <a class="nav-link" id="lnk_updates" data-toggle="pill" href="#div_updates" role="tab" aria-controls="div_updates" aria-selected="false">Updates</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" id="lnk_contacts" data-toggle="pill" href="#div_contacts" role="tab" aria-controls="div_contacts" aria-selected="false">Contacts</a>
+                  <a class="nav-link" id="lnk_contacts" data-toggle="pill" href="#div_contacts" role="tab" aria-controls="div_contacts" aria-selected="false">Contacts 
+                    <span class="badge badge-danger ml-1" id="lbl_contactCount">0</span>
+                  </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" id="lnk_activities" data-toggle="pill" href="#div_activities" role="tab" aria-controls="div_activities" aria-selected="false">Activities</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" id="lnk_organizations" data-toggle="pill" href="#div_organizations" role="tab" aria-controls="div_organizations" aria-selected="false">Organizations</a>
+                  <a class="nav-link" id="lnk_organizations" data-toggle="pill" href="#div_organizations" role="tab" aria-controls="div_organizations" aria-selected="false">Organizations
+                    <span class="badge badge-danger ml-1" id="lbl_organizationCount">0</span>
+                  </a>
                 </li>                
               </ul>
             </div>
             <div class="card-body">
               <div class="tab-content">
                 <div class="tab-pane fade active show" id="div_details" role="tabpanel" aria-labelledby="lnk_details">
-                  Details
+                  <div class="card shadow-none">
+                    <div class="card-header p-0">
+                      <h3 class="card-title">Campaign Details</h3>
+                      <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                      </button>
+                      </div>
+                    </div>
+                    <div class="card-body p-0" style="display: block;">
+                      <div class="row mt-2">
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Campaign Name</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Assigned To</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Campaign Status</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Campaign Type</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Product</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Target Audience</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Expected Close Date</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Sponsor</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Target Size</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Created Time</td>
+                                <td class="p-1">
+                                 ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Num Sent</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Modified Time</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="card shadow-none">
+                    <div class="card-header p-0">
+                      <h3 class="card-title">Expectations & Actuals</h3>
+                      <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                      </button>
+                      </div>
+                    </div>
+                    <div class="card-body p-0" style="display: block;">
+                      <div class="row mt-2">
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Budget Cost</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Expected Response</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Expected Sales Count</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Expected Response Count</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Expected ROI</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Actual Cost</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Expected Revenue</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Actual Sales Count</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Actual Response Count</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Actual ROI</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card shadow-none">
+                    <div class="card-header p-0">
+                      <h3 class="card-title">Description Details</h3>
+                      <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                      </button>
+                      </div>
+                    </div>
+                    <div class="card-body p-0" style="display: block;">
+                      <div class="row">
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-lg-6 col-sm-12"></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div class="tab-pane fade" id="div_updates" role="tabpanel" aria-labelledby="lnk_updates">
                   Updates
                 </div>
                 <div class="tab-pane fade" id="div_contacts" role="tabpanel" aria-labelledby="lnk_contacts">
-                  Contacts
+                  <table id="tbl_contacts" class="table display nowrap" style="border: .5px solid #DEE2E6;" width="100%">
+                    <thead>
+                      <tr>
+                        <th class="p-2">ID</th>
+                        <th class="p-2" data-priority="1">Salutation</th>
+                        <th class="p-2" data-priority="2">First Name</th>
+                        <th class="p-2" data-priority="3">Last Name</th>
+                        <th class="p-2">Position</th>
+                        <th class="p-2">Company Name</th>
+                        <th class="p-2">Primary Email</th>
+                        <th class="p-2">Assigned To</th>
+                        <th class="p-2">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      
+                    </tbody>
+                  </table>
                 </div>
                 <div class="tab-pane fade" id="div_activities" role="tabpanel" aria-labelledby="lnk_activities">
                   Activities
                 </div>
                 <div class="tab-pane fade" id="div_organizations" role="tabpanel" aria-labelledby="lnk_organizations">
-                  Organizations
+                  <table id="tbl_organizations" class="table display nowrap" style="border: .5px solid #DEE2E6;" width="100%">
+                    <thead>
+                      <tr>
+                        <th class="p-2">ID</th>
+                        <th class="p-2" data-priority="1">Organization Name</th>
+                        <th class="p-2" data-priority="2">Primary Email</th>
+                        <th class="p-2" data-priority="3">Website</th>
+                        <th class="p-2">State</th>
+                        <th class="p-2">City</th>
+                        <th class="p-2">Leads</th>
+                        <th class="p-2">Assigned To</th>
+                        <th class="p-2">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
@@ -232,7 +555,7 @@
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header modal-header--sticky">
-            <h5 class="modal-title" id="lbl_stateOrganization">
+            <h5 class="modal-title" id="lbl_stateCampaign">
               <i class="fa fa-plus mr-1"></i> 
               <span>Add Campaign</span>
             </h5>
@@ -248,7 +571,7 @@
 
               <div class="card card-primary card-outline">
                 <div class="card-header">
-                  <h5 class="m-0">Basic Information - 
+                  <h5 class="m-0">Campaign Details - 
                     <small><i class="text-red">All fields with astirisk(*) is required </i></small>
                   </h5>
                 </div>
@@ -259,9 +582,9 @@
                       <table class="table tbl mb-1">
                         <tbody>
                           <tr>
-                            <td class="p-1" width="120px;" valign="middle">Organization *</td>
+                            <td class="p-1" width="150px;" valign="middle">Campaign Name *</td>
                             <td class="p-1">
-                              <input type="text" class="form-control form-control-sm" id="txt_organizationName" name="txt_organizationName" placeholder="(Organization name is regquired)">
+                              <input type="text" class="form-control form-control-sm" id="txt_campaignName" name="txt_campaignName" placeholder="(Campaign name is regquired)">
                             </td>
                           </tr>
                         </tbody>
@@ -271,7 +594,7 @@
                       <table class="table tbl mb-1">
                         <tbody>
                           <tr>
-                            <td class="p-1" width="120px;" valign="middle">Assigned To *</td>
+                            <td class="p-1" width="150px;" valign="middle">Assigned To *</td>
                             <td class="p-1">
                               <select class="form-control select2" id="slc_assignedTo" name="slc_assignedTo" style="width:100%;">
                                 <option value="">--Select user--</option>
@@ -288,145 +611,15 @@
                       <table class="table tbl mb-1">
                         <tbody>
                           <tr>
-                            <td class="p-1" width="120px;" valign="middle">Primary Email *</td>
+                            <td class="p-1" width="150px;" valign="middle">Campaign Status</td>
                             <td class="p-1">
-                              <input type="text" class="form-control form-control-sm" id="txt_primaryEmail" name="txt_primaryEmail" placeholder="(e.g. juan@gmail.com)">
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="col-lg-6 col-sm-12">
-                      <table class="table tbl mb-1">
-                        <tbody>
-                          <tr>
-                            <td class="p-1" width="120px;" valign="middle">Secondary Email</td>
-                            <td class="p-1">
-                              <input type="text" class="form-control form-control-sm" id="txt_secondaryEmail" name="txt_secondaryEmail" placeholder="(e.g. juantwo@gmail.com)">
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-6 col-sm-12">
-                      <table class="table tbl mb-1">
-                        <tbody>
-                          <tr>
-                            <td class="p-1" width="120px;" valign="middle">Main Website</td>
-                            <td class="p-1">
-                              <input type="text" class="form-control form-control-sm" id="txt_mainWebsite" name="txt_mainWebsite" placeholder="(e.g. https://www.oragon.com)">
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="col-lg-6 col-sm-12">
-                      <table class="table tbl mb-1">
-                        <tbody>
-                          <tr>
-                            <td class="p-1" width="120px;" valign="middle">Other Website</td>
-                            <td class="p-1">
-                              <input type="text" class="form-control form-control-sm" id="txt_otherWebsite" name="txt_otherWebsite" placeholder="(e.g. https://www.crm.oragon.com)">
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-6 col-sm-12">
-                      <table class="table tbl mb-1">
-                        <tbody>
-                          <tr>
-                            <td class="p-1" width="120px;" valign="middle">Phone Number</td>
-                            <td class="p-1">
-                              <input type="text" class="form-control form-control-sm" id="txt_phoneNumber" name="txt_phoneNumber" placeholder="(e.g. 09395202340)">
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="col-lg-6 col-sm-12">
-                      <table class="table tbl mb-1">
-                        <tbody>
-                          <tr>
-                            <td class="p-1" width="120px;" valign="middle">Fax</td>
-                            <td class="p-1">
-                              <input type="text" class="form-control form-control-sm" id="txt_fax" name="txt_fax" placeholder="(e.g. 09395202340)">
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-6 col-sm-12">
-                      <table class="table tbl mb-1">
-                        <tbody>
-                          <tr>
-                            <td class="p-1" width="120px;" valign="middle">LinkedIn</td>
-                            <td class="p-1">
-                              <input type="text" class="form-control form-control-sm" id="txt_linkedinUrl" name="txt_linkedinUrl" placeholder="(e.g. xxxxxxx)">
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="col-lg-6 col-sm-12">
-                      <table class="table tbl mb-1">
-                        <tbody>
-                          <tr>
-                            <td class="p-1" width="120px;" valign="middle">Facebook</td>
-                            <td class="p-1">
-                              <input type="text" class="form-control form-control-sm" id="txt_facebookUrl" name="txt_facebookUrl" placeholder="(e.g. xxxxxxx)">
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-6 col-sm-12">
-                      <table class="table tbl mb-1">
-                        <tbody>
-                          <tr>
-                            <td class="p-1" width="120px;" valign="middle">Twitter</td>
-                            <td class="p-1">
-                              <input type="text" class="form-control form-control-sm" id="txt_twitterUrl" name="txt_twitterUrl" placeholder="(e.g. xxxxxxx)">
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="col-lg-6 col-sm-12">
-                      <table class="table tbl mb-1">
-                        <tbody>
-                          <tr>
-                            <td class="p-1" width="120px;" valign="middle">Instagram</td>
-                            <td class="p-1">
-                              <input type="text" class="form-control form-control-sm" id="txt_instagramUrl" name="txt_instagramUrl" placeholder="(e.g. xxxxxxx)">
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-6 col-sm-12">
-                      <table class="table tbl mb-1">
-                        <tbody>
-                          <tr>
-                            <td class="p-1" width="120px;" valign="middle">Industry</td>
-                            <td class="p-1">
-                              <select class="form-control select2" id="slc_industry" name="slc_industry" style="width:100%;">
-                                <option value="">--Select industry--</option>
+                              <select class="form-control form-control-sm" id="slc_campaignStatus" name="slc_campaignStatus">
+                                <option value="" selected>--Select campaign status--</option>
+                                <option value="Planning">Planning</option>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Cancelled">Cancelled</option>
                               </select>
                             </td>
                           </tr>
@@ -437,9 +630,23 @@
                       <table class="table tbl mb-1">
                         <tbody>
                           <tr>
-                            <td class="p-1" width="120px;" valign="middle">NAICS Code</td>
+                            <td class="p-1" width="150px;" valign="middle">Campaign Type</td>
                             <td class="p-1">
-                              <input type="text" class="form-control form-control-sm" id="txt_naicsCode" name="txt_naicsCode" placeholder="(e.g. xxxxxxx)">
+                              <select class="form-control form-control-sm" id="slc_campaignType" name="slc_campaignType">
+                                <option value="" selected>--Select campaign type--</option>
+                                <option value="Conference">Conference</option>
+                                <option value="Webinar">Webinar</option>
+                                <option value="Trade Show">Trade Show</option>
+                                <option value="Public Relations">Public Relations</option>
+                                <option value="Partners">Partners</option>
+                                <option value="Referral Program">Referral Program</option>
+                                <option value="Advertisement">Advertisement</option>
+                                <option value="Banner Ads">Banner Ads</option>
+                                <option value="Direct Mail">Direct Mail</option>
+                                <option value="Primary Email">Primary Email</option>
+                                <option value="Telemarketing">Telemarketing</option>
+                                <option value="Others">Others</option>
+                              </select>
                             </td>
                           </tr>
                         </tbody>
@@ -452,9 +659,9 @@
                       <table class="table tbl mb-1">
                         <tbody>
                           <tr>
-                            <td class="p-1" width="120px;" valign="middle">Employee Count</td>
+                            <td class="p-1" width="150px;" valign="middle">Product</td>
                             <td class="p-1">
-                              <input type="text" class="form-control form-control-sm" id="txt_employeeCount" name="txt_employeeCount" placeholder="(e.g. 5-10)">
+                              <input type="text" class="form-control form-control-sm" id="txt_product" name="txt_product" placeholder="(e.g. Product)">
                             </td>
                           </tr>
                         </tbody>
@@ -464,9 +671,9 @@
                       <table class="table tbl mb-1">
                         <tbody>
                           <tr>
-                            <td class="p-1" width="120px;" valign="middle">Annual Revenue</td>
+                            <td class="p-1" width="150px;" valign="middle">Target Audience</td>
                             <td class="p-1">
-                              <input type="number" class="form-control form-control-sm" id="txt_annualRevenue" name="txt_annualRevenue" placeholder="(e.g. 1,000,000)">
+                              <input type="text" class="form-control form-control-sm" id="txt_targetAudience" name="txt_targetAudience" placeholder="(e.g. Target Audience)">
                             </td>
                           </tr>
                         </tbody>
@@ -479,11 +686,9 @@
                       <table class="table tbl mb-1">
                         <tbody>
                           <tr>
-                            <td class="p-1" width="120px;" valign="middle">Type</td>
+                            <td class="p-1" width="150px;" valign="middle">Expected Close Date *</td>
                             <td class="p-1">
-                              <select class="form-control select2" id="slc_type" name="slc_type" style="width:100%;">
-                                <option value="">--Select type--</option>
-                              </select>
+                              <input type="date" class="form-control form-control-sm" id="txt_expectedCloseDate" name="txt_expectedCloseDate" placeholder="(e.g. YYYY-mm-dd)" required>
                             </td>
                           </tr>
                         </tbody>
@@ -493,9 +698,9 @@
                       <table class="table tbl mb-1">
                         <tbody>
                           <tr>
-                            <td class="p-1" width="120px;" valign="middle">Ticket Symbol</td>
+                            <td class="p-1" width="150px;" valign="middle">Sponsor</td>
                             <td class="p-1">
-                              <input type="text" class="form-control form-control-sm" id="txt_ticketSymbol" name="txt_ticketSymbol" placeholder="(e.g. xxxxx)">
+                              <input type="text" class="form-control form-control-sm" id="txt_sponsor" name="txt_sponsor" placeholder="(e.g. Sponsor)">
                             </td>
                           </tr>
                         </tbody>
@@ -508,11 +713,9 @@
                       <table class="table tbl mb-1">
                         <tbody>
                           <tr>
-                            <td class="p-1" width="120px;" valign="middle">Member Of</td>
+                            <td class="p-1" width="150px;" valign="middle">Target Size</td>
                             <td class="p-1">
-                              <select class="form-control select2" id="slc_memberOf" name="slc_memberOf" style="width:100%;">
-                                <option value="">--Select organization--</option>
-                              </select>
+                              <input type="text" class="form-control form-control-sm" id="txt_targetSize" name="txt_targetSize" placeholder="(e.g. xxxxxxx)">
                             </td>
                           </tr>
                         </tbody>
@@ -522,95 +725,56 @@
                       <table class="table tbl mb-1">
                         <tbody>
                           <tr>
-                            <td class="p-1" width="120px;" valign="middle">Email Opt Out</td>
+                            <td class="p-1" width="150px;" valign="middle">Num Sent</td>
                             <td class="p-1">
-                              <select class="form-control form-control-sm" id="slc_emailOptOut" name="slc_emailOptOut">
-                                <option value="" selected>--Yes or No--</option>
-                                <option value="1">Yes</option>
-                                <option value="0">No</option>
-                              </select>
+                              <input type="number" class="form-control form-control-sm" id="txt_numSent" name="txt_numSent" placeholder="(e.g. xxxxxxx)">
                             </td>
                           </tr>
                         </tbody>
                       </table>
                     </div>
-                  </div>
+                  </div>                  
 
                 </div>
               </div>
               <div class="card card-primary card-outline">
                 <div class="card-header">
-                  <h5 class="m-0">Address Details</h5>
+                  <h5 class="m-0">Expectations & Actuals</h5>
                 </div>
                 <div class="card-body">
-
-                  <div class="row mb-0">
-                    <div class="col-lg-4 col-sm-12">
-                      <label>Is Billing the same as Shipping?</label>
-                    </div>
-                    <div class="col-lg-8 col-sm-12">
-                      <label class="radio-inline">
-                        <input type="radio" class="mr-1" name="rdb_optradio" checked>Yes
-                      </label>
-                      <label class="radio-inline">
-                        <input type="radio" class="mr-1" name="rdb_optradio">No
-                      </label>
-                    </div>
-                    <!-- <div class="col-lg-12 col-sm-12">
-                      <table class="table tbl mb-1">
-                        <tbody>
-                          <tr>
-                            <td class="p-1" width="220px;" valign="middle">
-                              <label>Is Billing the same as Shipping?</label>
-                            </td>
-                            <td class="p-1">
-                              <label class="radio-inline">
-                                <input type="radio" class="mr-1" name="rdb_optradio" checked>Yes
-                              </label>
-                              <label class="radio-inline">
-                                <input type="radio" class="mr-1" name="rdb_optradio">No
-                              </label>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div> -->
-                  </div>
-
-                  <hr>
-
+                  
                   <div class="row">
                     <div class="col-lg-6 col-sm-12">
                       <table class="table tbl mb-1">
                         <tbody>
                           <tr>
-                            <td class="p-1" width="120px;" valign="middle">Billing Street</td>
+                            <td class="p-1" width="180px;" valign="middle">Budget Cost</td>
                             <td class="p-1">
-                              <textarea class="form-control" rows="3" id="txt_billingStreet" name="txt_billingStreet"></textarea>
+                              <input type="text" class="form-control form-control-sm" id="txt_budgetCost" name="txt_budgetCost">
                             </td>
                           </tr>
                           <tr>
-                            <td class="p-1" width="120px;" valign="middle">Billing City</td>
+                            <td class="p-1" width="180px;" valign="middle">Expected Response</td>
                             <td class="p-1">
-                              <input type="text" class="form-control form-control-sm" id="txt_billingCity" name="txt_billingCity">
+                              <input type="text" class="form-control form-control-sm" id="txt_expectedResponse" name="txt_expectedResponse">
                             </td>
                           </tr>
                           <tr>
-                            <td class="p-1" width="120px;" valign="middle">Billing State</td>
+                            <td class="p-1" width="180px;" valign="middle">Expected Sales Count</td>
                             <td class="p-1">
-                              <input type="text" class="form-control form-control-sm" id="txt_billingState" name="txt_billingState">
+                              <input type="text" class="form-control form-control-sm" id="txt_expectedSalesCount" name="txt_expectedSalesCount">
                             </td>
                           </tr>
                           <tr>
-                            <td class="p-1" width="120px;" valign="middle">Billing Zip</td>
+                            <td class="p-1" width="180px;" valign="middle">Expected Response Count</td>
                             <td class="p-1">
-                              <input type="text" class="form-control form-control-sm" id="txt_billingZip" name="txt_billingZip">
+                              <input type="text" class="form-control form-control-sm" id="txt_expectedResponseCount" name="txt_expectedResponseCount">
                             </td>
                           </tr>
                           <tr>
-                            <td class="p-1" width="120px;" valign="middle">Billing Country</td>
+                            <td class="p-1" width="180px;" valign="middle">Expected ROI</td>
                             <td class="p-1">
-                              <input type="text" class="form-control form-control-sm" id="txt_billingCountry" name="txt_billingCountry">
+                              <input type="text" class="form-control form-control-sm" id="txt_expectedROI" name="txt_expectedROI">
                             </td>
                           </tr>
                         </tbody>
@@ -620,33 +784,33 @@
                       <table class="table tbl mb-1">
                         <tbody>
                           <tr>
-                            <td class="p-1" width="120px;" valign="middle">Shipping Street</td>
+                            <td class="p-1" width="180px;" valign="middle">Actual Cost</td>
                             <td class="p-1">
-                              <textarea class="form-control" rows="3" id="txt_shippingStreet" name="txt_shippingStreet"></textarea>
+                              <input type="text" class="form-control form-control-sm" id="txt_actualCost" name="txt_actualCost">
                             </td>
                           </tr>
                           <tr>
-                            <td class="p-1" width="120px;" valign="middle">Shipping City</td>
+                            <td class="p-1" width="180px;" valign="middle">Expected Revenue</td>
                             <td class="p-1">
-                              <input type="text" class="form-control form-control-sm" id="txt_shippingCity" name="txt_shippingCity">
+                              <input type="text" class="form-control form-control-sm" id="txt_expectedRevenue" name="txt_expectedRevenue">
                             </td>
                           </tr>
                           <tr>
-                            <td class="p-1" width="120px;" valign="middle">Shipping State</td>
+                            <td class="p-1" width="180px;" valign="middle">Actual Sales Count</td>
                             <td class="p-1">
-                              <input type="text" class="form-control form-control-sm" id="txt_shippingState" name="txt_shippingState">
+                              <input type="text" class="form-control form-control-sm" id="txt_actualSalesCount" name="txt_actualSalesCount">
                             </td>
                           </tr>
                           <tr>
-                            <td class="p-1" width="120px;" valign="middle">Shipping Zip</td>
+                            <td class="p-1" width="180px;" valign="middle">Actual Response Count</td>
                             <td class="p-1">
-                              <input type="text" class="form-control form-control-sm" id="txt_shippingZip" name="txt_shippingZip">
+                              <input type="text" class="form-control form-control-sm" id="txt_actualResponseCount" name="txt_actualResponseCount">
                             </td>
                           </tr>
                           <tr>
-                            <td class="p-1" width="120px;" valign="middle">Shipping Country</td>
+                            <td class="p-1" width="180px;" valign="middle">Actual ROI</td>
                             <td class="p-1">
-                              <input type="text" class="form-control form-control-sm" id="txt_shippingCountry" name="txt_shippingCountry">
+                              <input type="text" class="form-control form-control-sm" id="txt_actualROI" name="txt_actualROI">
                             </td>
                           </tr>
                         </tbody>
@@ -664,35 +828,13 @@
                   <textarea class="form-control" rows="5" id="txt_description" name="txt_description"></textarea>
                 </div>
               </div>
-              <div class="card card-primary card-outline">
-                <div class="card-header">
-                  <h5 class="m-0">Profile Picture</h5>
-                </div>
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-lg-6 col-sm-12">
-                      <div class="info-box shadow-none bg-light mb-2">
-                        <span class="info-box-icon bg-warning"><i class="far fa-image"></i></span>
-                        <div class="info-box-content">
-                          <span class="info-box-number">Note:</span>
-                          <span class="info-box-text">Accepted files (.jpg, .png, .jpeg)</span>
-                        </div>
-                      </div>
-                      <input type="file" class="form-control" id="file_profilePicture" name="file_profilePicture" style="padding: 3px 3px 3px 3px !important;">
-                    </div>
-                    <div class="col-lg-6 col-sm-12">
-                      
-                    </div>
-                  </div>                    
-                </div>
-              </div>
 
             </form>
               
           </div>
           <div class="modal-footer modal-footer--sticky">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" form="form_campaign">Save Organization</button>
+            <button type="submit" class="btn btn-primary" id="btn_saveCampaign" form="form_campaign">Save Campaign</button>
           </div>
 
         </div>
@@ -720,6 +862,84 @@
           <div class="modal-footer modal-footer--sticky">
             <button type="reset" class="btn btn-secondary">clear</button>
             <button type="submit" class="btn btn-primary" form="form_importCampaigns">Upload File</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modal_selectContact" role="dialog">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header modal-header--sticky">
+            <h5 class="modal-title"><i class="fa fa-user mr-1"></i> Select Contact</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <form id="form_selectCampaigns">
+              <table id="tbl_allContacts" class="table display nowrap" style="border: .5px solid #DEE2E6;" width="100%">
+                <thead>
+                  <tr>
+                    <th class="p-2"></th>
+                    <th class="p-2" data-priority="1">Salutation</th>
+                    <th class="p-2" data-priority="2">First Name</th>
+                    <th class="p-2" data-priority="3">Last Name</th>
+                    <th class="p-2">Position</th>
+                    <th class="p-2">Company Name</th>
+                    <th class="p-2">Primary Email</th>
+                    <th class="p-2">Assigned To</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                </tbody>
+              </table>
+            </form>
+
+          </div>
+          <div class="modal-footer modal-footer--sticky">
+            <button type="button" class="btn btn-primary" id="btn_addSelectedContacts">Add selected contact/s</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modal_selectOrganization" role="dialog">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header modal-header--sticky">
+            <h5 class="modal-title"><i class="fa fa-building mr-1"></i> Select Organization</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <form id="form_selectCampaigns">
+              <table id="tbl_allOrganizations" class="table display nowrap" style="border: .5px solid #DEE2E6;" width="100%">
+                <thead>
+                  <tr>
+                    <th class="p-2">ID</th>
+                    <th class="p-2" data-priority="1">Organization Name</th>
+                    <th class="p-2" data-priority="2">Primary Email</th>
+                    <th class="p-2" data-priority="3">Website</th>
+                    <th class="p-2">State</th>
+                    <th class="p-2">City</th>
+                    <th class="p-2">Leads</th>
+                    <th class="p-2">Assigned To</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                </tbody>
+              </table>
+            </form>
+
+          </div>
+          <div class="modal-footer modal-footer--sticky">
+            <button type="button" class="btn btn-primary" id="btn_addSelectedOrganizations">Add selected organization/s</button>
           </div>
         </div>
       </div>
@@ -779,74 +999,89 @@
     $('#btn_addCampaign').on('click',function(){
       CAMPAIGN.loadUsers('#slc_assignedTo');
       CAMPAIGN.loadCampaigns('select');
-      $('#lbl_stateOrganization span').text('Add Organization');
-      $('#lbl_stateOrganization i').removeClass('fa-pen');
-      $('#lbl_stateOrganization i').addClass('fa-plus');
-      $('#modal_organization').modal('show');
+      $('#lbl_stateCampaign span').text('Add Campaign');
+      $('#lbl_stateCampaign i').removeClass('fa-pen');
+      $('#lbl_stateCampaign i').addClass('fa-plus');
+      $('#modal_campaign').modal('show');
     });
 
     $('#btn_importCampaigns').on('click',function(){
       $('#modal_importCampaigns').modal('show');
     });
 
-    $('#lnk_addOrganization').on('click',function(){
+    $('#lnk_addCampaign').on('click',function(){
       CAMPAIGN.loadUsers('#slc_assignedTo');
       CAMPAIGN.loadCampaigns('select');
-      $('#lbl_stateOrganization span').text('Add Organization');
-      $('#lbl_stateOrganization i').removeClass('fa-pen');
-      $('#lbl_stateOrganization i').addClass('fa-plus');
-      $('#modal_organization').modal('show');
+      $('#lbl_stateCampaign span').text('Add Campaign');
+      $('#lbl_stateCampaign i').removeClass('fa-pen');
+      $('#lbl_stateCampaign i').addClass('fa-plus');
+      $('#modal_campaign').modal('show');
     });
 
     $('#lnk_importCampaigns').on('click',function(){
       $('#modal_importCampaigns').modal('show');
     });
 
-    $('#form_organization').on('submit',function(e){
+    $('#form_campaign').on('submit',function(e){
       e.preventDefault();
-      CAMPAIGN.addOrganization(this);
+      ($('#txt_campaignId').val() == "")? CAMPAIGN.addCampaign(this) : CAMPAIGN.editCampaign(this);
     });
 
     let campaignId = $('#txt_campaignId').val();
     if(campaignId == "")
     {
       // ===========================================================>
-      // load Organizations
+      // load Campaigns
       CAMPAIGN.loadCampaigns('table');
     }
     else
     {
       // ===========================================================>
-      // select Organization
+      // select Campaign
 
       $('#lnk_details').addClass('active');
 
-      CAMPAIGN.selectOrganization('load',campaignId);
+      CAMPAIGN.selectCampaign('load',campaignId);
 
-      $('#btn_editOrganization').on('click',function(){
-        CAMPAIGN.selectOrganization('edit',campaignId);
+      $('#btn_editCampaign').on('click',function(){
+        CAMPAIGN.selectCampaign('edit',campaignId);
       });
 
-      $('#btn_sendEmail').on('click',function(){
-        CAMPAIGN.loadEmailTemplates();
-        $('#txt_to').val($('#lbl_organizationEmail').text());
-        $('#txt_content').summernote(summernoteConfig);
-        $('#modal_sendOrganizationEmail').modal('show');
+      CAMPAIGN.loadCampaignDetails(campaignId);
+
+      $('#lbl_contactCount').prop('hidden',true);
+      CAMPAIGN.loadSelectedContactCampaigns(campaignId);
+      $('#lbl_organizationCount').prop('hidden',true);
+      CAMPAIGN.loadSelectedOrganizationCampaigns(campaignId);
+
+      $('#lnk_details').on('click',function(){
+
+      });
+
+      $('#lnk_updates').on('click',function(){
+
+      });
+
+      $('#lnk_contacts').on('click',function(){
+        CAMPAIGN.loadSelectedContactCampaigns(campaignId);
+      });
+
+      $('#lnk_activities').on('click',function(){
+
+      });
+
+      $('#lnk_organizations').on('click',function(){
+        CAMPAIGN.loadSelectedOrganizationCampaigns(campaignId);
       });
     }
 
-    $('#slc_emailTemplate').on('change',function(){
-      let campaignId = $('#txt_campaignId').val();
-      let templateId = $(this).val();
-      CAMPAIGN.selectEmailTemplate(campaignId,templateId);
+    $('#btn_addSelectedContacts').on('click',function(){
+      CAMPAIGN.addSelectedContact();
     });
 
-    $('#form_sendOrganizationEmail').on('submit',function(e){
-      e.preventDefault();
-      CAMPAIGN.sendOrganizationEmail(this);
+    $('#btn_addSelectedOrganizations').on('click',function(){
+      CAMPAIGN.addSelectedOrganization();
     });
-
-
 
   });
 </script>

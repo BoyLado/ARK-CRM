@@ -198,14 +198,16 @@
                     <a class="nav-link" id="lnk_activities" data-toggle="pill" href="#div_activities" role="tab" aria-controls="div_activities" aria-selected="false">Activities</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" id="lnk_emails" data-toggle="pill" href="#div_emails" role="tab" aria-controls="div_emails" aria-selected="false">Emails</a>
+                    <a class="nav-link" id="lnk_emails" data-toggle="pill" href="#div_emails" role="tab" aria-controls="div_emails" aria-selected="false">Emails
+                      <span class="badge badge-danger ml-1" id="lbl_emailCount">0</span>
+                    </a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" id="lnk_documents" data-toggle="pill" href="#div_documents" role="tab" aria-controls="div_documents" aria-selected="false">Documents</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" id="lnk_campaigns" data-toggle="pill" href="#div_campaigns" role="tab" aria-controls="div_campaigns" aria-selected="false">
-                      Campaigns
+                    <a class="nav-link" id="lnk_campaigns" data-toggle="pill" href="#div_campaigns" role="tab" aria-controls="div_campaigns" aria-selected="false">Campaigns
+                      <span class="badge badge-danger ml-1" id="lbl_campaignCount">0</span>
                     </a>
                   </li>
                   <li class="nav-item">
@@ -885,7 +887,23 @@
                     Documents
                   </div>
                   <div class="tab-pane fade" id="div_campaigns" role="tabpanel" aria-labelledby="lnk_campaigns">
-                    Campaigns
+                    <table id="tbl_campaigns" class="table display nowrap" style="border: .5px solid #DEE2E6;" width="100%">
+                      <thead>
+                        <tr>
+                          <th class="p-2"></th>
+                          <th class="p-2" data-priority="1">Campaign Name</th>
+                          <th class="p-2" data-priority="2">Assigned To</th>
+                          <th class="p-2" data-priority="3">Campaign Status</th>
+                          <th class="p-2">Campaign Type</th>
+                          <th class="p-2">Expected Close Date</th>
+                          <th class="p-2">Expected Revenue</th>
+                          <th class="p-2">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        
+                      </tbody>
+                    </table>
                   </div>
                   <div class="tab-pane fade" id="div_comments" role="tabpanel" aria-labelledby="lnk_comments">
                     <form id="form_comments">
@@ -1646,6 +1664,44 @@
         </div>
       </div>
 
+      <div class="modal fade" id="modal_selectCampaigns" role="dialog">
+        <div class="modal-dialog modal-xl" role="document">
+          <div class="modal-content">
+            <div class="modal-header modal-header--sticky">
+              <h5 class="modal-title"><i class="fa fa-bullhorn mr-1"></i> Select Campaigns</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+              <form id="form_selectCampaigns">
+                <table id="tbl_allCampaigns" class="table display nowrap" style="border: .5px solid #DEE2E6;" width="100%">
+                  <thead>
+                    <tr>
+                      <th class="p-2"></th>
+                      <th class="p-2  pl-4" data-priority="1">Campaign Name</th>
+                      <th class="p-2" data-priority="2">Assigned To</th>
+                      <th class="p-2" data-priority="3">Campaign Status</th>
+                      <th class="p-2">Campaign Type</th>
+                      <th class="p-2">Expected Close Date</th>
+                      <th class="p-2">Expected Revenue</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    
+                  </tbody>
+                </table>
+              </form>
+
+            </div>
+            <div class="modal-footer modal-footer--sticky">
+              <button type="button" class="btn btn-primary" id="btn_addSelectedCampaigns">Add selected campaign/s</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
     <!-- /.content -->
   </div>
@@ -1698,7 +1754,8 @@
       $('.select2').select2();
 
       $('#btn_addContacts').on('click',function(){
-        CONTACTS.loadUsers(['#slc_reportsTo','#slc_assignedTo']);
+        CONTACTS.loadUsers('#slc_reportsTo');
+        CONTACTS.loadUsers('#slc_assignedTo');
         CONTACTS.loadOrganizations('#slc_companyName');
         $('#lbl_stateContact span').text('Add Contact');
         $('#lbl_stateContact i').removeClass('fa-pen');
@@ -1758,6 +1815,11 @@
           $('#modal_sendContactEmail').modal('show');
         });
 
+        $('#lbl_emailCount').prop('hidden',true);
+        CONTACTS.loadContactEmails(contactId);
+        $('#lbl_campaignCount').prop('hidden',true);
+        CONTACTS.loadContactCampaigns(contactId);
+
         $('#lnk_summary').on('click',function(){
           CONTACTS.loadContactSummary(contactId);
         });
@@ -1783,7 +1845,7 @@
         });
 
         $('#lnk_campaigns').on('click',function(){
-
+          CONTACTS.loadContactCampaigns(contactId);
         });
 
         $('#lnk_comments').on('click',function(){
@@ -1802,6 +1864,10 @@
           CONTACTS.replyContactComment(this);
         });
       }
+
+      $('#btn_addSelectedCampaigns').on('click',function(){
+        CONTACTS.addSelectedCampaign();
+      });
 
       $('#slc_emailTemplate').on('change',function(){
         let contactId = $('#txt_contactId').val();

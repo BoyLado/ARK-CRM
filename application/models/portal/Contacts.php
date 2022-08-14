@@ -243,6 +243,88 @@ class Contacts extends CI_Model
 	}
 
 	/*
+		ContactController->loadContactCampaigns()
+	*/
+	public function loadContactCampaigns($contactId)
+	{
+		$columns = [
+			'a.id',
+			'a.campaign_id',
+			'b.campaign_name',
+			'(SELECT CONCAT(salutation, " ", first_name, " ", last_name) FROM users WHERE id = b.assigned_to) as assigned_to_name',
+			'b.campaign_status',
+			'b.campaign_type',
+			'b.expected_close_date',
+			'b.expected_revenue'
+		];
+
+		$this->db->where('a.contact_id',$contactId);
+		$this->db->select($columns);
+		$this->db->from('contact_campaigns a');
+		$this->db->join('campaigns b','a.campaign_id = b.id','left');
+		$data = $this->db->get()->result_array();
+    return $data;
+	}
+
+	/*
+		ContactController->addContactCampaign()
+	*/
+	public function addContactCampaign($arrData)
+	{
+		try {
+		  $this->db->trans_start();
+		    $this->db->insert_batch('contact_campaigns',$arrData);
+		  $this->db->trans_complete();
+		  return ($this->db->trans_status() === TRUE)? 1 : 0;
+		} catch (PDOException $e) {
+		  throw $e;
+		}
+	}
+
+	/*
+		ContactController->unlinkContactCampaign()
+	*/
+	public function unlinkContactCampaign($contactCampaignId)
+	{
+		try {
+		  $this->db->trans_start();
+		    $this->db->delete('contact_campaigns',['id'=>$contactCampaignId]);
+		  $this->db->trans_complete();
+		  return ($this->db->trans_status() === TRUE)? 1 : 0;
+		} catch (PDOException $e) {
+		  throw $e;
+		}
+	}
+
+	/*
+		CampaignController->loadUnlinkContacts()
+	*/
+	public function loadUnlinkContacts($arrContactIds)
+	{
+		$columns = [
+			'a.id',
+			'a.salutation',
+			'a.first_name',
+			'a.last_name',
+			'a.position',
+			'a.organization_id',
+			'(SELECT organization_name FROM organizations WHERE id = a.organization_id) as organization_name',
+			'a.primary_email',
+			'(SELECT CONCAT(salutation, " ", first_name, " ", last_name) FROM users WHERE id = a.assigned_to) as assigned_to_name'
+		];
+
+		if(count($arrContactIds) > 0)
+		{
+			$this->db->where_not_in('a.id',$arrContactIds);
+		}
+
+		$this->db->select($columns);
+		$this->db->from('contacts a');
+		$data = $this->db->get()->result_array();
+    return $data;
+	}
+
+	/*
 		ContactController->loadContactComments()
 	*/
 	public function loadContactComments($contactId)

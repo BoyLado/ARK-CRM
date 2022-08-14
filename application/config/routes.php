@@ -73,6 +73,14 @@ $route['users'] = 'portal/NavigationController/users';
 |
 */
 $route['marketing/load-campaigns'] = 'portal/CampaignController/loadCampaigns';
+$route['marketing/add-campaign'] = 'portal/CampaignController/addCampaign';
+$route['marketing/select-campaign'] = 'portal/CampaignController/selectCampaign';
+$route['marketing/edit-campaign'] = 'portal/CampaignController/editCampaign';
+$route['marketing/load-campaign-details'] = 'portal/CampaignController/loadCampaignDetails';
+$route['marketing/load-selected-contact-campaigns'] = 'portal/CampaignController/loadSelectedContactCampaigns';
+$route['marketing/load-unlink-contacts'] = 'portal/CampaignController/loadUnlinkContacts';
+$route['marketing/load-selected-organization-campaigns'] = 'portal/CampaignController/loadSelectedOrganizationCampaigns';
+$route['marketing/load-unlink-organizations'] = 'portal/CampaignController/loadUnlinkOrganizations';
 
 $route['marketing/load-contacts'] = 'portal/ContactController/loadContacts';
 $route['marketing/add-contact'] = 'portal/ContactController/addContact';
@@ -81,6 +89,10 @@ $route['marketing/edit-contact'] = 'portal/ContactController/editContact';
 $route['marketing/load-contact-summary'] = 'portal/ContactController/loadContactSummary';
 $route['marketing/load-contact-details'] = 'portal/ContactController/loadContactDetails';
 $route['marketing/load-contact-emails'] = 'portal/ContactController/loadContactEmails';
+$route['marketing/load-contact-campaigns'] = 'portal/ContactController/loadContactCampaigns';
+$route['marketing/load-unlink-contact-campaigns'] = 'portal/ContactController/loadUnlinkContactCampaigns';
+$route['marketing/add-contact-campaign'] = 'portal/ContactController/addContactCampaign';
+$route['marketing/unlink-contact-campaign'] = 'portal/ContactController/unlinkContactCampaign';
 $route['marketing/load-contact-comments'] = 'portal/ContactController/loadContactComments';
 $route['marketing/add-contact-comment'] = 'portal/ContactController/addContactComment';
 $route['marketing/select-contact-email-template'] = 'portal/ContactController/selectEmailTemplate';
@@ -89,6 +101,11 @@ $route['marketing/send-contact-email'] = 'portal/ContactController/sendContactEm
 $route['marketing/load-organizations'] = 'portal/OrganizationController/loadOrganizations';
 $route['marketing/add-organization'] = 'portal/OrganizationController/addOrganization';
 $route['marketing/select-organization'] = 'portal/OrganizationController/selectOrganization';
+$route['marketing/load-organization-contacts'] = 'portal/OrganizationController/loadOrganizationContacts';
+$route['marketing/unlink-organization-contact'] = 'portal/OrganizationController/unlinkOrganizationContact';
+$route['marketing/load-organization-emails'] = 'portal/OrganizationController/loadOrganizationEmails';
+$route['marketing/add-organization-campaign'] = 'portal/OrganizationController/addOrganizationCampaign';
+$route['marketing/unlink-organization-campaign'] = 'portal/OrganizationController/unlinkOrganizationCampaign';
 $route['marketing/select-organization-email-template'] = 'portal/OrganizationController/selectEmailTemplate';
 
 
