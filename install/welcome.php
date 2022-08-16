@@ -14,7 +14,7 @@ if(isset($_GET['fname']))
 {
     $ndex = strpos(baseUrl(),'install/welcome.php');
     $substrLink = substr(baseUrl(),0,$ndex);
-    $loginLink = $substrLink.'login/asd123';
+    $loginLink = $substrLink.'index.php/login/asd123';
 }
 else
 {
