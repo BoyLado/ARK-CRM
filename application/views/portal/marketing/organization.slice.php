@@ -215,7 +215,6 @@
                 <li class="nav-item">
                   <a class="nav-link" id="lnk_comments" data-toggle="pill" href="#div_comments" role="tab" aria-controls="div_comments" aria-selected="false">
                     Comments
-                    <span class="badge badge-danger ml-1">3</span>
                   </a>
                 </li>
               </ul>
