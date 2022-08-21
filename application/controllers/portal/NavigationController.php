@@ -110,6 +110,29 @@ class NavigationController extends CI_Controller
 		}
 	}
 
+	public function calendar()
+	{
+		$data['pageTitle'] = "Arkonor LLC | Calendar";
+		$data['customScripts'] = 'calendar';
+		$this->slice->view('portal.calendar', $data);
+	}
+
+	public function documents()
+	{
+		$data['pageTitle'] = "Arkonor LLC | Documents";
+		$data['customScripts'] = 'documents';
+		$data['documentId'] = "";
+		$this->slice->view('portal.documents', $data);
+	}
+
+	public function documentPreview($documentId)
+	{
+		$data['pageTitle'] = "Arkonor LLC | Document Preview";
+		$data['customScripts'] = 'documents';
+		$data['documentId'] = $documentId;
+		$this->slice->view('portal.documents', $data);
+	}
+
 	public function emailTemplate()
 	{
 		$data['pageTitle'] = "Arkonor LLC | Email Template";

@@ -372,6 +372,96 @@ ALTER TABLE `organization_campaigns` ADD FOREIGN KEY (`organization_id`) REFEREN
 ALTER TABLE `organization_campaigns` ADD FOREIGN KEY (`campaign_id`) REFERENCES `campaigns` (`id`) ON DELETE CASCADE;
 
 
+-- 2022-08-18
+CREATE TABLE `documents` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `type` varchar(50) DEFAULT NULL,
+  `file_name` text DEFAULT NULL,
+  `file_url` text DEFAULT NULL,
+  `notes` text DEFAULT NULL,
+  `assigned_to` int(11) NOT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_date` datetime DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `documents` ADD FOREIGN KEY (`assigned_to`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+ALTER TABLE `documents` ADD FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+ALTER TABLE `documents` ADD FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+CREATE TABLE `contact_documents` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `contact_id` int(11) NOT NULL,
+  `document_id` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_date` datetime DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `contact_documents` ADD FOREIGN KEY (`contact_id`) REFERENCES `contacts` (`id`) ON DELETE CASCADE;
+ALTER TABLE `contact_documents` ADD FOREIGN KEY (`document_id`) REFERENCES `documents` (`id`) ON DELETE CASCADE;
+ALTER TABLE `contact_documents` ADD FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+ALTER TABLE `contact_documents` ADD FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+CREATE TABLE `organization_documents` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `organization_id` int(11) NOT NULL,
+  `document_id` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_date` datetime DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `organization_documents` ADD FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE CASCADE;
+ALTER TABLE `organization_documents` ADD FOREIGN KEY (`document_id`) REFERENCES `documents` (`id`) ON DELETE CASCADE;
+ALTER TABLE `organization_documents` ADD FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+ALTER TABLE `organization_documents` ADD FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+ALTER TABLE `documents`
+ADD COLUMN `document_number` varchar(20) DEFAULT NULL AFTER `id`,
+ADD COLUMN `file_type` varchar(20) DEFAULT NULL AFTER `file_url`,
+ADD COLUMN `file_size` decimal(20,2) DEFAULT NULL AFTER `file_type`,
+ADD COLUMN `download_count` decimal(20,2) DEFAULT NULL AFTER `file_size`;
+
+-- documents
+--  -> id
+--  -> title
+--  -> type (file_upload/link_external_document)
+--  -> file_name (if type == file_upload)
+--  -> file_url (if type == link_external_document)
+--  -> notes
+--  -> assigned_to
+--  -> created_by
+--  -> created_date
+--  -> updated_by
+--  -> updated_date
+
+-- contact_documents
+--  -> id
+--  -> contact_id
+--  -> document_id
+--  -> created_by
+--  -> created_date
+--  -> updated_by
+--  -> updated_date
+
+-- organization_documents
+--  -> id
+--  -> organization_id
+--  -> document_id
+--  -> created_by
+--  -> created_date
+--  -> updated_by
+--  -> updated_date
+
+
 campaign_activities
 
 contact_activities

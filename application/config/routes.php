@@ -59,6 +59,13 @@ $route['contact-preview/(:num)'] = 'portal/NavigationController/contactPreview/$
 $route['organizations'] = 'portal/NavigationController/organizations';
 $route['organization-preview/(:num)'] = 'portal/NavigationController/organizationPreview/$1';
 
+//calendar
+$route['calendar'] = 'portal/NavigationController/calendar';
+
+//documents
+$route['documents'] = 'portal/NavigationController/documents';
+$route['document-preview/(:num)'] = 'portal/NavigationController/documentPreview/$1';
+
 // tools
 $route['email-template'] = 'portal/NavigationController/emailTemplate';
 
@@ -89,9 +96,14 @@ $route['marketing/edit-contact'] = 'portal/ContactController/editContact';
 $route['marketing/load-contact-summary'] = 'portal/ContactController/loadContactSummary';
 $route['marketing/load-contact-details'] = 'portal/ContactController/loadContactDetails';
 $route['marketing/load-contact-emails'] = 'portal/ContactController/loadContactEmails';
+$route['marketing/load-contact-documents'] = 'portal/ContactController/loadContactDocuments';
+$route['marketing/unlink-contact-document'] = 'portal/ContactController/unlinkContactDocument';
+$route['marketing/load-unlink-contact-documents'] = 'portal/ContactController/loadUnlinkContactDocuments';
+$route['marketing/add-selected-contact-documents'] = 'portal/ContactController/addSelectedContactDocuments';
+$route['marketing/add-contact-document'] = 'portal/ContactController/addContactDocument';
 $route['marketing/load-contact-campaigns'] = 'portal/ContactController/loadContactCampaigns';
 $route['marketing/load-unlink-contact-campaigns'] = 'portal/ContactController/loadUnlinkContactCampaigns';
-$route['marketing/add-contact-campaign'] = 'portal/ContactController/addContactCampaign';
+$route['marketing/add-selected-contact-campaigns'] = 'portal/ContactController/addSelectedContactCampaigns';
 $route['marketing/unlink-contact-campaign'] = 'portal/ContactController/unlinkContactCampaign';
 $route['marketing/load-contact-comments'] = 'portal/ContactController/loadContactComments';
 $route['marketing/add-contact-comment'] = 'portal/ContactController/addContactComment';
@@ -101,9 +113,18 @@ $route['marketing/send-contact-email'] = 'portal/ContactController/sendContactEm
 $route['marketing/load-organizations'] = 'portal/OrganizationController/loadOrganizations';
 $route['marketing/add-organization'] = 'portal/OrganizationController/addOrganization';
 $route['marketing/select-organization'] = 'portal/OrganizationController/selectOrganization';
+$route['marketing/load-organization-summary'] = 'portal/OrganizationController/loadOrganizationSummary';
+$route['marketing/load-organization-details'] = 'portal/OrganizationController/loadOrganizationDetails';
 $route['marketing/load-organization-contacts'] = 'portal/OrganizationController/loadOrganizationContacts';
 $route['marketing/unlink-organization-contact'] = 'portal/OrganizationController/unlinkOrganizationContact';
 $route['marketing/load-organization-emails'] = 'portal/OrganizationController/loadOrganizationEmails';
+$route['marketing/load-organization-documents'] = 'portal/OrganizationController/loadOrganizationDocuments';
+$route['marketing/unlink-organization-document'] = 'portal/OrganizationController/unlinkOrganizationDocument';
+$route['marketing/load-unlink-organization-documents'] = 'portal/OrganizationController/loadUnlinkOrganizationDocuments';
+$route['marketing/add-selected-organization-documents'] = 'portal/OrganizationController/addSelectedOrganizationDocuments';
+$route['marketing/add-organization-document'] = 'portal/OrganizationController/addOrganizationDocument';
+$route['marketing/load-organization-campaigns'] = 'portal/OrganizationController/loadOrganizationCampaigns';
+$route['marketing/load-unlink-organization-campaigns'] = 'portal/OrganizationController/loadUnlinkOrganizationCampaigns';
 $route['marketing/add-organization-campaign'] = 'portal/OrganizationController/addOrganizationCampaign';
 $route['marketing/unlink-organization-campaign'] = 'portal/OrganizationController/unlinkOrganizationCampaign';
 $route['marketing/select-organization-email-template'] = 'portal/OrganizationController/selectEmailTemplate';
@@ -112,6 +133,9 @@ $route['marketing/select-organization-email-template'] = 'portal/OrganizationCon
 //test code for uploading pdf
 $route['upload-pdf'] = 'portal/ContactController/uploadPdf';
 $route['load-sample'] = 'portal/ContactController/loadSample';
+
+//documents
+$route['load-documents'] = 'portal/DocumentController/loadDocuments';
 
 //tools/email template
 $route['tools/add-category'] = 'portal/EmailTemplateController/addCategory';

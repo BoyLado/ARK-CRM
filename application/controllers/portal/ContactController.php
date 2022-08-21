@@ -20,6 +20,7 @@ class ContactController extends CI_Controller
 		$this->load->database();
 		$this->load->model('portal/Contacts','contacts');
 		$this->load->model('portal/EmailTemplates','email_template');
+		$this->load->model('portal/Documents','documents');
 		$this->load->model('portal/Campaigns','campaigns');
 	}
 
@@ -223,6 +224,116 @@ class ContactController extends CI_Controller
 		$this->output->set_content_type('application/json')->set_output(json_encode($data));
 	}
 
+	public function loadContactDocuments()
+	{
+		$params = getParams();
+
+		$data = $this->contacts->loadContactDocuments($params['contactId']);
+		$this->output->set_content_type('application/json')->set_output(json_encode($data));
+	}
+
+	public function unlinkContactDocument()
+	{
+		$params = getParams();
+
+		$result = $this->contacts->unlinkContactDocument($params['contactDocumentId']);
+		$msgResult = ($result > 0)? "Success" : "Database error";
+		$this->output->set_content_type('application/json')->set_output(json_encode($msgResult));
+	}
+
+	public function loadUnlinkContactDocuments()
+	{
+		$params = getParams();
+
+		$arrData = $this->contacts->loadContactDocuments($params['contactId']);
+
+		$arrDocumentIds = [];
+		foreach($arrData as $key => $value)
+		{
+			$arrDocumentIds[] = $value['document_id']; 
+		}
+
+		$data = $this->documents->loadUnlinkDocuments($arrDocumentIds);
+		$this->output->set_content_type('application/json')->set_output(json_encode($data));
+	}
+
+	public function addSelectedContactDocuments()
+	{
+		$params = getParams();
+
+		$arrData = [];
+		if(isset($params['arrSelectedDocuments']))
+		{
+			foreach(explode(',',$params['arrSelectedDocuments']) as $key => $value)
+			{
+				$arrData[] = ['contact_id'=>$params['contactId'], 'document_id'=>$value];
+			}
+		}
+		else
+		{
+			foreach(explode(',',$params['arrSelectedContacts']) as $key => $value)
+			{
+				$arrData[] = ['contact_id'=>$value, 'document_id'=>$params['documentId']];
+			}
+		}
+
+		$result = $this->contacts->addSelectedContactDocuments($arrData);
+		$msgResult = ($result > 0)? "Success" : "Database error";
+		$this->output->set_content_type('application/json')->set_output(json_encode($msgResult));
+	}
+
+	public function addContactDocument()
+	{
+		$params = getParams();
+
+		$this->form_validation->set_rules('txt_title', 'Title', 'required');
+		$this->form_validation->set_rules('slc_assignedToDocument', 'Assigned To', 'required');
+
+		if ($this->form_validation->run() == TRUE)
+		{			
+			$arrData = [
+				'title' 			=> $params['txt_title'],
+				'assigned_to' => $params['slc_assignedToDocument'],
+				'type' 				=> $params['slc_type'],
+				'notes'				=> $params['txt_notes'],
+				'created_by'  => $this->session->userdata('arkonorllc_user_id'),
+				'created_date'=> date('Y-m-d H:i:s')
+			];
+			if($params['slc_type'] == 1)
+			{
+				$arrData['file_name'] = '';
+			}
+			else
+			{
+				$arrData['file_url'] = $params['txt_fileUrl'];
+			}
+
+			$documentId = $this->documents->addDocument($arrData);
+			if($documentId > 0)
+			{
+				$arrData = [
+					'contact_id' => $params['txt_contactId'],
+					'document_id' => $documentId,
+					'created_by'  => $this->session->userdata('arkonorllc_user_id'),
+					'created_date'=> date('Y-m-d H:i:s')
+				];
+
+				$result = $this->contacts->addContactDocument($arrData);
+				$msgResult = ($result > 0)? "Success" : "Database error";
+			}
+			else
+			{
+				$msgResult = "Unable to save the document";
+			}
+		}
+		else
+		{
+		  $msgResult = strip_tags(validation_errors());
+		}
+
+		$this->output->set_content_type('application/json')->set_output(json_encode($msgResult));
+	}
+
 	public function loadContactCampaigns()
 	{
 		$params = getParams();
@@ -247,7 +358,7 @@ class ContactController extends CI_Controller
 		$this->output->set_content_type('application/json')->set_output(json_encode($data));
 	}
 
-	public function addContactCampaign()
+	public function addSelectedContactCampaigns()
 	{
 		$params = getParams();
 
@@ -267,7 +378,7 @@ class ContactController extends CI_Controller
 			}
 		}
 
-		$result = $this->contacts->addContactCampaign($arrData);
+		$result = $this->contacts->addSelectedContactCampaigns($arrData);
 		$msgResult = ($result > 0)? "Success" : "Database error";
 		$this->output->set_content_type('application/json')->set_output(json_encode($msgResult));
 	}

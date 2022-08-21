@@ -4,6 +4,9 @@ const ORGANIZATION = (function(){
 
 	let thisOrganization = {};
 
+  let _arrSelectedDocuments = [];
+  let _arrSelectedCampaigns = [];
+
 	var Toast = Swal.mixin({
     toast: true,
     position: 'top',
@@ -201,6 +204,86 @@ const ORGANIZATION = (function(){
 
   // start of details
 
+  //summary
+  thisOrganization.loadOrganizationSummary = function(organizationId)
+  {
+    $.ajax({
+      /* OrganizationController->loadOrganizationSummary() */
+      url : `${baseUrl}index.php/marketing/load-organization-summary`,
+      method : 'get',
+      dataType: 'json',
+      data : {organizationId : organizationId},
+      success : function(data)
+      {
+        console.log(data);
+        // Summary
+        $('#lbl_orgName').html(data['organization_name']);
+        $('#lbl_assignedTo').text(data['assigned_to_name']);
+        $('#lbl_billingCity').text((data['billing_city'] != null)? data['billing_city'] : '---');
+        $('#lbl_billingCountry').text((data['billing_country'] != null)? data['billing_country'] : '---');
+      }
+    });
+  }
+
+  //details
+  thisOrganization.loadOrganizationDetails = function(organizationId)
+  {
+    $.ajax({
+      /* OrganizationController->loadOrganizationDetails() */
+      url : `${baseUrl}index.php/marketing/load-organization-details`,
+      method : 'get',
+      dataType: 'json',
+      data : {organizationId : organizationId},
+      success : function(data)
+      {
+        console.log(data);
+
+        let mainWebsite = (data['main_website'] != null)? `<a href="${data['main_website']}" target="_blank">${data['main_website']}</a>` : '---';
+        let otherWebsite = (data['other_website'] != null)? `<a href="${data['other_website']}" target="_blank">${data['other_website']}</a>` : '---';
+
+        let linkedIn = (data['linkedin_url'] != null)? `<a href="${data['linkedin_url']}" target="_blank">${data['linkedin_url']}</a>` : '---';
+        let facebook = (data['facebook_url'] != null)? `<a href="${data['facebook_url']}" target="_blank">${data['facebook_url']}</a>` : '---';
+        let twitter = (data['twitter_url'] != null)? `<a href="${data['twitter_url']}" target="_blank">${data['twitter_url']}</a>` : '---';
+        let instagram = (data['instagram_url'] != null)? `<a href="${data['instagram_url']}" target="_blank">${data['instagram_url']}</a>` : '---';
+        // Details
+        $('#div_details table:eq(0) tbody tr td:eq(1)').text(data['organization_name']);
+        $('#div_details table:eq(1) tbody tr td:eq(1)').text(data['assigned_to_name']);
+        $('#div_details table:eq(2) tbody tr td:eq(1)').text((data['primary_email'] != null)? data['primary_email'] : '---');
+        $('#div_details table:eq(3) tbody tr td:eq(1)').html((data['secondary_email'] != null)? data['secondary_email'] : '---');
+        $('#div_details table:eq(4) tbody tr td:eq(1)').html(mainWebsite);
+        $('#div_details table:eq(5) tbody tr td:eq(1)').html(otherWebsite);
+        $('#div_details table:eq(6) tbody tr td:eq(1)').html((data['phone_number'] != null)? data['phone_number'] : '---');
+        $('#div_details table:eq(7) tbody tr td:eq(1)').html((data['fax'] != null)? data['fax'] : '---');
+        $('#div_details table:eq(8) tbody tr td:eq(1)').html(linkedIn);
+        $('#div_details table:eq(9) tbody tr td:eq(1)').html(facebook);
+        $('#div_details table:eq(10) tbody tr td:eq(1)').html(twitter);
+        $('#div_details table:eq(11) tbody tr td:eq(1)').html(instagram);
+        $('#div_details table:eq(12) tbody tr td:eq(1)').html((data['industry'] != null)? data['industry']:'---');
+        $('#div_details table:eq(13) tbody tr td:eq(1)').html((data['naics_code'] != null)? data['naics_code']:'---');
+        $('#div_details table:eq(14) tbody tr td:eq(1)').html((data['employee_count'] != null)? data['employee_count']:'---');
+        $('#div_details table:eq(15) tbody tr td:eq(1)').html((data['annual_revenue'] != null)? data['annual_revenue']:'---');
+        $('#div_details table:eq(16) tbody tr td:eq(1)').html((data['type'] != null)? data['type']:'---');
+        $('#div_details table:eq(17) tbody tr td:eq(1)').html((data['ticket_symbol'] != null)? data['ticket_symbol']:'---');
+        $('#div_details table:eq(18) tbody tr td:eq(1)').html((data['member_of'] != null)? data['member_of']:'---');
+        $('#div_details table:eq(19) tbody tr td:eq(1)').html((data['email_opt_out'] == 0)? 'No':'Yes');
+
+        $('#div_details table:eq(20) tbody tr:eq(0) td:eq(1)').html((data['billing_street'] != null)? data['billing_street']:'---');
+        $('#div_details table:eq(20) tbody tr:eq(1) td:eq(1)').html((data['billing_city'] != null)? data['billing_city']:'---');
+        $('#div_details table:eq(20) tbody tr:eq(2) td:eq(1)').html((data['billing_state'] != null)? data['billing_state']:'---');
+        $('#div_details table:eq(20) tbody tr:eq(3) td:eq(1)').html((data['billing_zip'] != null)? data['billing_zip']:'---');
+        $('#div_details table:eq(20) tbody tr:eq(4) td:eq(1)').html((data['billing_country'] != null)? data['billing_country']:'---');
+
+        $('#div_details table:eq(21) tbody tr:eq(0) td:eq(1)').html((data['shipping_street'] != null)? data['shipping_street']:'---');
+        $('#div_details table:eq(21) tbody tr:eq(1) td:eq(1)').html((data['shipping_city'] != null)? data['shipping_city']:'---');
+        $('#div_details table:eq(21) tbody tr:eq(2) td:eq(1)').html((data['shipping_state'] != null)? data['shipping_state']:'---');
+        $('#div_details table:eq(21) tbody tr:eq(3) td:eq(1)').html((data['shipping_zip'] != null)? data['shipping_zip']:'---');
+        $('#div_details table:eq(21) tbody tr:eq(4) td:eq(1)').html((data['shipping_country'] != null)? data['shipping_country']:'---');
+
+        $('#div_details table:eq(22) tbody tr td').html((data['description'] != null)? data['description']:'---');
+      }
+    });
+  }
+
   //contacts
   thisOrganization.loadOrganizationContacts = function(organizationId)
   {
@@ -368,6 +451,501 @@ const ORGANIZATION = (function(){
         }
       }
     });
+  }
+
+  //documents
+  thisOrganization.loadOrganizationDocuments = function(organizationId)
+  {
+    $.ajax({
+      /* OrganizationController->loadOrganizationDocuments() */
+      url : `${baseUrl}index.php/marketing/load-organization-documents`,
+      method : 'get',
+      dataType: 'json',
+      data : {organizationId : organizationId},
+      success : function(data)
+      {
+        console.log(data);
+        // Documents
+        let tbody = '';
+        let count = 0;
+        data.forEach(function(value,key){
+          let fileLink = '';
+          if(value['file_url'] != null)
+          {
+            fileLink = `<a href="${value['file_url']}" target="_blank">${value['file_url'].substring(0, 20)}...</a>`;
+          }
+          else
+          {
+            fileLink = `<a href="${baseUrl}assets/uploads/documents/${value['file_name']}" target="_blank">${value['file_name'].substring(0, 20)}...</a>`;
+          }
+          tbody += `<tr>
+                      <td class="p-1">${value['id']}</td>
+                      <td class="p-1 pl-4">${value['title']}</td>
+                      <td class="p-1">${fileLink}</td>
+                      <td class="p-1">${value['created_date']}</td>
+                      <td class="p-1">${value['assigned_to_name']}</td>
+                      <td class="p-1">${(value['download_count'] != null)? value['download_count'] : 0}</td>
+                      <td class="p-1">
+                        <a href="javascript:void(0)" onclick="alert('Coming Soon')" class="mr-2" title="Download">
+                          <i class="fa fa-download"></i>
+                        </a>
+                        <a href="javascript:void(0)" onclick="ORGANIZATION.unlinkOrganizationDocument(${value['id']})" title="Unlink">
+                          <i class="fa fa-unlink"></i>
+                        </a>
+                      </td>
+                    </tr>`;
+          count++;
+        });
+
+        $('#tbl_organizationDocuments').DataTable().destroy();
+        $('#tbl_organizationDocuments tbody').html(tbody);
+        $('#tbl_organizationDocuments').DataTable({
+          "responsive": true,
+          "columnDefs": [
+            { responsivePriority: 1, targets: 1 },
+            { responsivePriority: 2, targets: 2 },
+            { responsivePriority: 3, targets: 3 },
+            { responsivePriority: 10001, targets: 1 },
+            {
+              "targets": [0],
+              "visible": false,
+              "searchable": false
+            }
+          ],
+          "order": [[ 0, "desc" ]]
+        });
+
+        let buttons = `<button type="button" onclick="ORGANIZATION.selectDocumentModal(${organizationId})" class="btn btn-sm btn-default"><i class="fa fa-file mr-1"></i> Select Documents</button>
+                        <button type="button" onclick="ORGANIZATION.addDocumentModal()" class="btn btn-sm btn-default"><i class="fa fa-plus mr-1"></i> New Document</button>`;
+
+        $(`#tbl_organizationDocuments_length`).html(buttons);
+
+        if(count > 0)
+        {
+          $('#lbl_documentCount').prop('hidden',false);
+          $('#lbl_documentCount').text(count);
+        }
+        else
+        {
+          $('#lbl_documentCount').prop('hidden',true);
+          $('#lbl_documentCount').text(count);
+        }
+      }
+    });
+  }
+
+  thisOrganization.unlinkOrganizationDocument = function(organizationDocumentId)
+  {
+    if(confirm('Please confirm!'))
+    {
+      let formData = new FormData();
+
+      formData.set("organizationDocumentId", organizationDocumentId);
+
+      $.ajax({
+        /* OrganizationController->unlinkOrganizationDocument() */
+        url : `${baseUrl}index.php/marketing/unlink-organization-document`,
+        method : 'post',
+        dataType: 'json',
+        processData: false, // important
+        contentType: false, // important
+        data : formData,
+        success : function(result)
+        {
+          console.log(result);
+          if(result == 'Success')
+          {
+            Toast.fire({
+              icon: 'success',
+              title: 'Success! <br>Document unlinked successfully.',
+            });
+            ORGANIZATION.loadOrganizationDocuments($('#txt_organizationId').val());
+          }
+          else
+          {
+            Toast.fire({
+              icon: 'error',
+              title: 'Error! <br>Database error!'
+            });
+          }
+        }
+      });
+    }
+  }
+
+  thisOrganization.selectDocumentModal = function(organizationId)
+  {
+    $('#modal_selectDocuments').modal('show');
+    $('#btn_addSelectedDocuments').prop('disabled',true);
+    _arrSelectedDocuments = [];
+    ORGANIZATION.loadUnlinkOrganizationDocuments(organizationId);
+  }
+
+  thisOrganization.loadUnlinkOrganizationDocuments = function(organizationId)
+  {
+    $.ajax({
+      /* OrganizationController->loadUnlinkOrganizationDocuments() */
+      url : `${baseUrl}index.php/marketing/load-unlink-organization-documents`,
+      method : 'get',
+      dataType: 'json',
+      data : {organizationId:organizationId},
+      success : function(data)
+      {
+        console.log(data);
+        // Emails
+        let tbody = '';
+        data.forEach(function(value,key){
+          let fileLink = '';
+          if(value['file_url'] != null)
+          {
+            fileLink = `<a href="${value['file_url']}" target="_blank">${value['file_url'].substring(0, 20)}...</a>`;
+          }
+          else
+          {
+            fileLink = `<a href="${baseUrl}assets/uploads/documents/${value['file_name']}" target="_blank">${value['file_name'].substring(0, 20)}...</a>`;
+          }
+          tbody += `<tr>
+                      <td class="p-1"><input type="checkbox" onchange="ORGANIZATION.selectDocuments(this)" value="${value['id']}"/></td>
+                      <td class="p-1 pl-4">${value['title']}</td>
+                      <td class="p-1">${fileLink}</td>
+                      <td class="p-1">${value['created_date']}</td>
+                      <td class="p-1">${value['assigned_to_name']}</td>
+                      <td class="p-1">${(value['download_count'] != null)? value['download_count'] : 0}</td>
+                    </tr>`;
+        });
+
+        $(`#tbl_allDocuments`).DataTable().destroy();
+        $(`#tbl_allDocuments tbody`).html(tbody);
+        $(`#tbl_allDocuments`).DataTable({
+          "responsive": true,
+          "columnDefs": [
+            { responsivePriority: 1, targets: 1 },
+            { responsivePriority: 2, targets: 2 },
+            { responsivePriority: 3, targets: 3 },
+            { responsivePriority: 10001, targets: 1 }
+          ],
+          "order": [[ 0, "desc" ]]
+        });
+      }
+    });
+  }
+
+  thisOrganization.selectDocuments = function(thisCheckBox)
+  {
+    if($(thisCheckBox).is(':checked'))
+    {
+      _arrSelectedDocuments.push($(thisCheckBox).val());
+    }
+    else
+    {
+      let index = _arrSelectedDocuments.indexOf($(thisCheckBox).val());
+      if (index > -1) 
+      {
+        _arrSelectedDocuments.splice(index, 1); 
+      }
+    }
+
+    $('#btn_addSelectedDocuments').prop('disabled',(_arrSelectedDocuments.length > 0)? false : true);
+  }
+
+  thisOrganization.addSelectedDocuments = function()
+  {
+    let formData = new FormData();
+
+    formData.set("organizationId", $('#txt_organizationId').val());
+    formData.set("arrSelectedDocuments", _arrSelectedDocuments);
+
+    $.ajax({
+      /* OrganizationController->addSelectedOrganizationDocuments() */
+      url : `${baseUrl}index.php/marketing/add-selected-organization-documents`,
+      method : 'post',
+      dataType: 'json',
+      processData: false, // important
+      contentType: false, // important
+      data : formData,
+      success : function(result)
+      {
+        console.log(result);
+        $('#modal_selectDocuments').modal('hide');
+        if(result == 'Success')
+        {
+          Toast.fire({
+            icon: 'success',
+            title: 'Success! <br>New document/s added successfully.',
+          });
+          ORGANIZATION.loadOrganizationDocuments($('#txt_organizationId').val());
+        }
+        else
+        {
+          Toast.fire({
+            icon: 'error',
+            title: 'Error! <br>Database error!'
+          });
+        }
+      }
+    });
+  }
+
+  thisOrganization.addDocumentModal = function()
+  {
+    $('#div_fileName').hide();
+    $('#div_fileUrl').hide();
+    ORGANIZATION.loadUsers('#slc_assignedToDocument');
+    $('#modal_addDocument').modal('show');
+  }
+
+  thisOrganization.addOrganizationDocument = function(thisForm)
+  {
+    let formData = new FormData(thisForm);
+
+    formData.set("txt_organizationId", $('#txt_organizationId').val());
+
+    $.ajax({
+      /* OrganizationController->addOrganizationDocument() */
+      url : `${baseUrl}index.php/marketing/add-organization-document`,
+      method : 'post',
+      dataType: 'json',
+      processData: false, // important
+      contentType: false, // important
+      data : formData,
+      success : function(result)
+      {
+        console.log(result);
+        $('#modal_addDocument').modal('hide');
+        if(result == 'Success')
+        {
+          Toast.fire({
+            icon: 'success',
+            title: 'Success! <br>New document added successfully.',
+          });
+          setTimeout(function(){
+            ORGANIZATION.loadOrganizationDocuments($('#txt_organizationId').val());
+          }, 1000);
+        }
+        else
+        {
+          Toast.fire({
+            icon: 'error',
+            title: 'Error! <br>Database error!'
+          });
+        }
+      }
+    });
+  }
+
+  //Campaigns
+  thisOrganization.loadOrganizationCampaigns = function(organizationId)
+  {
+    $.ajax({
+      /* OrganizationController->loadOrganizationCampaigns() */
+      url : `${baseUrl}index.php/marketing/load-organization-campaigns`,
+      method : 'get',
+      dataType: 'json',
+      data : {organizationId : organizationId},
+      success : function(data)
+      {
+        console.log(data);
+        // Emails
+        let tbody = '';
+        let count = 0;
+        data.forEach(function(value,key){
+          tbody += `<tr>
+                      <td class="p-1">${value['id']}</td>
+                      <td class="p-1 pl-4">${value['campaign_name']}</td>
+                      <td class="p-1">${value['assigned_to_name']}</td>
+                      <td class="p-1">${value['campaign_status']}</td>
+                      <td class="p-1">${value['campaign_type']}</td>
+                      <td class="p-1">${value['expected_close_date']}</td>
+                      <td class="p-1">$ ${value['expected_revenue']}</td>
+                      <td class="p-1">
+                        <a href="javascript:void(0)" onclick="alert('Coming Soon')" class="mr-2" title="Edit">
+                          <i class="fa fa-pen"></i>
+                        </a>
+                        <a href="javascript:void(0)" onclick="ORGANIZATION.unlinkOrganizationCampaign(${value['id']})" title="Unlink">
+                          <i class="fa fa-unlink"></i>
+                        </a>
+                      </td>
+                    </tr>`;
+          count++;
+        });
+
+        $(`#tbl_campaigns`).DataTable().destroy();
+        $(`#tbl_campaigns tbody`).html(tbody);
+        $(`#tbl_campaigns`).DataTable({
+          "responsive": true,
+          "columnDefs": [
+            { responsivePriority: 1, targets: 1 },
+            { responsivePriority: 2, targets: 2 },
+            { responsivePriority: 3, targets: 3 },
+            { responsivePriority: 10001, targets: 1 },
+            {
+              "targets": [0],  
+              "visible": false,
+              "searchable": false
+            }
+          ],
+          "order": [[ 0, "desc" ]]
+        });
+
+        $(`#tbl_campaigns_length`).html(`<button type="button" onclick="ORGANIZATION.selectCampaignModal(${organizationId})" class="btn btn-sm btn-default"><i class="fa fa-bullhorn mr-1"></i> Select Campaigns</button>`);
+      
+        if(count > 0)
+        {
+          $('#lbl_campaignCount').prop('hidden',false);
+          $('#lbl_campaignCount').text(count);
+        }
+        else
+        {
+          $('#lbl_campaignCount').prop('hidden',true);
+          $('#lbl_campaignCount').text(count);
+        }
+      }
+    });
+  }
+
+  thisOrganization.loadUnlinkOrganizationCampaigns = function(organizationId)
+  {
+    $.ajax({
+      /* OrganizationController->loadUnlinkOrganizationCampaigns() */
+      url : `${baseUrl}index.php/marketing/load-unlink-organization-campaigns`,
+      method : 'get',
+      dataType: 'json',
+      data : {organizationId:organizationId},
+      success : function(data)
+      {
+        console.log(data);
+        // Emails
+        let tbody = '';
+        data.forEach(function(value,key){
+          tbody += `<tr>
+                      <td class="p-1"><input type="checkbox" onchange="ORGANIZATION.selectCampaigns(this)" value="${value['id']}"/></td>
+                      <td class="p-1 pl-4">${value['campaign_name']}</td>
+                      <td class="p-1">${value['assigned_to_name']}</td>
+                      <td class="p-1">${value['campaign_status']}</td>
+                      <td class="p-1">${value['campaign_type']}</td>
+                      <td class="p-1">${value['expected_close_date']}</td>
+                      <td class="p-1">$ ${value['expected_revenue']}</td>
+                    </tr>`;
+        });
+
+        $(`#tbl_allCampaigns`).DataTable().destroy();
+        $(`#tbl_allCampaigns tbody`).html(tbody);
+        $(`#tbl_allCampaigns`).DataTable({
+          "responsive": true,
+          "columnDefs": [
+            { responsivePriority: 1, targets: 1 },
+            { responsivePriority: 2, targets: 2 },
+            { responsivePriority: 3, targets: 3 },
+            { responsivePriority: 10001, targets: 1 }
+          ],
+          "order": [[ 0, "desc" ]]
+        });
+      }
+    });
+  }
+
+  thisOrganization.selectCampaignModal = function(organizationId)
+  {
+    $('#modal_selectCampaigns').modal('show');
+    $('#btn_addSelectedCampaigns').prop('disabled',true);
+    _arrSelectedCampaigns = [];
+    ORGANIZATION.loadUnlinkOrganizationCampaigns(organizationId);
+  }
+
+  thisOrganization.selectCampaigns = function(thisCheckBox)
+  {
+    if($(thisCheckBox).is(':checked'))
+    {
+      _arrSelectedCampaigns.push($(thisCheckBox).val());
+    }
+    else
+    {
+      let index = _arrSelectedCampaigns.indexOf($(thisCheckBox).val());
+      if (index > -1) 
+      {
+        _arrSelectedCampaigns.splice(index, 1); 
+      }
+    }
+
+    $('#btn_addSelectedCampaigns').prop('disabled',(_arrSelectedCampaigns.length > 0)? false : true);
+    
+  }
+
+  thisOrganization.addSelectedCampaign = function()
+  {
+    let formData = new FormData();
+
+    formData.set("organizationId", $('#txt_organizationId').val());
+    formData.set("arrSelectedCampaigns", _arrSelectedCampaigns);
+
+    $.ajax({
+      /* OrganizationController->addOrganizationCampaign() */
+      url : `${baseUrl}index.php/marketing/add-organization-campaign`,
+      method : 'post',
+      dataType: 'json',
+      processData: false, // important
+      contentType: false, // important
+      data : formData,
+      success : function(result)
+      {
+        console.log(result);
+        $('#modal_selectCampaigns').modal('hide');
+        if(result == 'Success')
+        {
+          Toast.fire({
+            icon: 'success',
+            title: 'Success! <br>New campaign added successfully.',
+          });
+          ORGANIZATION.loadOrganizationCampaigns($('#txt_organizationId').val());
+        }
+        else
+        {
+          Toast.fire({
+            icon: 'error',
+            title: 'Error! <br>Database error!'
+          });
+        }
+      }
+    });
+  }
+
+  thisOrganization.unlinkOrganizationCampaign = function(organizationCampaignId)
+  {
+    if(confirm('Please confirm!'))
+    {
+      let formData = new FormData();
+
+      formData.set("organizationCampaignId", organizationCampaignId);
+
+      $.ajax({
+        /* OrganizationController->unlinkOrganizationCampaign() */
+        url : `${baseUrl}index.php/marketing/unlink-organization-campaign`,
+        method : 'post',
+        dataType: 'json',
+        processData: false, // important
+        contentType: false, // important
+        data : formData,
+        success : function(result)
+        {
+          console.log(result);
+          if(result == 'Success')
+          {
+            Toast.fire({
+              icon: 'success',
+              title: 'Success! <br>Campaign unlinked successfully.',
+            });
+            ORGANIZATION.loadOrganizationCampaigns($('#txt_organizationId').val());
+          }
+          else
+          {
+            Toast.fire({
+              icon: 'error',
+              title: 'Error! <br>Database error!'
+            });
+          }
+        }
+      });
+    }   
   }
 
   return thisOrganization;

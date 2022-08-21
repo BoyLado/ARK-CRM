@@ -207,10 +207,14 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" id="lnk_documents" data-toggle="pill" href="#div_documents" role="tab" aria-controls="div_documents" aria-selected="false">Documents</a>
+                  <a class="nav-link" id="lnk_documents" data-toggle="pill" href="#div_documents" role="tab" aria-controls="div_documents" aria-selected="false">Documents
+                    <span class="badge badge-danger ml-1" id="lbl_documentCount">0</span>
+                  </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" id="lnk_campaigns" data-toggle="pill" href="#div_campaigns" role="tab" aria-controls="div_campaigns" aria-selected="false">Campaigns</a>
+                  <a class="nav-link" id="lnk_campaigns" data-toggle="pill" href="#div_campaigns" role="tab" aria-controls="div_campaigns" aria-selected="false">Campaigns
+                    <span class="badge badge-danger ml-1" id="lbl_campaignCount">0</span>
+                  </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" id="lnk_comments" data-toggle="pill" href="#div_comments" role="tab" aria-controls="div_comments" aria-selected="false">
@@ -230,7 +234,7 @@
                           <tr>
                             <td class="p-1 text-muted" width="160px;" valign="middle">Organization Name</td>
                             <td class="p-1">
-                              <span id="lbl_organizationName">---</span>
+                              <span id="lbl_orgName">---</span>
                             </td>
                           </tr>
                           <tr>
@@ -756,10 +760,41 @@
                   </table>
                 </div>
                 <div class="tab-pane fade" id="div_documents" role="tabpanel" aria-labelledby="lnk_documents">
-                  Documents Coming Soon!
+                  <table id="tbl_organizationDocuments" class="table display nowrap" style="border: .5px solid #DEE2E6;" width="100%">
+                    <thead>
+                      <tr>
+                        <th class="p-2"></th>
+                        <th class="p-2 pl-4" data-priority="1">Title</th>
+                        <th class="p-2" data-priority="2">File Name</th>
+                        <th class="p-2" data-priority="3">Modified Date & Time</th>
+                        <th class="p-2">Assigned To</th>
+                        <th class="p-2">Download Count</th>
+                        <th class="p-2">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      
+                    </tbody>
+                  </table>
                 </div>
                 <div class="tab-pane fade" id="div_campaigns" role="tabpanel" aria-labelledby="lnk_campaigns">
-                  Campaigns
+                  <table id="tbl_campaigns" class="table display nowrap" style="border: .5px solid #DEE2E6;" width="100%">
+                    <thead>
+                      <tr>
+                        <th class="p-2"></th>
+                        <th class="p-2" data-priority="1">Campaign Name</th>
+                        <th class="p-2" data-priority="2">Assigned To</th>
+                        <th class="p-2" data-priority="3">Campaign Status</th>
+                        <th class="p-2">Campaign Type</th>
+                        <th class="p-2">Expected Close Date</th>
+                        <th class="p-2">Expected Revenue</th>
+                        <th class="p-2">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      
+                    </tbody>
+                  </table>
                 </div>
                 <div class="tab-pane fade" id="div_comments" role="tabpanel" aria-labelledby="lnk_comments">
                   Comments
@@ -1376,6 +1411,159 @@
       </div>
     </div>
 
+
+    <div class="modal fade" id="modal_selectDocuments" role="dialog">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header modal-header--sticky">
+            <h5 class="modal-title"><i class="fa fa-file mr-1"></i> Select Documents</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <form id="form_selectDocuments">
+              <table id="tbl_allDocuments" class="table display nowrap" style="border: .5px solid #DEE2E6;" width="100%">
+                <thead>
+                  <tr>
+                    <th class="p-2"></th>
+                    <th class="p-2 pl-4" data-priority="1">Title</th>
+                    <th class="p-2" data-priority="2">File</th>
+                    <th class="p-2" data-priority="3">Modified Date & Time</th>
+                    <th class="p-2">Assigned To</th>
+                    <th class="p-2">Download Count</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                </tbody>
+              </table>
+            </form>
+
+          </div>
+          <div class="modal-footer modal-footer--sticky">
+            <button type="button" class="btn btn-primary" id="btn_addSelectedDocuments">Add selected document/s</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modal_addDocument" role="dialog">
+      <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-header modal-header--sticky">
+            <h5 class="modal-title"><i class="fa fa-plus mr-1"></i> Add Document</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <form id="form_addDocument">
+              <div class="row">
+                <div class="col-lg-3 col-sm-12">
+                  Title *
+                </div>
+                <div class="col-lg-9 col-sm-12">
+                  <input type="text" class="form-control form-control-sm" id="txt_title" name="txt_title" required>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-lg-3 col-sm-12">
+                  Assigned To *
+                </div>
+                <div class="col-lg-9 col-sm-12">
+                  <select class="form-control select2" id="slc_assignedToDocument" name="slc_assignedToDocument" required style="width:100%;">
+                    <option value="">--Select user--</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-lg-3 col-sm-12">
+                  Type
+                </div>
+                <div class="col-lg-9 col-sm-12">
+                  <select class="form-control form-control-sm" id="slc_uploadtype" name="slc_uploadtype">
+                    <option>--Select Type--</option>
+                    <option value="1">File Upload</option>
+                    <option value="2">Link External Document</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mt-2" id="div_fileName">
+                <div class="col-lg-3 col-sm-12">
+                  File Name
+                </div>
+                <div class="col-lg-9 col-sm-12">
+                  <input type="file" class="form-control" id="file_fileName" name="file_fileName" style="padding: 3px 3px 3px 3px !important;">
+                </div>
+              </div>
+              <div class="row mt-2" id="div_fileUrl">
+                <div class="col-lg-3 col-sm-12">
+                  File URL
+                </div>
+                <div class="col-lg-9 col-sm-12">
+                  <textarea class="form-control form-control-sm" id="txt_fileUrl" name="txt_fileUrl" rows="4"></textarea>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-lg-3 col-sm-12">
+                  Notes
+                </div>
+                <div class="col-lg-9 col-sm-12">
+                  <textarea class="form-control form-control-sm" id="txt_notes" name="txt_notes" rows="4"></textarea>
+                </div>
+              </div>
+            </form>
+
+          </div>
+          <div class="modal-footer modal-footer--sticky">
+            <button type="submit" class="btn btn-primary" id="btn_addDocument" form="form_addDocument">Save Document</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="modal_selectCampaigns" role="dialog">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header modal-header--sticky">
+            <h5 class="modal-title"><i class="fa fa-bullhorn mr-1"></i> Select Campaigns</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <form id="form_selectCampaigns">
+              <table id="tbl_allCampaigns" class="table display nowrap" style="border: .5px solid #DEE2E6;" width="100%">
+                <thead>
+                  <tr>
+                    <th class="p-2"></th>
+                    <th class="p-2  pl-4" data-priority="1">Campaign Name</th>
+                    <th class="p-2" data-priority="2">Assigned To</th>
+                    <th class="p-2" data-priority="3">Campaign Status</th>
+                    <th class="p-2">Campaign Type</th>
+                    <th class="p-2">Expected Close Date</th>
+                    <th class="p-2">Expected Revenue</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                </tbody>
+              </table>
+            </form>
+
+          </div>
+          <div class="modal-footer modal-footer--sticky">
+            <button type="button" class="btn btn-primary" id="btn_addSelectedCampaigns">Add selected campaign/s</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
   <!-- /.content -->
 </div>
@@ -1486,17 +1674,22 @@
         $('#modal_sendOrganizationEmail').modal('show');
       });
 
+      ORGANIZATION.loadOrganizationSummary(organizationId);
       $('#lbl_contactCount').prop('hidden',true);
       ORGANIZATION.loadOrganizationContacts(organizationId);
       $('#lbl_emailCount').prop('hidden',true);
       ORGANIZATION.loadOrganizationEmails(organizationId);
+      $('#lbl_documentCount').prop('hidden',true);
+      ORGANIZATION.loadOrganizationDocuments(organizationId);
+      $('#lbl_campaignCount').prop('hidden',true);
+      ORGANIZATION.loadOrganizationCampaigns(organizationId);
 
       $('#lnk_summary').on('click',function(){
-        // CONTACTS.loadContactSummary(contactId);
+        ORGANIZATION.loadOrganizationSummary(organizationId);
       });
 
       $('#lnk_details').on('click',function(){
-        // CONTACTS.loadContactDetails(contactId);
+        ORGANIZATION.loadOrganizationDetails(organizationId);
       });
 
       $('#lnk_updates').on('click',function(){
@@ -1516,17 +1709,44 @@
       });
 
       $('#lnk_documents').on('click',function(){
-
+        ORGANIZATION.loadOrganizationDocuments(organizationId);
       });
 
       $('#lnk_campaigns').on('click',function(){
-        // CONTACTS.loadContactCampaigns(contactId);
+        ORGANIZATION.loadOrganizationCampaigns(organizationId);
       });
 
       $('#lnk_comments').on('click',function(){
-        // CONTACTS.loadContactComments(contactId);
+        
       });
     }
+
+    $('#btn_addSelectedDocuments').on('click',function(){
+      ORGANIZATION.addSelectedDocuments();
+    });
+
+    $('#slc_uploadtype').on('change',function(){
+      let type = $(this).val();
+      if(type == 1)
+      {
+        $('#div_fileName').show();
+        $('#div_fileUrl').hide();
+      }
+      else
+      {
+        $('#div_fileName').hide();
+        $('#div_fileUrl').show();
+      }
+    });
+
+    $('#form_addDocument').on('submit',function(e){
+      e.preventDefault();
+      ORGANIZATION.addOrganizationDocument(this);
+    });
+
+    $('#btn_addSelectedCampaigns').on('click',function(){
+      ORGANIZATION.addSelectedCampaign();
+    });
 
     $('#slc_emailTemplate').on('change',function(){
       let organizationId = $('#txt_organizationId').val();

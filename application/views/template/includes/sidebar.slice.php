@@ -104,7 +104,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" id="nav_calendar" class="nav-link">
+          <a href="<?php echo base_url(); ?>index.php/calendar" id="nav_calendar" class="nav-link">
             <i class="nav-icon fas fa-calendar"></i>
             <p>
               CALENDAR
@@ -112,7 +112,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" id="nav_documents" class="nav-link">
+          <a href="<?php echo base_url(); ?>index.php/documents" id="nav_documents" class="nav-link">
             <i class="nav-icon fas fa-folder-open"></i>
             <p>
               DOCUMENTS

@@ -4,6 +4,7 @@ const CONTACTS = (function(){
 
 	let thisContacts = {};
 
+	let _arrSelectedDocuments = []; //global variable
 	let _arrSelectedCampaigns = []; //global variable
 
 	var Toast = Swal.mixin({
@@ -297,6 +298,9 @@ const CONTACTS = (function(){
 		});
 	}
 
+	//start of details
+
+	//summary
 	thisContacts.loadContactSummary = function(contactId)
 	{
 		$.ajax({
@@ -324,6 +328,7 @@ const CONTACTS = (function(){
 		});
 	}
 
+	//details
 	thisContacts.loadContactDetails = function(contactId)
 	{
 		$.ajax({
@@ -381,6 +386,7 @@ const CONTACTS = (function(){
 		});
 	}
 
+	//emails
 	thisContacts.loadContactEmails = function(contactId)
 	{
 		$.ajax({
@@ -436,6 +442,286 @@ const CONTACTS = (function(){
 		    {
 		      $('#lbl_emailCount').prop('hidden',true);
 		      $('#lbl_emailCount').text(count);
+		    }
+		  }
+		});
+	}
+
+	//documents
+	thisContacts.loadContactDocuments = function(contactId)
+	{
+		$.ajax({
+			/* ContactController->loadContactDocuments() */
+		  url : `${baseUrl}index.php/marketing/load-contact-documents`,
+		  method : 'get',
+		  dataType: 'json',
+		  data : {contactId : contactId},
+		  success : function(data)
+		  {
+		    console.log(data);
+    		// Documents
+		    let tbody = '';
+		    let count = 0;
+		    data.forEach(function(value,key){
+		    	let fileLink = '';
+		    	if(value['file_url'] != null)
+		    	{
+		    		fileLink = `<a href="${value['file_url']}" target="_blank">${value['file_url'].substring(0, 20)}...</a>`;
+		    	}
+		    	else
+		    	{
+		    		fileLink = `<a href="${baseUrl}assets/uploads/documents/${value['file_name']}" target="_blank">${value['file_name'].substring(0, 20)}...</a>`;
+		    	}
+		    	tbody += `<tr>
+	                    <td class="p-1">${value['id']}</td>
+	                    <td class="p-1 pl-4">${value['title']}</td>
+	                    <td class="p-1">${fileLink}</td>
+	                    <td class="p-1">${value['created_date']}</td>
+	                    <td class="p-1">${value['assigned_to_name']}</td>
+	                    <td class="p-1">${(value['download_count'] != null)? value['download_count'] : 0}</td>
+	                    <td class="p-1">
+	                    	<a href="javascript:void(0)" onclick="alert('Coming Soon')" class="mr-2" title="Download">
+	                    	  <i class="fa fa-download"></i>
+	                    	</a>
+	                    	<a href="javascript:void(0)" onclick="CONTACTS.unlinkContactDocument(${value['id']})" title="Unlink">
+	                    	  <i class="fa fa-unlink"></i>
+	                    	</a>
+	                    </td>
+	                  </tr>`;
+	        count++;
+		    });
+
+		    $('#tbl_contactDocuments').DataTable().destroy();
+		    $('#tbl_contactDocuments tbody').html(tbody);
+		    $('#tbl_contactDocuments').DataTable({
+		    	"responsive": true,
+		    	"columnDefs": [
+            { responsivePriority: 1, targets: 1 },
+            { responsivePriority: 2, targets: 2 },
+            { responsivePriority: 3, targets: 3 },
+            { responsivePriority: 10001, targets: 1 },
+            {
+              "targets": [0],
+              "visible": false,
+              "searchable": false
+            }
+	        ],
+	        "order": [[ 0, "desc" ]]
+		    });
+
+		    let buttons = `<button type="button" onclick="CONTACTS.selectDocumentModal(${contactId})" class="btn btn-sm btn-default"><i class="fa fa-file mr-1"></i> Select Documents</button>
+		    								<button type="button" onclick="CONTACTS.addDocumentModal()" class="btn btn-sm btn-default"><i class="fa fa-plus mr-1"></i> New Document</button>`;
+
+		    $(`#tbl_contactDocuments_length`).html(buttons);
+
+		    if(count > 0)
+		    {
+		      $('#lbl_documentCount').prop('hidden',false);
+		      $('#lbl_documentCount').text(count);
+		    }
+		    else
+		    {
+		      $('#lbl_documentCount').prop('hidden',true);
+		      $('#lbl_documentCount').text(count);
+		    }
+		  }
+		});
+	}
+
+	thisContacts.unlinkContactDocument = function(contactDocumentId)
+	{
+		if(confirm('Please confirm!'))
+		{
+			let formData = new FormData();
+
+			formData.set("contactDocumentId", contactDocumentId);
+
+			$.ajax({
+				/* ContactController->unlinkContactDocument() */
+			  url : `${baseUrl}index.php/marketing/unlink-contact-document`,
+			  method : 'post',
+			  dataType: 'json',
+			  processData: false, // important
+			  contentType: false, // important
+			  data : formData,
+			  success : function(result)
+			  {
+			    console.log(result);
+			    if(result == 'Success')
+			    {
+	          Toast.fire({
+			        icon: 'success',
+			        title: 'Success! <br>Document unlinked successfully.',
+			      });
+			      CONTACTS.loadContactDocuments($('#txt_contactId').val());
+			    }
+			    else
+			    {
+	          Toast.fire({
+			        icon: 'error',
+			        title: 'Error! <br>Database error!'
+			      });
+			    }
+			  }
+			});
+		}		
+	}
+
+	thisContacts.selectDocumentModal = function(contactId)
+	{
+		$('#modal_selectDocuments').modal('show');
+		$('#btn_addSelectedDocuments').prop('disabled',true);
+		_arrSelectedDocuments = [];
+		CONTACTS.loadUnlinkContactDocuments(contactId);
+	}
+
+	thisContacts.loadUnlinkContactDocuments = function(contactId)
+	{
+		$.ajax({
+			/* ContactController->loadUnlinkContactDocuments() */
+		  url : `${baseUrl}index.php/marketing/load-unlink-contact-documents`,
+		  method : 'get',
+		  dataType: 'json',
+		  data : {contactId:contactId},
+		  success : function(data)
+		  {
+		    console.log(data);
+    		// Emails
+		    let tbody = '';
+		    data.forEach(function(value,key){
+		    	let fileLink = '';
+		    	if(value['file_url'] != null)
+		    	{
+		    		fileLink = `<a href="${value['file_url']}" target="_blank">${value['file_url'].substring(0, 20)}...</a>`;
+		    	}
+		    	else
+		    	{
+		    		fileLink = `<a href="${baseUrl}assets/uploads/documents/${value['file_name']}" target="_blank">${value['file_name'].substring(0, 20)}...</a>`;
+		    	}
+		    	tbody += `<tr>
+	                    <td class="p-1"><input type="checkbox" onchange="CONTACTS.selectDocuments(this)" value="${value['id']}"/></td>
+	                    <td class="p-1 pl-4">${value['title']}</td>
+	                    <td class="p-1">${fileLink}</td>
+	                    <td class="p-1">${value['created_date']}</td>
+	                    <td class="p-1">${value['assigned_to_name']}</td>
+	                    <td class="p-1">${(value['download_count'] != null)? value['download_count'] : 0}</td>
+	                  </tr>`;
+		    });
+
+		    $(`#tbl_allDocuments`).DataTable().destroy();
+		    $(`#tbl_allDocuments tbody`).html(tbody);
+		    $(`#tbl_allDocuments`).DataTable({
+		    	"responsive": true,
+		    	"columnDefs": [
+            { responsivePriority: 1, targets: 1 },
+            { responsivePriority: 2, targets: 2 },
+            { responsivePriority: 3, targets: 3 },
+            { responsivePriority: 10001, targets: 1 }
+	        ],
+	        "order": [[ 0, "desc" ]]
+		    });
+		  }
+		});
+	}
+
+	thisContacts.selectDocuments = function(thisCheckBox)
+	{
+		if($(thisCheckBox).is(':checked'))
+		{
+			_arrSelectedDocuments.push($(thisCheckBox).val());
+		}
+		else
+		{
+			let index = _arrSelectedDocuments.indexOf($(thisCheckBox).val());
+			if (index > -1) 
+			{
+			  _arrSelectedDocuments.splice(index, 1); 
+			}
+		}
+
+		$('#btn_addSelectedDocuments').prop('disabled',(_arrSelectedDocuments.length > 0)? false : true);
+	}
+
+	thisContacts.addSelectedDocuments = function()
+	{
+		let formData = new FormData();
+
+		formData.set("contactId", $('#txt_contactId').val());
+		formData.set("arrSelectedDocuments", _arrSelectedDocuments);
+
+		$.ajax({
+			/* ContactController->addSelectedContactDocuments() */
+		  url : `${baseUrl}index.php/marketing/add-selected-contact-documents`,
+		  method : 'post',
+		  dataType: 'json',
+		  processData: false, // important
+		  contentType: false, // important
+		  data : formData,
+		  success : function(result)
+		  {
+		    console.log(result);
+		    $('#modal_selectDocuments').modal('hide');
+		    if(result == 'Success')
+		    {
+          Toast.fire({
+		        icon: 'success',
+		        title: 'Success! <br>New document/s added successfully.',
+		      });
+		      CONTACTS.loadContactDocuments($('#txt_contactId').val());
+		    }
+		    else
+		    {
+          Toast.fire({
+		        icon: 'error',
+		        title: 'Error! <br>Database error!'
+		      });
+		    }
+		  }
+		});
+	}
+
+	thisContacts.addDocumentModal = function()
+	{
+		$('#div_fileName').hide();
+		$('#div_fileUrl').hide();
+		CONTACTS.loadUsers('#slc_assignedToDocument');
+		$('#modal_addDocument').modal('show');
+	}
+
+	thisContacts.addContactDocument = function(thisForm)
+	{
+		let formData = new FormData(thisForm);
+
+		formData.set("txt_contactId", $('#txt_contactId').val());
+
+		$.ajax({
+			/* ContactController->addContactDocument() */
+		  url : `${baseUrl}index.php/marketing/add-contact-document`,
+		  method : 'post',
+		  dataType: 'json',
+		  processData: false, // important
+		  contentType: false, // important
+		  data : formData,
+		  success : function(result)
+		  {
+		    console.log(result);
+		    $('#modal_addDocument').modal('hide');
+		    if(result == 'Success')
+		    {
+          Toast.fire({
+		        icon: 'success',
+		        title: 'Success! <br>New document added successfully.',
+		      });
+		      setTimeout(function(){
+            CONTACT.loadContactDocuments($('#txt_contactId').val());
+          }, 1000);
+		    }
+		    else
+		    {
+          Toast.fire({
+		        icon: 'error',
+		        title: 'Error! <br>Database error!'
+		      });
 		    }
 		  }
 		});
@@ -511,6 +797,53 @@ const CONTACTS = (function(){
 		});
 	}
 
+	thisContacts.unlinkContactCampaign = function(contactCampaignId)
+	{
+		if(confirm('Please confirm!'))
+		{
+			let formData = new FormData();
+
+			formData.set("contactCampaignId", contactCampaignId);
+
+			$.ajax({
+				/* ContactController->unlinkContactCampaign() */
+			  url : `${baseUrl}index.php/marketing/unlink-contact-campaign`,
+			  method : 'post',
+			  dataType: 'json',
+			  processData: false, // important
+			  contentType: false, // important
+			  data : formData,
+			  success : function(result)
+			  {
+			    console.log(result);
+			    if(result == 'Success')
+			    {
+	          Toast.fire({
+			        icon: 'success',
+			        title: 'Success! <br>Campaign unlinked successfully.',
+			      });
+			      CONTACTS.loadContactCampaigns($('#txt_contactId').val());
+			    }
+			    else
+			    {
+	          Toast.fire({
+			        icon: 'error',
+			        title: 'Error! <br>Database error!'
+			      });
+			    }
+			  }
+			});
+		}		
+	}
+
+	thisContacts.selectCampaignModal = function(contactId)
+	{
+		$('#modal_selectCampaigns').modal('show');
+		$('#btn_addSelectedCampaigns').prop('disabled',true);
+		_arrSelectedCampaigns = [];
+		CONTACTS.loadUnlinkContactCampaigns(contactId);
+	}
+
 	thisContacts.loadUnlinkContactCampaigns = function(contactId)
 	{
 		$.ajax({
@@ -552,14 +885,6 @@ const CONTACTS = (function(){
 		});
 	}
 
-	thisContacts.selectCampaignModal = function(contactId)
-	{
-		$('#modal_selectCampaigns').modal('show');
-		$('#btn_addSelectedCampaigns').prop('disabled',true);
-		_arrSelectedCampaigns = [];
-		CONTACTS.loadUnlinkContactCampaigns(contactId);
-	}
-
 	thisContacts.selectCampaigns = function(thisCheckBox)
 	{
 		if($(thisCheckBox).is(':checked'))
@@ -575,11 +900,10 @@ const CONTACTS = (function(){
 			}
 		}
 
-		$('#btn_addSelectedCampaigns').prop('disabled',(_arrSelectedCampaigns.length > 0)? false : true);
-		
+		$('#btn_addSelectedCampaigns').prop('disabled',(_arrSelectedCampaigns.length > 0)? false : true);		
 	}
 
-	thisContacts.addSelectedCampaign = function()
+	thisContacts.addSelectedCampaigns = function()
 	{
 		let formData = new FormData();
 
@@ -587,8 +911,8 @@ const CONTACTS = (function(){
 		formData.set("arrSelectedCampaigns", _arrSelectedCampaigns);
 
 		$.ajax({
-			/* ContactController->addContactCampaign() */
-		  url : `${baseUrl}index.php/marketing/add-contact-campaign`,
+			/* ContactController->addSelectedContactCampaigns() */
+		  url : `${baseUrl}index.php/marketing/add-selected-contact-campaigns`,
 		  method : 'post',
 		  dataType: 'json',
 		  processData: false, // important
@@ -602,7 +926,7 @@ const CONTACTS = (function(){
 		    {
           Toast.fire({
 		        icon: 'success',
-		        title: 'Success! <br>New contact added successfully.',
+		        title: 'Success! <br>New campaign/s added successfully.',
 		      });
 		      CONTACTS.loadContactCampaigns($('#txt_contactId').val());
 		    }
@@ -617,44 +941,6 @@ const CONTACTS = (function(){
 		});
 	}
 
-	thisContacts.unlinkContactCampaign = function(contactCampaignId)
-	{
-		if(confirm('Please confirm!'))
-		{
-			let formData = new FormData();
-
-			formData.set("contactCampaignId", contactCampaignId);
-
-			$.ajax({
-				/* ContactController->unlinkContactCampaign() */
-			  url : `${baseUrl}index.php/marketing/unlink-contact-campaign`,
-			  method : 'post',
-			  dataType: 'json',
-			  processData: false, // important
-			  contentType: false, // important
-			  data : formData,
-			  success : function(result)
-			  {
-			    console.log(result);
-			    if(result == 'Success')
-			    {
-	          Toast.fire({
-			        icon: 'success',
-			        title: 'Success! <br>Campaign unlinked successfully.',
-			      });
-			      CONTACTS.loadContactCampaigns($('#txt_contactId').val());
-			    }
-			    else
-			    {
-	          Toast.fire({
-			        icon: 'error',
-			        title: 'Error! <br>Database error!'
-			      });
-			    }
-			  }
-			});
-		}		
-	}
 
 	//comments
 	thisContacts.loadContactComments = function(contactId)

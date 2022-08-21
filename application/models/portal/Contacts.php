@@ -243,6 +243,80 @@ class Contacts extends CI_Model
 	}
 
 	/*
+		ContactController->loadContactDocuments()
+	*/
+	public function loadContactDocuments($contactId)
+	{
+		$columns = [
+			'a.id',
+			'a.document_id',
+			'b.title',
+			'(SELECT CONCAT(salutation, " ", first_name, " ", last_name) FROM users WHERE id = b.assigned_to) as assigned_to_name',
+			'b.document_number',
+			'b.type',
+			'b.file_name',
+			'b.file_url',
+			'b.file_type',
+			'b.file_size',
+			'b.download_count',
+			'b.created_date',
+			'b.updated_date'
+		];
+
+		$this->db->where('a.contact_id',$contactId);
+		$this->db->select($columns);
+		$this->db->from('contact_documents a');
+		$this->db->join('documents b','a.document_id = b.id','left');
+		$data = $this->db->get()->result_array();
+	  return $data;
+	}
+
+	/*
+		ContactController->unlinkContactDocument()
+	*/
+	public function unlinkContactDocument($contactDocumentId)
+	{
+		try {
+		  $this->db->trans_start();
+		    $this->db->delete('contact_documents',['id'=>$contactDocumentId]);
+		  $this->db->trans_complete();
+		  return ($this->db->trans_status() === TRUE)? 1 : 0;
+		} catch (PDOException $e) {
+		  throw $e;
+		}
+	}
+
+	/*
+		ContactController->addSelectedContactDocuments()
+	*/
+	public function addSelectedContactDocuments($arrData)
+	{
+		try {
+		  $this->db->trans_start();
+		    $this->db->insert_batch('contact_documents',$arrData);
+		  $this->db->trans_complete();
+		  return ($this->db->trans_status() === TRUE)? 1 : 0;
+		} catch (PDOException $e) {
+		  throw $e;
+		}
+	}
+
+	/*
+		ContactController->addContactDocument()
+	*/
+	public function addContactDocument($arrData)
+	{
+		try {
+		  $this->db->trans_start();
+		    $this->db->insert('contact_documents',$arrData);
+		  $this->db->trans_complete();
+		  return ($this->db->trans_status() === TRUE)? 1 : 0;
+		} catch (PDOException $e) {
+		  throw $e;
+		}
+	}
+
+	/*
 		ContactController->loadContactCampaigns()
 	*/
 	public function loadContactCampaigns($contactId)
@@ -267,9 +341,9 @@ class Contacts extends CI_Model
 	}
 
 	/*
-		ContactController->addContactCampaign()
+		ContactController->addSelectedContactCampaigns()
 	*/
-	public function addContactCampaign($arrData)
+	public function addSelectedContactCampaigns($arrData)
 	{
 		try {
 		  $this->db->trans_start();

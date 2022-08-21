@@ -239,6 +239,34 @@ class Campaigns extends CI_Model
 	}
 
 	/*
+		OrganizationController->loadUnlinkOrganizationCampaigns()
+	*/
+	public function loadUnlinkOrganizationCampaigns($arrCampaignIds)
+	{
+		$columns = [
+			'a.id',
+			'a.campaign_name',
+			'(SELECT CONCAT(salutation, " ", first_name, " ", last_name) FROM users WHERE id = a.assigned_to) as assigned_to_name',
+			'a.campaign_status',
+			'a.campaign_type',
+			'a.expected_close_date',
+			'a.expected_revenue',
+			'a.created_by',
+			'a.created_date'
+		];
+
+		if(count($arrCampaignIds) > 0)
+		{
+			$this->db->where_not_in('a.id',$arrCampaignIds);
+		}
+
+		$this->db->select($columns);
+		$this->db->from('campaigns a');
+		$data = $this->db->get()->result_array();
+    return $data;
+	}
+
+	/*
 		CampaignController->loadUnlinkOrganizations()
 	*/
 	public function loadOrganizationCampaigns($campaignId)

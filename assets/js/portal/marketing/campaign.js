@@ -252,32 +252,32 @@ const CAMPAIGN = (function(){
         console.log(data);
         // Details
         
-        $('#div_details table:eq(0) tbody tr td:eq(1)').text(data['campaign_name']);
-        $('#div_details table:eq(1) tbody tr td:eq(1)').text(data['assigned_to_name']);
-        $('#div_details table:eq(2) tbody tr td:eq(1)').text(data['campaign_status']);
-        $('#div_details table:eq(3) tbody tr td:eq(1)').text(data['campaign_type']);
-        $('#div_details table:eq(4) tbody tr td:eq(1)').text(data['product']);
-        $('#div_details table:eq(5) tbody tr td:eq(1)').text(data['target_audience']);
-        $('#div_details table:eq(6) tbody tr td:eq(1)').text(data['expected_close_date']);
-        $('#div_details table:eq(7) tbody tr td:eq(1)').text(data['sponsor']);
-        $('#div_details table:eq(8) tbody tr td:eq(1)').text(data['target_size']);
-        $('#div_details table:eq(9) tbody tr td:eq(1)').text(data['created_date']);
-        $('#div_details table:eq(10) tbody tr td:eq(1)').text(data['num_sent']);
-        $('#div_details table:eq(11) tbody tr td:eq(1)').text(data['updated_date']);
+        $('#div_details table:eq(0) tbody tr td:eq(1)').text((data['campaign_name'])? data['campaign_name'] : '---');
+        $('#div_details table:eq(1) tbody tr td:eq(1)').text((data['assigned_to_name'])? data['assigned_to_name'] : '---');
+        $('#div_details table:eq(2) tbody tr td:eq(1)').text((data['campaign_status'])? data['campaign_status'] : '---');
+        $('#div_details table:eq(3) tbody tr td:eq(1)').text((data['campaign_type'])? data['campaign_type'] : '---');
+        $('#div_details table:eq(4) tbody tr td:eq(1)').text((data['product'])? data['product'] : '---');
+        $('#div_details table:eq(5) tbody tr td:eq(1)').text((data['target_audience'])? data['target_audience'] : '---');
+        $('#div_details table:eq(6) tbody tr td:eq(1)').text((data['expected_close_date'])? data['expected_close_date'] : '---');
+        $('#div_details table:eq(7) tbody tr td:eq(1)').text((data['sponsor'])? data['sponsor'] : '---');
+        $('#div_details table:eq(8) tbody tr td:eq(1)').text((data['target_size'])? data['target_size'] : '---');
+        $('#div_details table:eq(9) tbody tr td:eq(1)').text((data['created_date'])? data['created_date'] : '---');
+        $('#div_details table:eq(10) tbody tr td:eq(1)').text((data['num_sent'])? data['num_sent'] : '---');
+        $('#div_details table:eq(11) tbody tr td:eq(1)').text((data['updated_date'])? data['updated_date'] : '---');
 
-        $('#div_details table:eq(12) tbody tr:eq(0) td:eq(1)').html((data['budget_cost'] != '')? data['budget_cost']:'N/A');
-        $('#div_details table:eq(12) tbody tr:eq(1) td:eq(1)').html((data['expected_response'] != '')? data['expected_response']:'N/A');
-        $('#div_details table:eq(12) tbody tr:eq(2) td:eq(1)').html((data['expected_sales_count'] != '')? data['expected_sales_count']:'N/A');
-        $('#div_details table:eq(12) tbody tr:eq(3) td:eq(1)').html((data['expected_response_count'] != '')? data['expected_response_count']:'N/A');
-        $('#div_details table:eq(12) tbody tr:eq(4) td:eq(1)').html((data['expected_roi'] != '')? data['expected_roi']:'N/A');
+        $('#div_details table:eq(12) tbody tr:eq(0) td:eq(1)').html((data['budget_cost'] != null)? data['budget_cost']:'---');
+        $('#div_details table:eq(12) tbody tr:eq(1) td:eq(1)').html((data['expected_response'] != null)? data['expected_response']:'---');
+        $('#div_details table:eq(12) tbody tr:eq(2) td:eq(1)').html((data['expected_sales_count'] != null)? data['expected_sales_count']:'---');
+        $('#div_details table:eq(12) tbody tr:eq(3) td:eq(1)').html((data['expected_response_count'] != null)? data['expected_response_count']:'---');
+        $('#div_details table:eq(12) tbody tr:eq(4) td:eq(1)').html((data['expected_roi'] != null)? data['expected_roi']:'---');
         
-        $('#div_details table:eq(13) tbody tr:eq(0) td:eq(1)').html((data['actual_cost'] != '')? data['actual_cost']:'N/A');
-        $('#div_details table:eq(13) tbody tr:eq(1) td:eq(1)').html((data['expected_revenue'] != '')? data['expected_revenue']:'N/A');
-        $('#div_details table:eq(13) tbody tr:eq(2) td:eq(1)').html((data['actual_sales_count'] != '')? data['actual_sales_count']:'N/A');
-        $('#div_details table:eq(13) tbody tr:eq(3) td:eq(1)').html((data['actual_response_count'] != '')? data['actual_response_count']:'N/A');
-        $('#div_details table:eq(13) tbody tr:eq(4) td:eq(1)').html((data['actual_roi'] != '')? data['actual_roi']:'N/A');
+        $('#div_details table:eq(13) tbody tr:eq(0) td:eq(1)').html((data['actual_cost'] != null)? data['actual_cost']:'---');
+        $('#div_details table:eq(13) tbody tr:eq(1) td:eq(1)').html((data['expected_revenue'] != null)? data['expected_revenue']:'---');
+        $('#div_details table:eq(13) tbody tr:eq(2) td:eq(1)').html((data['actual_sales_count'] != null)? data['actual_sales_count']:'---');
+        $('#div_details table:eq(13) tbody tr:eq(3) td:eq(1)').html((data['actual_response_count'] != null)? data['actual_response_count']:'---');
+        $('#div_details table:eq(13) tbody tr:eq(4) td:eq(1)').html((data['actual_roi'] != null)? data['actual_roi']:'---');
         
-        $('#div_details table:eq(14) tbody tr td').html((data['campaign_description'] != '')? data['campaign_description']:'N/A');
+        $('#div_details table:eq(14) tbody tr td').html((data['campaign_description'] != null)? data['campaign_description']:'---');
       }
     });
   }
