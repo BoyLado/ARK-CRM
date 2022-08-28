@@ -54,9 +54,11 @@
             <small>
               <a href="<?php echo base_url(); ?>index.php/documents" class="text-muted">All</a>
             </small> 
-            <!-- <small> - 
-              <a href="#" class="text-muted" id="lnk_user">Anton Jay</a>
-            </small> -->
+            @if($documentId != "")
+            <small> - 
+              <a href="javascript:void(0)" class="text-muted" id="lnk_document"></a>
+            </small>
+            @endif
           </h6>
           <div class="float-right">
             <div class="d-inline d-lg-none">
@@ -134,16 +136,16 @@
                       <img class="img-square elevation-1" src="<?php echo base_url(); ?>assets/img/document-placeholder.png" alt="User Avatar">
                     </span>
                     <div class="info-box-content" style="line-height:1.7">
-                      <span class="info-box-text" id="lbl_campaignName" style="font-size: 1.5em;">
+                      <span class="info-box-text" id="lbl_documentTitle" style="font-size: 1.5em;">
                         <!-- Mr. Anton Jay Hermo -->
                       </span>
                       <span class="info-box-text" style="font-size: .9em;">
-                        <i class="fa fa-clone mr-1"></i>
-                        <span id="lbl_campaignStatus"><!-- Web Developer --></span>
+                        <i class="fa fa-clock mr-1" title="Uploaded Last"></i>
+                        <span id="lbl_documentUploadedLast"><!-- Web Developer --></span>
                       </span>
-                      <span class="info-box-text" style="font-size: .9em;">
-                        <i class="fa fa-calendar mr-1"></i>
-                        <span id="lbl_expectedCloseDate"><!-- ajhay.dev@gmail.com --></span>
+                      <span class="info-box-text" style="font-size: .9em;" id="lbl_documentDownload">
+                        <!-- <i class="fa fa-download mr-1" title="Download"></i>
+                        <span></span> -->
                       </span>
                     </div>
                   </div>
@@ -154,11 +156,11 @@
                 <div class="col-lg-4 col-sm-12">
                   <div class="d-inline d-lg-none"><hr></div>
                   <div class="form-group mb-0">
-                    <button class="btn btn-sm btn-default" id="btn_editCampaign">
+                    <button class="btn btn-sm btn-default" id="btn_editDocument">
                       <i class="fa fa-pen mr-2"></i>Edit
                     </button>
-                    <button class="btn btn-sm btn-default" id="btn_deleteCampaign">
-                      <i class="fa fa-trash mr-2"></i>Delete Campaign
+                    <button class="btn btn-sm btn-default" id="btn_deleteDocument">
+                      <i class="fa fa-trash mr-2"></i>Delete Document
                     </button>
                     <!-- <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown">
                       More <i class="nav-icon fas fa-caret-down ml-1"></i> 
@@ -207,7 +209,7 @@
                 <div class="tab-pane fade active show" id="div_details" role="tabpanel" aria-labelledby="lnk_details">
                   <div class="card shadow-none">
                     <div class="card-header p-0">
-                      <h3 class="card-title">Campaign Details</h3>
+                      <h3 class="card-title">Basic Information</h3>
                       <div class="card-tools">
                       <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
@@ -220,7 +222,7 @@
                           <table class="table tbl mb-1">
                             <tbody>
                               <tr>
-                                <td class="p-1 text-muted" width="40%;" valign="middle">Campaign Name</td>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Title</td>
                                 <td class="p-1">
                                   ---
                                 </td>
@@ -247,7 +249,7 @@
                           <table class="table tbl mb-1">
                             <tbody>
                               <tr>
-                                <td class="p-1 text-muted" width="40%;" valign="middle">Campaign Status</td>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Folder Name</td>
                                 <td class="p-1">
                                   ---
                                 </td>
@@ -259,7 +261,7 @@
                           <table class="table tbl mb-1">
                             <tbody>
                               <tr>
-                                <td class="p-1 text-muted" width="40%;" valign="middle">Campaign Type</td>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Document No.</td>
                                 <td class="p-1">
                                   ---
                                 </td>
@@ -270,92 +272,11 @@
                       </div>
 
                       <div class="row">
-                        <div class="col-lg-6 col-sm-12">
-                          <table class="table tbl mb-1">
-                            <tbody>
-                              <tr>
-                                <td class="p-1 text-muted" width="40%;" valign="middle">Product</td>
-                                <td class="p-1">
-                                  ---
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                        <div class="col-lg-6 col-sm-12">
-                          <table class="table tbl mb-1">
-                            <tbody>
-                              <tr>
-                                <td class="p-1 text-muted" width="40%;" valign="middle">Target Audience</td>
-                                <td class="p-1">
-                                  ---
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-
-                      <div class="row">
-                        <div class="col-lg-6 col-sm-12">
-                          <table class="table tbl mb-1">
-                            <tbody>
-                              <tr>
-                                <td class="p-1 text-muted" width="40%;" valign="middle">Expected Close Date</td>
-                                <td class="p-1">
-                                  ---
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                        <div class="col-lg-6 col-sm-12">
-                          <table class="table tbl mb-1">
-                            <tbody>
-                              <tr>
-                                <td class="p-1 text-muted" width="40%;" valign="middle">Sponsor</td>
-                                <td class="p-1">
-                                  ---
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-
-                      <div class="row">
-                        <div class="col-lg-6 col-sm-12">
-                          <table class="table tbl mb-1">
-                            <tbody>
-                              <tr>
-                                <td class="p-1 text-muted" width="40%;" valign="middle">Target Size</td>
-                                <td class="p-1">
-                                  ---
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
                         <div class="col-lg-6 col-sm-12">
                           <table class="table tbl mb-1">
                             <tbody>
                               <tr>
                                 <td class="p-1 text-muted" width="40%;" valign="middle">Created Time</td>
-                                <td class="p-1">
-                                 ---
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-
-                      <div class="row">
-                        <div class="col-lg-6 col-sm-12">
-                          <table class="table tbl mb-1">
-                            <tbody>
-                              <tr>
-                                <td class="p-1 text-muted" width="40%;" valign="middle">Num Sent</td>
                                 <td class="p-1">
                                   ---
                                 </td>
@@ -381,93 +302,7 @@
                   </div>
                   <div class="card shadow-none">
                     <div class="card-header p-0">
-                      <h3 class="card-title">Expectations & Actuals</h3>
-                      <div class="card-tools">
-                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                        <i class="fas fa-minus"></i>
-                      </button>
-                      </div>
-                    </div>
-                    <div class="card-body p-0" style="display: block;">
-                      <div class="row mt-2">
-                        <div class="col-lg-6 col-sm-12">
-                          <table class="table tbl mb-1">
-                            <tbody>
-                              <tr>
-                                <td class="p-1 text-muted" width="40%;" valign="middle">Budget Cost</td>
-                                <td class="p-1">
-                                  ---
-                                </td>
-                              </tr>
-                              <tr>
-                                <td class="p-1 text-muted" width="40%;" valign="middle">Expected Response</td>
-                                <td class="p-1">
-                                  ---
-                                </td>
-                              </tr>
-                              <tr>
-                                <td class="p-1 text-muted" width="40%;" valign="middle">Expected Sales Count</td>
-                                <td class="p-1">
-                                  ---
-                                </td>
-                              </tr>
-                              <tr>
-                                <td class="p-1 text-muted" width="40%;" valign="middle">Expected Response Count</td>
-                                <td class="p-1">
-                                  ---
-                                </td>
-                              </tr>
-                              <tr>
-                                <td class="p-1 text-muted" width="40%;" valign="middle">Expected ROI</td>
-                                <td class="p-1">
-                                  ---
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                        <div class="col-lg-6 col-sm-12">
-                          <table class="table tbl mb-1">
-                            <tbody>
-                              <tr>
-                                <td class="p-1 text-muted" width="40%;" valign="middle">Actual Cost</td>
-                                <td class="p-1">
-                                  ---
-                                </td>
-                              </tr>
-                              <tr>
-                                <td class="p-1 text-muted" width="40%;" valign="middle">Expected Revenue</td>
-                                <td class="p-1">
-                                  ---
-                                </td>
-                              </tr>
-                              <tr>
-                                <td class="p-1 text-muted" width="40%;" valign="middle">Actual Sales Count</td>
-                                <td class="p-1">
-                                  ---
-                                </td>
-                              </tr>
-                              <tr>
-                                <td class="p-1 text-muted" width="40%;" valign="middle">Actual Response Count</td>
-                                <td class="p-1">
-                                  ---
-                                </td>
-                              </tr>
-                              <tr>
-                                <td class="p-1 text-muted" width="40%;" valign="middle">Actual ROI</td>
-                                <td class="p-1">
-                                  ---
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card shadow-none">
-                    <div class="card-header p-0">
-                      <h3 class="card-title">Description Details</h3>
+                      <h3 class="card-title">Description</h3>
                       <div class="card-tools">
                       <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
@@ -489,6 +324,72 @@
                         </div>
                         <div class="col-lg-6 col-sm-12"></div>
                       </div>
+                    </div>
+                  </div>
+                  <div class="card shadow-none">
+                    <div class="card-header p-0">
+                      <h3 class="card-title">File Details</h3>
+                      <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                      </button>
+                      </div>
+                    </div>
+                    <div class="card-body p-0" style="display: block;">
+                      <div class="row mt-2">
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">File Name</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">File Size</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">File Type</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                          <table class="table tbl mb-1">
+                            <tbody>
+                              <tr>
+                                <td class="p-1 text-muted" width="40%;" valign="middle">Download Count</td>
+                                <td class="p-1">
+                                  ---
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
                     </div>
                   </div>
                 </div>
@@ -546,25 +447,155 @@
 
     </div><!-- /.container flued -->
 
-    <div class="modal fade" id="modal_inviteNewUser" role="dialog">
+    <div class="modal fade" id="modal_addDocument" role="dialog">
       <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
           <div class="modal-header modal-header--sticky">
-            <h5 class="modal-title"><i class="fa fa-plus mr-1"></i> Invite New User</h5>
+            <h5 class="modal-title"><i class="fa fa-plus mr-1"></i> Add Document</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
 
-            <form id="form_inviteNewUser">
-              <input type="email" class="form-control" id="txt_userEmail" name="txt_userEmail" placeholder="User email (e.g. ajhay.dev@gmail.com)" required>
+            <form id="form_addDocument">
+              <div class="row">
+                <div class="col-lg-3 col-sm-12">
+                  Title *
+                </div>
+                <div class="col-lg-9 col-sm-12">
+                  <input type="text" class="form-control form-control-sm" id="txt_title" name="txt_title" required>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-lg-3 col-sm-12">
+                  Assigned To *
+                </div>
+                <div class="col-lg-9 col-sm-12">
+                  <select class="form-control select2" id="slc_assignedToDocument" name="slc_assignedToDocument" required style="width:100%;">
+                    <option value="">--Select user--</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-lg-3 col-sm-12">
+                  Type
+                </div>
+                <div class="col-lg-9 col-sm-12">
+                  <select class="form-control form-control-sm" id="slc_uploadtype" name="slc_uploadtype">
+                    <option>--Select Type--</option>
+                    <option value="1">File Upload</option>
+                    <option value="2">Link External Document</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mt-2" id="div_fileName">
+                <div class="col-lg-3 col-sm-12">
+                  File Name
+                </div>
+                <div class="col-lg-9 col-sm-12">
+                  <input type="file" class="form-control" id="file_fileName" name="file_fileName" style="padding: 3px 3px 3px 3px !important;">
+                </div>
+              </div>
+              <div class="row mt-2" id="div_fileUrl">
+                <div class="col-lg-3 col-sm-12">
+                  File URL
+                </div>
+                <div class="col-lg-9 col-sm-12">
+                  <textarea class="form-control form-control-sm" id="txt_fileUrl" name="txt_fileUrl" rows="4"></textarea>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-lg-3 col-sm-12">
+                  Notes
+                </div>
+                <div class="col-lg-9 col-sm-12">
+                  <textarea class="form-control form-control-sm" id="txt_notes" name="txt_notes" rows="4"></textarea>
+                </div>
+              </div>
             </form>
 
           </div>
           <div class="modal-footer modal-footer--sticky">
-            <button type="reset" class="btn btn-secondary">clear</button>
-            <button type="submit" class="btn btn-primary" id="btn_submitInvitation" form="form_inviteNewUser">Submit Invitation</button>
+            <button type="submit" class="btn btn-primary" id="btn_addDocument" form="form_addDocument">Save Document</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modal_selectContact" role="dialog">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header modal-header--sticky">
+            <h5 class="modal-title"><i class="fa fa-user mr-1"></i> Select Contact</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <form id="form_selectContactDocuments">
+              <table id="tbl_allContacts" class="table display nowrap" style="border: .5px solid #DEE2E6;" width="100%">
+                <thead>
+                  <tr>
+                    <th class="p-2"></th>
+                    <th class="p-2" data-priority="1">Salutation</th>
+                    <th class="p-2" data-priority="2">First Name</th>
+                    <th class="p-2" data-priority="3">Last Name</th>
+                    <th class="p-2">Position</th>
+                    <th class="p-2">Company Name</th>
+                    <th class="p-2">Primary Email</th>
+                    <th class="p-2">Assigned To</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                </tbody>
+              </table>
+            </form>
+
+          </div>
+          <div class="modal-footer modal-footer--sticky">
+            <button type="button" class="btn btn-primary" id="btn_addSelectedContacts">Add selected contact/s</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modal_selectOrganization" role="dialog">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header modal-header--sticky">
+            <h5 class="modal-title"><i class="fa fa-building mr-1"></i> Select Organization</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <form id="form_selectOrganizationDocuments">
+              <table id="tbl_allOrganizations" class="table display nowrap" style="border: .5px solid #DEE2E6;" width="100%">
+                <thead>
+                  <tr>
+                    <th class="p-2">ID</th>
+                    <th class="p-2" data-priority="1">Organization Name</th>
+                    <th class="p-2" data-priority="2">Primary Email</th>
+                    <th class="p-2" data-priority="3">Website</th>
+                    <th class="p-2">State</th>
+                    <th class="p-2">City</th>
+                    <th class="p-2">Leads</th>
+                    <th class="p-2">Assigned To</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                </tbody>
+              </table>
+            </form>
+
+          </div>
+          <div class="modal-footer modal-footer--sticky">
+            <button type="button" class="btn btn-primary" id="btn_addSelectedOrganizations">Add selected organization/s</button>
           </div>
         </div>
       </div>
@@ -621,6 +652,33 @@
     //events
     $('.select2').select2();
 
+    $('#lnk_addDocument').on('click',function(){
+      DOCUMENTS.addDocumentModal();
+    });
+
+    $('#btn_addDocument').on('click',function(){
+      DOCUMENTS.addDocumentModal();
+    });
+
+    $('#slc_uploadtype').on('change',function(){
+      let type = $(this).val();
+      if(type == 1)
+      {
+        $('#div_fileName').show();
+        $('#div_fileUrl').hide();
+      }
+      else
+      {
+        $('#div_fileName').hide();
+        $('#div_fileUrl').show();
+      }
+    });
+
+    $('#form_addDocument').on('submit',function(e){
+      e.preventDefault();
+      DOCUMENTS.addDocument(this);
+    });
+
     let documentId = $('#txt_documentId').val();
     if(documentId == "")
     {
@@ -631,7 +689,49 @@
     else
     {
 
+      $('#btn_editDocument').on('click',function(){
+        // DOCUMENTS.selectDocument('edit',documentId);
+      });
+
+      $('#btn_deleteDocument').on('click',function(){
+        // DOCUMENTS.deleteDocument(documentId);
+      });
+
+      $('#lnk_details').addClass('active');
+
+      DOCUMENTS.selectDocument('load',documentId);
+      DOCUMENTS.loadDocumentDetails(documentId);
+
+      $('#lbl_contactCount').prop('hidden',true);
+      DOCUMENTS.loadSelectedContactDocuments(documentId);
+      $('#lbl_organizationCount').prop('hidden',true);
+      DOCUMENTS.loadSelectedOrganizationDocuments(documentId);
+
+      $('#lnk_details').on('click',function(){
+        DOCUMENTS.loadDocumentDetails(documentId);
+      });
+
+      $('#lnk_updates').on('click',function(){
+        // DOCUMENTS.loadDocumentUpdates(documentId);
+      });
+
+      $('#lnk_contacts').on('click',function(){
+        DOCUMENTS.loadSelectedContactDocuments(documentId);
+      });
+
+      $('#lnk_organizations').on('click',function(){
+        DOCUMENTS.loadSelectedOrganizationDocuments(documentId);
+      });
+
     }
+
+    $('#btn_addSelectedContacts').on('click',function(){
+      DOCUMENTS.addSelectedContact();
+    });
+
+    $('#btn_addSelectedOrganizations').on('click',function(){
+      DOCUMENTS.addSelectedOrganization();
+    });
 
   });
 </script>

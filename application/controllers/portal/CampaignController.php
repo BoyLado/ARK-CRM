@@ -138,6 +138,15 @@ class CampaignController extends CI_Controller
 		$this->output->set_content_type('application/json')->set_output(json_encode($data));
 	}
 
+
+
+
+
+
+
+
+
+
 	public function loadSelectedContactCampaigns()
 	{
 		$params = getParams();
@@ -161,6 +170,17 @@ class CampaignController extends CI_Controller
 		$data = $this->contacts->loadUnlinkContacts($arrContactIds);
 		$this->output->set_content_type('application/json')->set_output(json_encode($data));
 	}
+
+
+
+
+
+
+
+
+
+
+	
 
 	public function loadSelectedOrganizationCampaigns()
 	{

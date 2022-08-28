@@ -91,6 +91,7 @@
       <div class="container-fluid">
 
         <input type="hidden" id="txt_contactId" name="txt_contactId" value="{{ $contactId }}">
+        <input type="hidden" id="txt_contactState" name="txt_contactState">
 
         @if($contactId == "")
         <div class="row">
@@ -1889,6 +1890,7 @@
         $('#lbl_stateContact span').text('Add Contact');
         $('#lbl_stateContact i').removeClass('fa-pen');
         $('#lbl_stateContact i').addClass('fa-plus');
+        $('#txt_contactState').val('add');        
         $('#modal_contact').modal('show');
       });
 
@@ -1903,6 +1905,7 @@
         $('#lbl_stateContact span').text('Add Contact');
         $('#lbl_stateContact i').removeClass('fa-pen');
         $('#lbl_stateContact i').addClass('fa-plus');
+        $('#txt_contactState').val('add');
         $('#modal_contact').modal('show');
       });
 
@@ -1912,7 +1915,7 @@
 
       $('#form_contacts').on('submit',function(e){
         e.preventDefault();
-        ($('#txt_contactId').val() == "")? CONTACTS.addContact(this) : CONTACTS.editContact(this);
+        ($('#txt_contactState').val() == "add")? CONTACTS.addContact(this) : CONTACTS.editContact(this);
       });
 
       let contactId = $('#txt_contactId').val();
@@ -1934,6 +1937,7 @@
         CONTACTS.loadContactSummary(contactId);
         
         $('#btn_editContact').on('click',function(){
+          $('#txt_contactState').val('edit');
           CONTACTS.selectContact('edit',contactId);
         });
 

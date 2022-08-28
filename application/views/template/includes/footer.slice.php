@@ -48,6 +48,8 @@
 <script src="<?php echo base_url(); ?>assets/AdminLTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/AdminLTE/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
 
+<script src="<?php echo base_url(); ?>assets/js/helpers/common_helper.js"></script>
+
 <!-- ==========================================================================================> -->
 
 <!-- Custom JS [JQuery Events] -->

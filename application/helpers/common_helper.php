@@ -1,5 +1,29 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+function dayTime($start)
+{
+  if($start == null || $start == '')
+  {
+    return "No date found!";
+  }
+  date_default_timezone_set('Asia/Manila');
+
+  $start = strtotime($start);
+  $end = strtotime(date('Y-m-d H:i:s'));
+  $days = 0;
+  $hours = 0;
+  while(date('Y-m-d H:i:s', $start) < date('Y-m-d H:i:s', $end)){
+    $dayDiff = (abs($end - $start)/(60*60)) / 24;
+    if($dayDiff >= 1)
+    {
+      $days += date('N', $start) < 6 ? 1 : 0;
+    }
+    $hours = date('N', $start) < 6 ? (abs($end - $start)/(60*60)) % 24 : 0;
+    $start = strtotime("+1 day", $start);
+  }
+
+  return $days . " day(s) & " . $hours . " hour(s)";
+}
 
 
 function set_filename($filename,$path = './assets/uploads/')
@@ -37,75 +61,74 @@ function set_filename($filename,$path = './assets/uploads/')
 		return $new_filename;
 	}
 
-function do_upload($filename, $uploadPath = './assets/uploads/'){
-		$CI =& get_instance();
-		$config['upload_path']          = $uploadPath;
-		$config['allowed_types']        = '*';
-		$config['max_size']             = 5000;
-		// $config['max_width']            = 1000;
-		// $config['max_height']           = 667;
-		$config['encrypt_name'] 				= TRUE;
+function do_upload($filename, $uploadPath = './assets/uploads/')
+{
+	$CI =& get_instance();
+	$config['upload_path']          = $uploadPath;
+	$config['allowed_types']        = '*';
+	$config['max_size']             = 5000;
+	// $config['max_width']            = 1000;
+	// $config['max_height']           = 667;
+	$config['encrypt_name'] 				= TRUE;
 
-		$CI->load->library('upload', $config);
+	$CI->load->library('upload', $config);
 
-		if ( ! $CI->upload->do_upload($filename))
-		{
-				$msgResult['error'] = $CI->upload->display_errors();
-		}
-		else
-		{
-				$msgResult['upload_data'] = $CI->upload->data();
-				$msgResult['success'] = "success";
-
-		}
-		
-		return $msgResult;
+	if ( ! $CI->upload->do_upload($filename))
+	{
+			$msgResult['error'] = $CI->upload->display_errors();
 	}
+	else
+	{
+			$msgResult['upload_data'] = $CI->upload->data();
+			$msgResult['success'] = "success";
 
-function do_multiple_upload($params){
-		$CI =& get_instance();
-		// Count total files
-		$countfiles = count($params['name']);
-		$error = '';
-		$params['name'] = array_values($params['name']);
-		$params['type'] = array_values($params['type']);
-		$params['tmp_name'] = array_values($params['tmp_name']);
-		$params['error'] = array_values($params['error']);
-		$params['size'] = array_values($params['size']);
-		
-		for($i=0;$i<$countfiles;$i++){
-			if(!empty($params['name'][$i])){
-				
-				$config['upload_path']          = './uploads/';
-				$config['allowed_types']        = '*';
-				$config['max_size']             = 5000;
-				// $config['file_name'] = $params['name'][$i];
-				$_FILES['file']['name'] = $params['name'][$i];
-				$_FILES['file']['type'] = $params['type'][$i];
-				$_FILES['file']['tmp_name'] = $params['tmp_name'][$i];
-				$_FILES['file']['error'] = $params['error'][$i];
-				$_FILES['file']['size'] = $params['size'][$i];
+	}
+	
+	return $msgResult;
+}
 
-				//Load upload library
-				$CI->load->library('upload',$config); 
- 
-				// File upload
-				if ( ! $CI->upload->do_upload('file'))
-				{
-						$error = $CI->upload->display_errors();
-						
-				}
-				else
-				{
-						
-						$data = array('upload_data' => $CI->upload->data());
-						$error = "";
+function do_multiple_upload($params)
+{
+	$CI =& get_instance();
+	// Count total files
+	$countfiles 				= count($params['name']);
+	$error 							= '';
+	$params['name'] 		= array_values($params['name']);
+	$params['type'] 		= array_values($params['type']);
+	$params['tmp_name'] = array_values($params['tmp_name']);
+	$params['error'] 		= array_values($params['error']);
+	$params['size'] 		= array_values($params['size']);
+	
+	for($i=0;$i<$countfiles;$i++)
+	{
+		if(!empty($params['name'][$i]))
+		{
+			$config['upload_path']      = './assets/uploads/';
+			$config['allowed_types']    = '*';
+			$config['max_size']         = 5000;
+			$_FILES['file']['name'] 		= $params['name'][$i];
+			$_FILES['file']['type'] 		= $params['type'][$i];
+			$_FILES['file']['tmp_name'] = $params['tmp_name'][$i];
+			$_FILES['file']['error'] 		= $params['error'][$i];
+			$_FILES['file']['size'] 		= $params['size'][$i];
 
-				}
+			//Load upload library
+			$CI->load->library('upload',$config); 
+
+			// File upload
+			if ( ! $CI->upload->do_upload('file'))
+			{
+				$error = $CI->upload->display_errors();					
+			}
+			else
+			{					
+				$data = array('upload_data' => $CI->upload->data());
+				$error = "";
 			}
 		}
-		return $error;
 	}
+	return $error;
+}
 
 /*
 |----------------------------------------------------------------------

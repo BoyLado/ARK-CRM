@@ -91,6 +91,7 @@
     <div class="container-fluid">
 
       <input type="hidden" id="txt_organizationId" name="txt_organizationId" value="{{ $organizationId }}">
+      <input type="hidden" id="txt_organizationState" name="txt_organizationState">
 
       @if($organizationId == "")
       <div class="row">
@@ -1412,6 +1413,46 @@
     </div>
 
 
+    <div class="modal fade" id="modal_selectContact" role="dialog">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header modal-header--sticky">
+            <h5 class="modal-title"><i class="fa fa-user mr-1"></i> Select Contact</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <form id="form_selectContacts">
+              <table id="tbl_allContacts" class="table display nowrap" style="border: .5px solid #DEE2E6;" width="100%">
+                <thead>
+                  <tr>
+                    <th class="p-2"></th>
+                    <th class="p-2" data-priority="1">Salutation</th>
+                    <th class="p-2" data-priority="2">First Name</th>
+                    <th class="p-2" data-priority="3">Last Name</th>
+                    <th class="p-2">Position</th>
+                    <th class="p-2">Company Name</th>
+                    <th class="p-2">Primary Email</th>
+                    <th class="p-2">Assigned To</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                </tbody>
+              </table>
+            </form>
+
+          </div>
+          <div class="modal-footer modal-footer--sticky">
+            <button type="button" class="btn btn-primary" id="btn_addSelectedContacts">Add selected contact/s</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
     <div class="modal fade" id="modal_selectDocuments" role="dialog">
       <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
@@ -1621,6 +1662,7 @@
       $('#lbl_stateOrganization span').text('Add Organization');
       $('#lbl_stateOrganization i').removeClass('fa-pen');
       $('#lbl_stateOrganization i').addClass('fa-plus');
+      $('#txt_organizationState').val('add');
       $('#modal_organization').modal('show');
     });
 
@@ -1634,6 +1676,7 @@
       $('#lbl_stateOrganization span').text('Add Organization');
       $('#lbl_stateOrganization i').removeClass('fa-pen');
       $('#lbl_stateOrganization i').addClass('fa-plus');
+      $('#txt_organizationState').val('add');
       $('#modal_organization').modal('show');
     });
 
@@ -1643,7 +1686,7 @@
 
     $('#form_organization').on('submit',function(e){
       e.preventDefault();
-      ORGANIZATION.addOrganization(this);
+      ($('#txt_organizationState').val() == "add")? ORGANIZATION.addOrganization(this) : ORGANIZATION.editOrganization(this);
     });
 
     let organizationId = $('#txt_organizationId').val();
@@ -1664,6 +1707,7 @@
       ORGANIZATION.selectOrganization('load',organizationId);
 
       $('#btn_editOrganization').on('click',function(){
+        $('#txt_organizationState').val('edit');
         ORGANIZATION.selectOrganization('edit',organizationId);
       });
 
@@ -1720,6 +1764,10 @@
         
       });
     }
+
+    $('#btn_addSelectedContacts').on('click',function(){
+      ORGANIZATION.addSelectedContacts();
+    });
 
     $('#btn_addSelectedDocuments').on('click',function(){
       ORGANIZATION.addSelectedDocuments();

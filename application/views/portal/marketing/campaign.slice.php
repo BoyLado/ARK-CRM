@@ -750,7 +750,7 @@
                           <tr>
                             <td class="p-1" width="180px;" valign="middle">Budget Cost</td>
                             <td class="p-1">
-                              <input type="text" class="form-control form-control-sm" id="txt_budgetCost" name="txt_budgetCost">
+                              <input type="number" class="form-control form-control-sm" id="txt_budgetCost" name="txt_budgetCost">
                             </td>
                           </tr>
                           <tr>
@@ -762,7 +762,7 @@
                           <tr>
                             <td class="p-1" width="180px;" valign="middle">Expected Sales Count</td>
                             <td class="p-1">
-                              <input type="text" class="form-control form-control-sm" id="txt_expectedSalesCount" name="txt_expectedSalesCount">
+                              <input type="number" class="form-control form-control-sm" id="txt_expectedSalesCount" name="txt_expectedSalesCount">
                             </td>
                           </tr>
                           <tr>
@@ -786,13 +786,13 @@
                           <tr>
                             <td class="p-1" width="180px;" valign="middle">Actual Cost</td>
                             <td class="p-1">
-                              <input type="text" class="form-control form-control-sm" id="txt_actualCost" name="txt_actualCost">
+                              <input type="number" class="form-control form-control-sm" id="txt_actualCost" name="txt_actualCost">
                             </td>
                           </tr>
                           <tr>
                             <td class="p-1" width="180px;" valign="middle">Expected Revenue</td>
                             <td class="p-1">
-                              <input type="text" class="form-control form-control-sm" id="txt_expectedRevenue" name="txt_expectedRevenue">
+                              <input type="number" class="form-control form-control-sm" id="txt_expectedRevenue" name="txt_expectedRevenue">
                             </td>
                           </tr>
                           <tr>

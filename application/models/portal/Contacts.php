@@ -121,6 +121,9 @@ class Contacts extends CI_Model
     return $data;
 	}
 
+	/*
+		ContactController->editContact()
+	*/
 	public function editContact($arrData, $contactId)
 	{
 		try {
@@ -242,6 +245,17 @@ class Contacts extends CI_Model
     return $data;
 	}
 
+
+
+
+
+
+
+
+
+
+
+
 	/*
 		ContactController->loadContactDocuments()
 	*/
@@ -316,6 +330,18 @@ class Contacts extends CI_Model
 		}
 	}
 
+
+
+
+
+
+
+
+
+
+
+
+
 	/*
 		ContactController->loadContactCampaigns()
 	*/
@@ -340,20 +366,6 @@ class Contacts extends CI_Model
     return $data;
 	}
 
-	/*
-		ContactController->addSelectedContactCampaigns()
-	*/
-	public function addSelectedContactCampaigns($arrData)
-	{
-		try {
-		  $this->db->trans_start();
-		    $this->db->insert_batch('contact_campaigns',$arrData);
-		  $this->db->trans_complete();
-		  return ($this->db->trans_status() === TRUE)? 1 : 0;
-		} catch (PDOException $e) {
-		  throw $e;
-		}
-	}
 
 	/*
 		ContactController->unlinkContactCampaign()
@@ -371,7 +383,31 @@ class Contacts extends CI_Model
 	}
 
 	/*
+		ContactController->addSelectedContactCampaigns()
+	*/
+	public function addSelectedContactCampaigns($arrData)
+	{
+		try {
+		  $this->db->trans_start();
+		    $this->db->insert_batch('contact_campaigns',$arrData);
+		  $this->db->trans_complete();
+		  return ($this->db->trans_status() === TRUE)? 1 : 0;
+		} catch (PDOException $e) {
+		  throw $e;
+		}
+	}
+
+
+
+
+
+
+
+	
+
+	/*
 		CampaignController->loadUnlinkContacts()
+		DocumentController->loadUnlinkContacts()
 	*/
 	public function loadUnlinkContacts($arrContactIds)
 	{
@@ -397,6 +433,8 @@ class Contacts extends CI_Model
 		$data = $this->db->get()->result_array();
     return $data;
 	}
+
+
 
 	/*
 		ContactController->loadContactComments()

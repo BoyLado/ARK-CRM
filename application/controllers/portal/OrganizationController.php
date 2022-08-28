@@ -19,6 +19,7 @@ class OrganizationController extends CI_Controller
 
 		$this->load->database();
 		$this->load->model('portal/Organizations','organizations');
+		$this->load->model('portal/Contacts','contacts');
 		$this->load->model('portal/EmailTemplates','email_template');
 		$this->load->model('portal/Documents','documents');
 		$this->load->model('portal/Campaigns','campaigns');
@@ -40,16 +41,61 @@ class OrganizationController extends CI_Controller
 
     if ($this->form_validation->run() == TRUE)
     {
+    	$msgResult = 0;
+
     	$arrData = [
-    		'organization_name' 		=> $params['txt_organizationName'],
+    		'organization_name' => $params['txt_organizationName'],
     		'primary_email' 		=> $params['txt_primaryEmail'],
-    		'assigned_to' 		=> $params['slc_assignedTo'],
-    		'created_by' 		=> $this->session->userdata('arkonorllc_user_id'),
-    		'created_date'	=> date('Y-m-d H:i:s')
+    		'secondary_email'		=> $params['txt_secondaryEmail'],
+    		'main_website'			=> $params['txt_mainWebsite'],
+    		'other_website'			=> $params['txt_otherWebsite'],
+    		'phone_number'			=> $params['txt_phoneNumber'],
+    		'fax'								=> $params['txt_fax'],
+    		'linkedin_url'			=> $params['txt_linkedinUrl'],
+    		'facebook_url'			=> $params['txt_facebookUrl'],
+    		'twitter_url'				=> $params['txt_twitterUrl'],
+    		'instagram_url'			=> $params['txt_instagramUrl'],
+    		'industry'					=> $params['slc_industry'],
+    		'naics_code'				=> $params['txt_naicsCode'],
+    		'employee_count'		=> $params['txt_employeeCount'],
+    		'annual_revenue'		=> $params['txt_annualRevenue'],
+    		'type'							=> $params['slc_type'],
+    		'ticket_symbol'			=> $params['txt_ticketSymbol'],
+    		'member_of'					=> ($params['slc_memberOf'] == "")? NULL : $params['slc_memberOf'],
+    		'email_opt_out'			=> $params['slc_emailOptOut'],
+    		'assigned_to' 			=> $params['slc_assignedTo'],
+    		'created_by' 				=> $this->session->userdata('arkonorllc_user_id'),
+    		'created_date'			=> date('Y-m-d H:i:s')
     	];
 
-    	$result = $this->organizations->addOrganization($arrData);
-    	$msgResult = ($result > 0)? "Success" : "Database error";
+    	$insertId = $this->organizations->addOrganization($arrData);
+    	if($insertId != 0)
+    	{
+    		$arrAddressData = [
+    			'organization_id' 			=> $insertId,
+    			'billing_street' 	=> $params['txt_billingStreet'],
+    			'billing_city' 		=> $params['txt_billingCity'],
+    			'billing_state' 	=> $params['txt_billingState'],
+    			'billing_zip' 		=> $params['txt_billingZip'],
+    			'billing_country' => $params['txt_billingCountry'],
+    			'shipping_street' => $params['txt_shippingStreet'],
+    			'shipping_city' 	=> $params['txt_shippingCity'],
+    			'shipping_state' 	=> $params['txt_shippingState'],
+    			'shipping_zip' 		=> $params['txt_shippingZip'],
+    			'shipping_country'=> $params['txt_shippingCountry'],
+    			'created_by' 			=> $this->session->userdata('arkonorllc_user_id'),
+    			'created_date'		=> date('Y-m-d H:i:s')
+    		];
+    		$arrDescriptionData = [
+    			'organization_id' 			=> $insertId,
+    			'description' 		=> $params['txt_description'],
+    			'created_by' 			=> $this->session->userdata('arkonorllc_user_id'),
+    			'created_date'		=> date('Y-m-d H:i:s')
+    		];
+
+    		$result = $this->organizations->addOrganizationDetails($arrAddressData, $arrDescriptionData);
+    		$msgResult = ($result > 0)? "Success" : "Database error";
+    	}
     }
     else
     {
@@ -66,6 +112,78 @@ class OrganizationController extends CI_Controller
 		$data = $this->organizations->selectOrganization($params['organizationId']);
 		$this->output->set_content_type('application/json')->set_output(json_encode($data));
 	}
+
+	public function editOrganization()
+	{
+		$params = getParams();
+
+		$this->form_validation->set_rules('txt_organizationName', 'Organization Name', 'required');
+		$this->form_validation->set_rules('txt_primaryEmail', 'Primary Email', 'required');
+		$this->form_validation->set_rules('slc_assignedTo', 'Assigned To', 'required');
+
+    if ($this->form_validation->run() == TRUE)
+    {
+    	$arrData['organization_details'] = [
+    		'organization_name' 		=> $params['txt_organizationName'],
+    		'primary_email' 				=> $params['txt_primaryEmail'],
+    		'secondary_email'				=> $params['txt_secondaryEmail'],
+    		'main_website'					=> $params['txt_mainWebsite'],
+    		'other_website'					=> $params['txt_otherWebsite'],
+    		'phone_number'					=> $params['txt_phoneNumber'],
+    		'fax'										=> $params['txt_fax'],
+    		'linkedin_url'					=> $params['txt_linkedinUrl'],
+    		'facebook_url'					=> $params['txt_facebookUrl'],
+    		'twitter_url'						=> $params['txt_twitterUrl'],
+    		'instagram_url'					=> $params['txt_instagramUrl'],
+    		'industry'							=> $params['slc_industry'],
+    		'naics_code'						=> $params['txt_naicsCode'],
+    		'employee_count'				=> $params['txt_employeeCount'],
+    		'annual_revenue'				=> $params['txt_annualRevenue'],
+    		'type'									=> $params['slc_type'],
+    		'ticket_symbol'					=> $params['txt_ticketSymbol'],
+    		'member_of'							=> $params['slc_memberOf'],
+    		'email_opt_out'					=> $params['slc_emailOptOut'],
+    		'assigned_to' 					=> $params['slc_assignedTo'],
+    		'updated_by' 						=> $this->session->userdata('arkonorllc_user_id')
+    	];
+
+    	$arrData['organization_address'] = [
+    		'billing_street' 				=> $params['txt_billingStreet'],
+    		'billing_city' 					=> $params['txt_billingCity'],
+    		'billing_state' 				=> $params['txt_billingState'],
+    		'billing_zip' 					=> $params['txt_billingZip'],
+    		'billing_country' 			=> $params['txt_billingCountry'],
+    		'shipping_street' 			=> $params['txt_shippingStreet'],
+    		'shipping_city' 				=> $params['txt_shippingCity'],
+    		'shipping_state' 				=> $params['txt_shippingState'],
+    		'shipping_zip' 					=> $params['txt_shippingZip'],
+    		'shipping_country' 			=> $params['txt_shippingCountry'],
+    		'updated_by' 						=> $this->session->userdata('arkonorllc_user_id')
+    	];
+
+    	$arrData['organization_description'] = [
+    		'description' 					=> $params['txt_description'],
+    		'updated_by' 						=> $this->session->userdata('arkonorllc_user_id')
+    	];
+
+    	$result = $this->organizations->editOrganization($arrData, $params['txt_organizationId']);
+
+    	$msgResult = ($result > 0)? "Success" : "Database error";
+    }
+    else
+    {
+      $msgResult = strip_tags(validation_errors());
+    }
+
+    $this->output->set_content_type('application/json')->set_output(json_encode($msgResult));
+	}
+
+
+
+
+
+
+
 
 	public function loadOrganizationSummary()
 	{
@@ -101,6 +219,41 @@ class OrganizationController extends CI_Controller
 		$this->output->set_content_type('application/json')->set_output(json_encode($msgResult));
 	}
 
+	public function loadUnlinkOrganizationContacts()
+	{
+		$params = getParams();
+
+		$organizationId = $params['organizationId'];
+
+		$arrData = $this->organizations->loadOrganizationContacts($organizationId);
+
+		$arrContactIds = [];
+		foreach($arrData as $key => $value)
+		{
+			$arrContactIds[] = $value['id']; 
+		}
+
+		$data = $this->contacts->loadUnlinkContacts($arrContactIds);
+		$this->output->set_content_type('application/json')->set_output(json_encode($data));
+	}
+
+	public function addSelectedOrganizationContacts()
+	{
+		$params = getParams();
+
+		$arrData = [];
+		foreach(explode(',',$params['arrSelectedContacts']) as $key => $value)
+		{
+			$arrData[] = ['id'=>$value, 'organization_id'=>$params['organizationId']];
+		}
+
+		$result = $this->organizations->addSelectedOrganizationContacts($arrData);
+		$msgResult = ($result > 0)? "Success" : "Database error";
+		$this->output->set_content_type('application/json')->set_output(json_encode($msgResult));
+	}
+
+
+
 	public function loadOrganizationEmails()
 	{
 		$params = getParams();
@@ -108,6 +261,13 @@ class OrganizationController extends CI_Controller
 		$data = $this->organizations->loadOrganizationEmails($params['organizationId']);
 		$this->output->set_content_type('application/json')->set_output(json_encode($data));
 	}
+
+
+
+
+
+
+
 
 	public function loadOrganizationDocuments()
 	{
@@ -156,7 +316,7 @@ class OrganizationController extends CI_Controller
 		}
 		else
 		{
-			foreach(explode(',',$params['arrSelectedContacts']) as $key => $value)
+			foreach(explode(',',$params['arrSelectedOrganizations']) as $key => $value)
 			{
 				$arrData[] = ['organization_id'=>$value, 'document_id'=>$params['documentId']];
 			}
@@ -219,12 +379,29 @@ class OrganizationController extends CI_Controller
 		$this->output->set_content_type('application/json')->set_output(json_encode($msgResult));
 	}
 
+
+
+
+
+
+
+
+
 	public function loadOrganizationCampaigns()
 	{
 		$params = getParams();
 
 		$data = $this->organizations->loadOrganizationCampaigns($params['organizationId']);
 		$this->output->set_content_type('application/json')->set_output(json_encode($data));
+	}
+
+	public function unlinkOrganizationCampaign()
+	{
+		$params = getParams();
+
+		$result = $this->organizations->unlinkOrganizationCampaign($params['organizationCampaignId']);
+		$msgResult = ($result > 0)? "Success" : "Database error";
+		$this->output->set_content_type('application/json')->set_output(json_encode($msgResult));
 	}
 
 	public function loadUnlinkOrganizationCampaigns()
@@ -243,7 +420,7 @@ class OrganizationController extends CI_Controller
 		$this->output->set_content_type('application/json')->set_output(json_encode($data));
 	}
 
-	public function addOrganizationCampaign()
+	public function addSelectedOrganizationCampaigns()
 	{
 		$params = getParams();
 
@@ -263,19 +440,18 @@ class OrganizationController extends CI_Controller
 			}
 		}
 
-		$result = $this->organizations->addOrganizationCampaign($arrData);
+		$result = $this->organizations->addSelectedOrganizationCampaigns($arrData);
 		$msgResult = ($result > 0)? "Success" : "Database error";
 		$this->output->set_content_type('application/json')->set_output(json_encode($msgResult));
 	}
 
-	public function unlinkOrganizationCampaign()
-	{
-		$params = getParams();
 
-		$result = $this->organizations->unlinkOrganizationCampaign($params['organizationCampaignId']);
-		$msgResult = ($result > 0)? "Success" : "Database error";
-		$this->output->set_content_type('application/json')->set_output(json_encode($msgResult));
-	}
+
+
+
+
+
+	
 
 	public function selectEmailTemplate()
 	{

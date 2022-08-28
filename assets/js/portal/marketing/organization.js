@@ -72,7 +72,7 @@ const ORGANIZATION = (function(){
     });
   }
 
-  thisOrganization.loadUsers = function(elemId)
+  thisOrganization.loadUsers = function(elemId, userId = '')
   {
     $.ajax({
       /* UserController->loadUsers() */
@@ -84,7 +84,14 @@ const ORGANIZATION = (function(){
         console.log(data);
         let options = '<option value="">--Select user--</option>';
         data.forEach(function(value,key){
-          options += `<option value="${value['user_id']}">${value['salutation']} ${value['first_name']} ${value['last_name']}</option>`;
+          if(userId == value['user_id'])
+          {
+            options += `<option value="${value['user_id']}" selected>${value['salutation']} ${value['first_name']} ${value['last_name']}</option>`;
+          }
+          else
+          {
+            options += `<option value="${value['user_id']}">${value['salutation']} ${value['first_name']} ${value['last_name']}</option>`;
+          }         
         });
         $(elemId).html(options);
       }
@@ -112,6 +119,10 @@ const ORGANIZATION = (function(){
             icon: 'success',
             title: 'Success! <br>New organization added successfully.',
           });
+
+          setTimeout(function(){
+            window.location.replace(`${baseUrl}index.php/organizations`);
+          }, 1000);
         }
         else
         {
@@ -120,7 +131,6 @@ const ORGANIZATION = (function(){
             title: 'Error! <br>Database error!'
           });
         }
-        ORGANIZATION.loadOrganizations('table');
       }
     });
   }
@@ -143,6 +153,40 @@ const ORGANIZATION = (function(){
           $('#lbl_stateOrganization i').addClass('fa-pen');
           $('#modal_organization').modal('show');
           $('#txt_organizationId').val(organizationId);
+
+          $('#txt_organizationName').val(data['organization_name']);
+          ORGANIZATION.loadUsers('#slc_assignedTo', data['assigned_to']);
+          $('#txt_primaryEmail').val(data['primary_email']);
+          $('#txt_secondaryEmail').val(data['secondary_email']);
+          $('#txt_mainWebsite').val(data['main_website']);
+          $('#txt_otherWebsite').val(data['other_website']);
+          $('#txt_phoneNumber').val(data['phone_number']);
+          $('#txt_fax').val(data['fax']);
+          $('#txt_linkedinUrl').val(data['linkedin_url']);
+          $('#txt_facebookUrl').val(data['facebook_url']);
+          $('#txt_twitterUrl').val(data['twitter_url']);
+          $('#txt_instagramUrl').val(data['instagram_url']);
+          $('#slc_industry').val(data['industry']);
+          $('#txt_naicsCode').val(data['naics_code']);
+          $('#txt_employeeCount').val(data['employee_count']);
+          $('#txt_annualRevenue').val(data['annual_revenue']);
+          $('#slc_type').val(data['type']);
+          $('#txt_ticketSymbol').val(data['ticket_symbol']);
+          // $('#slc_memberOf').val(data['member_of']);
+          $('#slc_emailOptOut').val(data['email_opt_out']);
+
+          $('#txt_billingStreet').val(data['billing_street']);
+          $('#txt_billingCity').val(data['billing_city']);
+          $('#txt_billingState').val(data['billing_state']);
+          $('#txt_billingZip').val(data['billing_zip']);
+          $('#txt_billingCountry').val(data['billing_country']);
+          $('#txt_shippingStreet').val(data['shipping_street']);
+          $('#txt_shippingCity').val(data['shipping_city']);
+          $('#txt_shippingState').val(data['shipping_state']);
+          $('#txt_shippingZip').val(data['shipping_zip']);
+          $('#txt_shippingCountry').val(data['shipping_country']);
+
+          $('#txt_description').val(data['description']);
         }
         else if(action == 'load')
         {
@@ -161,6 +205,43 @@ const ORGANIZATION = (function(){
       }
     });
         
+  }
+
+  thisOrganization.editOrganization = function(thisForm)
+  {
+    let formData = new FormData(thisForm);
+
+    formData.set("txt_organizationId", $('#txt_organizationId').val());
+
+    $.ajax({
+      /* OrganizationController->editOrganization() */
+      url : `${baseUrl}index.php/marketing/edit-organization`,
+      method : 'post',
+      dataType: 'json',
+      processData: false, // important
+      contentType: false, // important
+      data : formData,
+      success : function(result)
+      {
+        console.log(result);
+        $('#modal_organization').modal('hide');
+        if(result == 'Success')
+        {
+          Toast.fire({
+            icon: 'success',
+            title: 'Success! <br>Organization edited successfully.',
+          });
+        }
+        else
+        {
+          Toast.fire({
+            icon: 'error',
+            title: 'Error! <br>Database error!'
+          });
+        }
+        ORGANIZATION.loadOrganizations('table');
+      }
+    });
   }
 
   thisOrganization.loadEmailTemplates = function()
@@ -338,6 +419,8 @@ const ORGANIZATION = (function(){
           "order": [[ 0, "desc" ]]
         });
 
+        $(`#tbl_contacts_length`).html(`<button type="button" onclick="ORGANIZATION.selectContactModal(${organizationId})" class="btn btn-sm btn-default"><i class="fa fa-user mr-1"></i> Select Contact</button>`);
+        
         if(count > 0)
         {
           $('#lbl_contactCount').prop('hidden',false);
@@ -390,6 +473,112 @@ const ORGANIZATION = (function(){
         }
       });  
     }    
+  }
+
+  thisOrganization.selectContactModal = function(organizationId)
+  {
+    $('#modal_selectContact').modal('show');
+    $('#btn_addSelectedContacts').prop('disabled',true);
+    _arrSelectedContacts = [];
+    ORGANIZATION.loadUnlinkContacts(organizationId);
+  }
+
+  thisOrganization.loadUnlinkContacts = function(organizationId)
+  {
+    $.ajax({
+      /* OrganizationController->loadUnlinkOrganizationContacts() */
+      url : `${baseUrl}index.php/marketing/load-unlink-organization-contacts`,
+      method : 'get',
+      dataType: 'json',
+      data : {organizationId:organizationId},
+      success : function(data)
+      {
+        console.log(data);
+        // Emails
+        let tbody = '';
+        data.forEach(function(value,key){
+          tbody += `<tr>
+                      <td class="p-1"><input type="checkbox" onchange="ORGANIZATION.selectContacts(this)" value="${value['id']}"/></td>
+                      <td class="p-1 pl-4">${value['salutation']}</td>
+                      <td class="p-1">${value['first_name']}</td>
+                      <td class="p-1">${value['last_name']}</td>
+                      <td class="p-1">${value['position']}</td>
+                      <td class="p-1">${value['organization_name']}</td>
+                      <td class="p-1">${value['primary_email']}</td>
+                      <td class="p-1">${value['assigned_to_name']}</td>
+                    </tr>`;
+        });
+
+        $(`#tbl_allContacts`).DataTable().destroy();
+        $(`#tbl_allContacts tbody`).html(tbody);
+        $(`#tbl_allContacts`).DataTable({
+          "responsive": true,
+          "columnDefs": [
+            { responsivePriority: 1, targets: 1 },
+            { responsivePriority: 2, targets: 2 },
+            { responsivePriority: 3, targets: 3 },
+            { responsivePriority: 10001, targets: 1 }
+          ],
+          "order": [[ 0, "desc" ]]
+        });
+      }
+    });
+  }
+
+  thisOrganization.selectContacts = function(thisCheckBox)
+  {
+    if($(thisCheckBox).is(':checked'))
+    {
+      _arrSelectedContacts.push($(thisCheckBox).val());
+    }
+    else
+    {
+      let index = _arrSelectedContacts.indexOf($(thisCheckBox).val());
+      if (index > -1) 
+      {
+        _arrSelectedContacts.splice(index, 1); 
+      }
+    }
+
+    $('#btn_addSelectedContacts').prop('disabled',(_arrSelectedContacts.length > 0)? false : true);    
+  }
+
+  thisOrganization.addSelectedContacts = function()
+  {
+    let formData = new FormData();
+
+    formData.set("organizationId", $('#txt_organizationId').val());
+    formData.set("arrSelectedContacts", _arrSelectedContacts);
+
+    $.ajax({
+      /* OrganizationController->addSelectedOrganizationContacts() */
+      url : `${baseUrl}index.php/marketing/add-selected-organization-contacts`,
+      method : 'post',
+      dataType: 'json',
+      processData: false, // important
+      contentType: false, // important
+      data : formData,
+      success : function(result)
+      {
+        console.log(result);
+        $('#modal_selectContact').modal('hide');
+        if(result == 'Success')
+        {
+          Toast.fire({
+            icon: 'success',
+            title: 'Success! <br>New contact added successfully.',
+          });
+          ORGANIZATION.loadOrganizationContacts($('#txt_organizationId').val());
+        }
+        else
+        {
+          Toast.fire({
+            icon: 'error',
+            title: 'Error! <br>Database error!'
+          });
+        }
+      }
+    });
   }
 
   //emails
@@ -879,8 +1068,8 @@ const ORGANIZATION = (function(){
     formData.set("arrSelectedCampaigns", _arrSelectedCampaigns);
 
     $.ajax({
-      /* OrganizationController->addOrganizationCampaign() */
-      url : `${baseUrl}index.php/marketing/add-organization-campaign`,
+      /* OrganizationController->addSelectedOrganizationCampaigns() */
+      url : `${baseUrl}index.php/marketing/add-selected-organization-campaigns`,
       method : 'post',
       dataType: 'json',
       processData: false, // important

@@ -53,7 +53,28 @@
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
-	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+	// define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+
+$local_servers = array('localhost', '127.0.0.1', '::1');
+$isLocal = in_array($_SERVER['SERVER_NAME'], $local_servers);
+
+if ($isLocal) 
+{
+  $env = 'development';
+} 
+else 
+{
+  if($_SERVER['SERVER_NAME'] == '192.168.1.5')
+  {
+    $env = 'testing';
+  }
+  else
+  {
+    $env = 'production';
+  }
+}
+
+define('ENVIRONMENT', $env);
 
 /*
  *---------------------------------------------------------------

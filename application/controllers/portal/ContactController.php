@@ -53,13 +53,15 @@ class ContactController extends CI_Controller
 		$this->form_validation->set_rules('slc_assignedTo', 'Assigned To', 'required');
 
 		if ($this->form_validation->run() == TRUE)
-		{
+		{	
+			$msgResult = 0;
+
 			$arrData = [
 				'salutation' 			=> $params['slc_salutation'],
 				'first_name' 			=> $params['txt_firstName'],
 				'last_name' 			=> $params['txt_lastName'],
 				'position' 				=> $params['txt_position'],
-				'organization_id'	=> $params['slc_companyName'],
+				'organization_id'	=> ($params['slc_companyName'] == "")? NULL : $params['slc_companyName'],
 				'primary_email' 	=> $params['txt_primaryEmail'],
 				'secondary_email' => $params['txt_secondaryEmail'],
 				'date_of_birth'		=> $params['txt_birthDate'],
@@ -76,8 +78,8 @@ class ContactController extends CI_Controller
 				'instagram_url'		=> $params['txt_instagramUrl'],
 				'lead_source'			=> $params['slc_leadSource'],
 				'department'			=> $params['txt_department'],
-				'reports_to'			=> $params['slc_reportsTo'],
-				'assigned_to'			=> $params['slc_assignedTo'],
+				'reports_to'			=> ($params['slc_reportsTo'] == "")? NULL : $params['slc_reportsTo'],
+				'assigned_to'			=> ($params['slc_assignedTo'] == "")? NULL : $params['slc_assignedTo'],
 				'email_opt_out'		=> $params['slc_emailOptOut'],
 				'unsubscribe_auth_code' => encrypt_code(generate_code()),
 				'created_by' 			=> $this->session->userdata('arkonorllc_user_id'),
@@ -224,6 +226,18 @@ class ContactController extends CI_Controller
 		$this->output->set_content_type('application/json')->set_output(json_encode($data));
 	}
 
+
+
+
+
+
+
+
+
+
+
+	// contact documents
+
 	public function loadContactDocuments()
 	{
 		$params = getParams();
@@ -334,12 +348,33 @@ class ContactController extends CI_Controller
 		$this->output->set_content_type('application/json')->set_output(json_encode($msgResult));
 	}
 
+
+
+
+
+
+
+
+
+
+
+
+	//contact campaign
 	public function loadContactCampaigns()
 	{
 		$params = getParams();
 
 		$data = $this->contacts->loadContactCampaigns($params['contactId']);
 		$this->output->set_content_type('application/json')->set_output(json_encode($data));
+	}
+
+	public function unlinkContactCampaign()
+	{
+		$params = getParams();
+
+		$result = $this->contacts->unlinkContactCampaign($params['contactCampaignId']);
+		$msgResult = ($result > 0)? "Success" : "Database error";
+		$this->output->set_content_type('application/json')->set_output(json_encode($msgResult));
 	}
 
 	public function loadUnlinkContactCampaigns()
@@ -382,15 +417,18 @@ class ContactController extends CI_Controller
 		$msgResult = ($result > 0)? "Success" : "Database error";
 		$this->output->set_content_type('application/json')->set_output(json_encode($msgResult));
 	}
+	
 
-	public function unlinkContactCampaign()
-	{
-		$params = getParams();
 
-		$result = $this->contacts->unlinkContactCampaign($params['contactCampaignId']);
-		$msgResult = ($result > 0)? "Success" : "Database error";
-		$this->output->set_content_type('application/json')->set_output(json_encode($msgResult));
-	}
+
+
+
+
+
+
+
+
+	//contact comments
 
 	public function loadContactComments()
 	{

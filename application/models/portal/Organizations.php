@@ -32,6 +32,23 @@ class Organizations extends CI_Model
 		try {
 		  $this->db->trans_start();
 		    $this->db->insert('organizations',$arrData);
+		    $insertId = $this->db->insert_id();
+		  $this->db->trans_complete();
+		  return ($this->db->trans_status() === TRUE)? $insertId : 0;
+		} catch (PDOException $e) {
+		  throw $e;
+		}
+	}
+
+	/*
+		OrganizationController->addOrganization()
+	*/
+	public function addOrganizationDetails($arrAddressData, $arrDescriptionData)
+	{
+		try {
+		  $this->db->trans_start();
+		    $this->db->insert('organization_address_details',$arrAddressData);
+		    $this->db->insert('organization_description_details',$arrDescriptionData);
 		  $this->db->trans_complete();
 		  return ($this->db->trans_status() === TRUE)? 1 : 0;
 		} catch (PDOException $e) {
@@ -47,21 +64,78 @@ class Organizations extends CI_Model
 	public function selectOrganization($organizationId)
 	{
 		$columns = [
-			'id',
-			'organization_name',
-			'primary_email',
-			'main_website',
-			'(SELECT CONCAT(salutation, " ",first_name, " ", last_name) FROM users WHERE id = assigned_to) assigned_to',
-			'created_by',
-			'created_date'
+			'a.id',
+			'a.organization_name',
+			'a.primary_email',
+			'a.secondary_email',
+			'a.main_website',
+			'a.other_website',
+			'a.phone_number',
+			'a.fax',
+			'a.linkedin_url',
+			'a.facebook_url',
+			'a.twitter_url',
+			'a.instagram_url',
+			'a.industry',
+			'a.naics_code',
+			'a.employee_count',
+			'a.annual_revenue',
+			'a.type',
+			'a.ticket_symbol',
+			'a.member_of',
+			'a.email_opt_out',
+			'a.assigned_to',
+			'(SELECT CONCAT(salutation, " ",first_name, " ", last_name) FROM users WHERE id = a.assigned_to) assigned_to_name',
+			'a.created_by',
+			'a.created_date',
+			'b.billing_street',
+			'b.billing_city',
+			'b.billing_state',
+			'b.billing_zip',
+			'b.billing_country',
+			'b.shipping_street',
+			'b.shipping_city',
+			'b.shipping_state',
+			'b.shipping_zip',
+			'b.shipping_country',
+			'c.description'
 		];
 
-		$this->db->where('id',$organizationId);
+		$this->db->where('a.id',$organizationId);
 		$this->db->select($columns);
-		$this->db->from('organizations');
+		$this->db->from('organizations a');
+		$this->db->join('organization_address_details b','a.id = b.organization_id','left');
+		$this->db->join('organization_description_details c','a.id = c.organization_id','left');
 		$data = $this->db->get()->row_array();
     return $data;
 	}
+
+	/*
+		OrganizationController->editOrganization()
+	*/
+	public function editOrganization($arrData, $organizationId)
+	{
+		try {
+		  $this->db->trans_start();
+		    $this->db->update('organizations',$arrData['organization_details'],['id'=>$organizationId]);
+		    $this->db->update('organization_address_details',$arrData['organization_address'],['organization_id'=>$organizationId]);
+		    $this->db->update('organization_description_details',$arrData['organization_description'],['organization_id'=>$organizationId]);
+		  $this->db->trans_complete();
+		  return ($this->db->trans_status() === TRUE)? 1 : 0;
+		} catch (PDOException $e) {
+		  throw $e;
+		}
+	}
+
+
+
+
+
+
+
+
+
+
 
 	/*
 		OrganizationController->loadOrganizationSummary()
@@ -136,6 +210,7 @@ class Organizations extends CI_Model
 
 	/*
 		OrganizationController->loadOrganizationContacts()
+		OrganizationController->loadUnlinkOrganizationContacts()
 	*/
 	public function loadOrganizationContacts($organizationId)
 	{
@@ -156,7 +231,7 @@ class Organizations extends CI_Model
 		$this->db->select($columns);
 		$this->db->from('contacts a');
 		$this->db->order_by('a.id','desc');
-		$data = $this->db->get()->result();
+		$data = $this->db->get()->result_array();
     return $data;
 	}
 
@@ -168,6 +243,21 @@ class Organizations extends CI_Model
 		try {
 		  $this->db->trans_start();
 		    $this->db->update('contacts',['organization_id'=>null],['id'=>$contactId]);
+		  $this->db->trans_complete();
+		  return ($this->db->trans_status() === TRUE)? 1 : 0;
+		} catch (PDOException $e) {
+		  throw $e;
+		}
+	}
+
+	/*
+		OrganizationController->addSelectedOrganizationContacts()
+	*/
+	public function addSelectedOrganizationContacts($arrData)
+	{
+		try {
+		  $this->db->trans_start();
+		    $this->db->update_batch('contacts',$arrData,'id');
 		  $this->db->trans_complete();
 		  return ($this->db->trans_status() === TRUE)? 1 : 0;
 		} catch (PDOException $e) {
@@ -197,6 +287,15 @@ class Organizations extends CI_Model
 		$data = $this->db->get()->result_array();
     return $data;
 	}
+
+
+
+
+
+
+
+
+
 
 	/*
 		OrganizationController->loadOrganizationDocuments()
@@ -272,6 +371,14 @@ class Organizations extends CI_Model
 		}
 	}
 
+
+
+
+
+
+
+
+
 	/*
 		OrganizationController->loadOrganizationCampaigns()
 	*/
@@ -297,21 +404,6 @@ class Organizations extends CI_Model
 	}
 
 	/*
-		OrganizationController->addOrganizationCampaign()
-	*/
-	public function addOrganizationCampaign($arrData)
-	{
-		try {
-		  $this->db->trans_start();
-		    $this->db->insert_batch('organization_campaigns',$arrData);
-		  $this->db->trans_complete();
-		  return ($this->db->trans_status() === TRUE)? 1 : 0;
-		} catch (PDOException $e) {
-		  throw $e;
-		}
-	}
-
-	/*
 		OrganizationController->unlinkOrganizationCampaign()
 	*/
 	public function unlinkOrganizationCampaign($organizationCampaignId)
@@ -327,7 +419,31 @@ class Organizations extends CI_Model
 	}
 
 	/*
+		OrganizationController->addSelectedOrganizationCampaigns()
+	*/
+	public function addSelectedOrganizationCampaigns($arrData)
+	{
+		try {
+		  $this->db->trans_start();
+		    $this->db->insert_batch('organization_campaigns',$arrData);
+		  $this->db->trans_complete();
+		  return ($this->db->trans_status() === TRUE)? 1 : 0;
+		} catch (PDOException $e) {
+		  throw $e;
+		}
+	}
+
+	
+
+
+
+
+
+
+
+	/*
 		CampaignController->loadUnlinkOrganizations()
+		DocumentController->loadUnlinkOrganizations()
 	*/
 	public function loadUnlinkOrganizations($arrOrganizationIds)
 	{

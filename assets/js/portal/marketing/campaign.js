@@ -164,16 +164,18 @@ const CAMPAIGN = (function(){
           $('#txt_sponsor').val(data['sponsor']);
           $('#txt_targetSize').val(data['target_size']);
           $('#txt_numSent').val(data['num_sent']);
-          $('#txt_budgetCost').val(data['budget_cost']);
+
+          $('#txt_budgetCost').val(HELPER.numberWithCommas(data['budget_cost']));
           $('#txt_expectedResponse').val(data['expected_response']);
           $('#txt_expectedSalesCount').val(data['expected_sales_count']);
           $('#txt_expectedResponseCount').val(data['expected_response_count']);
           $('#txt_expectedROI').val(data['expected_roi']);
           $('#txt_actualCost').val(data['actual_cost']);
           $('#txt_expectedRevenue').val(data['expected_revenue']);
-          $('#txt_actualSalesCount').val(data['actual_sale_count']);
+          $('#txt_actualSalesCount').val(HELPER.numberWithCommas(data['actual_sales_count']));
           $('#txt_actualResponseCount').val(data['actual_response_count']);
           $('#txt_actualROI').val(data['actual_roi']);
+
           $('#txt_description').val(data['campaign_description']);
         }
         else if(action == 'load')
@@ -352,6 +354,45 @@ const CAMPAIGN = (function(){
     });
   }
 
+  thisCampaign.unlinkContactCampaign = function(contactCampaignId)
+  {
+    if(confirm('Please confirm!'))
+    {
+      let formData = new FormData();
+
+      formData.set("contactCampaignId", contactCampaignId);
+
+      $.ajax({
+        /* ContactController->unlinkContactCampaign() */
+        url : `${baseUrl}index.php/marketing/unlink-contact-campaign`,
+        method : 'post',
+        dataType: 'json',
+        processData: false, // important
+        contentType: false, // important
+        data : formData,
+        success : function(result)
+        {
+          console.log(result);
+          if(result == 'Success')
+          {
+            Toast.fire({
+              icon: 'success',
+              title: 'Success! <br>Campaign unlinked successfully.',
+            });
+            CAMPAIGN.loadSelectedContactCampaigns($('#txt_campaignId').val());
+          }
+          else
+          {
+            Toast.fire({
+              icon: 'error',
+              title: 'Error! <br>Database error!'
+            });
+          }
+        }
+      });
+    }   
+  }
+
   thisCampaign.selectContactModal = function(campaignId)
   {
     $('#modal_selectContact').modal('show');
@@ -428,8 +469,8 @@ const CAMPAIGN = (function(){
     formData.set("arrSelectedContacts", _arrSelectedContacts);
 
     $.ajax({
-      /* ContactController->addContactCampaign() */
-      url : `${baseUrl}index.php/marketing/add-contact-campaign`,
+      /* ContactController->addSelectedContactCampaigns() */
+      url : `${baseUrl}index.php/marketing/add-selected-contact-campaigns`,
       method : 'post',
       dataType: 'json',
       processData: false, // important
@@ -457,45 +498,7 @@ const CAMPAIGN = (function(){
       }
     });
   }
-
-  thisCampaign.unlinkContactCampaign = function(contactCampaignId)
-  {
-    if(confirm('Please confirm!'))
-    {
-      let formData = new FormData();
-
-      formData.set("contactCampaignId", contactCampaignId);
-
-      $.ajax({
-        /* ContactController->unlinkContactCampaign() */
-        url : `${baseUrl}index.php/marketing/unlink-contact-campaign`,
-        method : 'post',
-        dataType: 'json',
-        processData: false, // important
-        contentType: false, // important
-        data : formData,
-        success : function(result)
-        {
-          console.log(result);
-          if(result == 'Success')
-          {
-            Toast.fire({
-              icon: 'success',
-              title: 'Success! <br>Campaign unlinked successfully.',
-            });
-            CAMPAIGN.loadSelectedContactCampaigns($('#txt_campaignId').val());
-          }
-          else
-          {
-            Toast.fire({
-              icon: 'error',
-              title: 'Error! <br>Database error!'
-            });
-          }
-        }
-      });
-    }   
-  }
+  
 
   //organizations
   thisCampaign.loadSelectedOrganizationCampaigns = function(campaignId)
@@ -566,6 +569,45 @@ const CAMPAIGN = (function(){
         }
       }
     });
+  }
+
+  thisCampaign.unlinkOrganizationCampaign = function(organizationCampaignId)
+  {
+    if(confirm('Please confirm!'))
+    {
+      let formData = new FormData();
+
+      formData.set("organizationCampaignId", organizationCampaignId);
+
+      $.ajax({
+        /* OrganizationController->unlinkOrganizationCampaign() */
+        url : `${baseUrl}index.php/marketing/unlink-organization-campaign`,
+        method : 'post',
+        dataType: 'json',
+        processData: false, // important
+        contentType: false, // important
+        data : formData,
+        success : function(result)
+        {
+          console.log(result);
+          if(result == 'Success')
+          {
+            Toast.fire({
+              icon: 'success',
+              title: 'Success! <br>Campaign unlinked successfully.',
+            });
+            CAMPAIGN.loadSelectedOrganizationCampaigns($('#txt_campaignId').val());
+          }
+          else
+          {
+            Toast.fire({
+              icon: 'error',
+              title: 'Error! <br>Database error!'
+            });
+          }
+        }
+      });
+    }   
   }
 
   thisCampaign.selectOrganizationModal = function(campaignId)
@@ -645,8 +687,8 @@ const CAMPAIGN = (function(){
     formData.set("arrSelectedOrganizations", _arrSelectedOrganizations);
 
     $.ajax({
-      /* OrganizationController->addOrganizationCampaign() */
-      url : `${baseUrl}index.php/marketing/add-organization-campaign`,
+      /* OrganizationController->addSelectedOrganizationCampaigns() */
+      url : `${baseUrl}index.php/marketing/add-selected-organization-campaigns`,
       method : 'post',
       dataType: 'json',
       processData: false, // important
@@ -675,44 +717,7 @@ const CAMPAIGN = (function(){
     });
   }
 
-  thisCampaign.unlinkOrganizationCampaign = function(organizationCampaignId)
-  {
-    if(confirm('Please confirm!'))
-    {
-      let formData = new FormData();
-
-      formData.set("organizationCampaignId", organizationCampaignId);
-
-      $.ajax({
-        /* OrganizationController->unlinkOrganizationCampaign() */
-        url : `${baseUrl}index.php/marketing/unlink-organization-campaign`,
-        method : 'post',
-        dataType: 'json',
-        processData: false, // important
-        contentType: false, // important
-        data : formData,
-        success : function(result)
-        {
-          console.log(result);
-          if(result == 'Success')
-          {
-            Toast.fire({
-              icon: 'success',
-              title: 'Success! <br>Campaign unlinked successfully.',
-            });
-            CAMPAIGN.loadSelectedOrganizationCampaigns($('#txt_campaignId').val());
-          }
-          else
-          {
-            Toast.fire({
-              icon: 'error',
-              title: 'Error! <br>Database error!'
-            });
-          }
-        }
-      });
-    }   
-  }
+  
 
   return thisCampaign;
 
