@@ -49,7 +49,7 @@ $config['base_url'] = ( ! empty($_SERVER['HTTPS'])) ? 'https://' . $domain : 'ht
 | variable so that it is blank.
 |
 */
-$config['index_page'] = '';
+$config['index_page'] = 'index.php';
 
 /*
 |--------------------------------------------------------------------------

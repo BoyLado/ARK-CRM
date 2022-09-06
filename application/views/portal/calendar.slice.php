@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/AdminLTE/plugins/select2/css/select2.min.css">
 
 <!-- Full Calendar -->
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/AdminLTE/plugins/fullcalendar/main.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/AdminLTE/plugins/fullcalendar/fullcalendar.css">
 
 <style type="text/css">
   /*INTERNAL STYLES*/
@@ -47,16 +47,12 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12">
-          <h6 class="mt-1 float-left">
+          <h6 class="float-left mb-0">
             <span>
-              <a href="<?php echo base_url(); ?>index.php/users" class="text-muted">Users</a> -
-            </span> 
-            <small>
-              <a href="<?php echo base_url(); ?>index.php/users" class="text-muted">All</a>
-            </small> 
-            <!-- <small> - 
-              <a href="#" class="text-muted" id="lnk_user">Anton Jay</a>
-            </small> -->
+              <a href="javascript:void(0)" id="btn_holidays" class="btn btn-default btn-sm">
+                <i class="fa fa-flag mr-1"></i>Holidays
+              </a>
+            </span>
           </h6>
           <div class="float-right">
             <div class="d-inline d-lg-none">
@@ -64,20 +60,26 @@
                 <i class="nav-icon fas fa-ellipsis-v"></i>
               </button>
               <div class="dropdown-menu" style="">
-                <a class="dropdown-item" href="javascript:void(0)" id="lnk_inviteNewUser">
-                  <i class="fa fa-plus mr-1"></i>Invite New User
+                <a class="dropdown-item" href="javascript:void(0)" id="lnk_addEvent">
+                  <i class="fa fa-plus mr-1"></i>Add Event
                 </a>
-                <a class="dropdown-item" href="javascript:void(0)" id="lnk_importUsers">
-                  <i class="fa fa-upload mr-1"></i>Import
+                <a class="dropdown-item" href="javascript:void(0)" id="lnk_addTask">
+                  <i class="fa fa-plus mr-1"></i>Add Task
+                </a>
+                <a class="dropdown-item" href="javascript:void(0)" id="lnk_createCalendar">
+                  <i class="fa fa-calendar-plus mr-1"></i>Create Calendar
                 </a>
               </div>
             </div>
             <div class="d-none d-lg-block">
-              <button type="button" class="btn btn-default btn-sm" id="btn_inviteNewUser">
-                <i class="fa fa-plus mr-1"></i> Invite New User
+              <button type="button" class="btn btn-default btn-sm" id="btn_addEvent">
+                <i class="fa fa-plus mr-1"></i> Add Event
               </button>
-              <button type="button" class="btn btn-default btn-sm" id="btn_importUsers">
-                <i class="fa fa-upload mr-1"></i> Import
+              <button type="button" class="btn btn-default btn-sm" id="btn_addTask">
+                <i class="fa fa-plus mr-1"></i> Add Task
+              </button>
+              <button type="button" class="btn btn-default btn-sm" id="btn_createCalendar">
+                <i class="fa fa-calendar-plus mr-1"></i> Create Calendar
               </button>
             </div>
           </div>
@@ -90,71 +92,237 @@
   <!-- Main content -->
   <div class="content">
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-lg-8 col-sm-12">
-          <div class="card card-primary card-outline">
-            <div class="card-body">
-              <table id="tbl_users" class="table display nowrap" style="border: .5px solid #DEE2E6;" width="100%">
-                <thead>
-                  <tr>
-                    <th class="p-2" data-priority="1">Salutation</th>
-                    <th class="p-2" data-priority="2">First Name</th>
-                    <th class="p-2" data-priority="3">Last Name</th>
-                    <th class="p-2">User Email</th>
-                    <th class="p-2">User Status</th>
-                    <th class="p-2">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-sm-12">
-          <div class="card card-primary card-outline">
-            <div class="card-body">
-              <table id="tbl_invites" class="table display nowrap" style="border: .5px solid #DEE2E6;" width="100%">
-                <thead>
-                  <tr>
-                    <th class="p-2" colspan="2">Pending Invites</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div><!-- /.row -->
+
+      <div id="div_calendars">
+        <hr>
+        <center><h5>Loading...</h5></center>
+      </div>
 
     </div><!-- /.container flued -->
 
-    <div class="modal fade" id="modal_inviteNewUser" role="dialog">
+    <div class="modal fade" id="modal_calendar" role="dialog">
       <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
           <div class="modal-header modal-header--sticky">
-            <h5 class="modal-title"><i class="fa fa-plus mr-1"></i> Invite New User</h5>
+            <h5 class="modal-title"><i class="fa fa-calendar-plus mr-1"></i> Create New Calendar</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
 
-            <form id="form_inviteNewUser">
-              <input type="email" class="form-control" id="txt_userEmail" name="txt_userEmail" placeholder="User email (e.g. ajhay.dev@gmail.com)" required>
+            <form id="form_calendar">
+              <input type="hidden" id="txt_calendarId" name="txt_calendarId">
+              Calendar Name :
+              <input type="text" class="form-control form-control-sm" id="txt_calendarName" name="txt_calendarName" placeholder="(e.g. Philippines)" required>
+              <div class="mb-2"></div>
+              Timezone :
+              <select class="form-control select2" id="slc_timezone" name="slc_timezone" style="width:100%;" required>
+                <option value="">--Select Timezone--</option>
+              </select>
             </form>
 
           </div>
           <div class="modal-footer modal-footer--sticky">
             <button type="reset" class="btn btn-secondary">clear</button>
-            <button type="submit" class="btn btn-primary" id="btn_submitInvitation" form="form_inviteNewUser">Submit Invitation</button>
+            <button type="submit" class="btn btn-primary" id="btn_saveCalendar" form="form_calendar">Save Calendar</button>
           </div>
         </div>
       </div>
     </div>
+
+
+    <div class="modal fade" id="modal_events" role="dialog">
+      <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-header modal-header--sticky">
+            <h5 class="modal-title"><i class="fa fa-plus mr-1"></i> Add Events</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <form id="form_events">
+              <input type="hidden" id="txt_eventId" name="txt_eventId">
+              Subject:
+              <input type="text" class="form-control form-control-sm" id="txt_eventSubject" name="txt_eventSubject" placeholder="Subject *" required>
+              <div class="mb-2"></div>
+              <div class="row">
+                <div class="col-lg-6 col-sm-12">
+                  <table width="100%">
+                    <tbody>
+                      <tr>
+                        <td colspan="2">From</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <input type="date" class="form-control form-control-sm" id="txt_eventStartDate" name="txt_eventStartDate">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <input type="time" class="form-control form-control-sm" id="txt_eventStartTime" name="txt_eventStartTime">
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-lg-6 col-sm-12">
+                  <table width="100%">
+                    <tbody>
+                      <tr>
+                        <td colspan="2">To</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <input type="date" class="form-control form-control-sm" id="txt_eventEndDate" name="txt_eventEndDate">
+                        </td>                        
+                      </tr>
+                      <tr>
+                        <td>
+                          <input type="time" class="form-control form-control-sm" id="txt_eventEndTime" name="txt_eventEndTime">
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="mb-2"></div>
+              Assigned To *:
+              <select class="form-control select2" id="slc_eventAssignedTo" name="slc_eventAssignedTo" style="width:100%;" required>
+                <option value="">--Select User--</option>
+              </select>
+              <div class="mb-2"></div>
+              Status *:
+              <select class="form-control select2" id="slc_eventStatus" name="slc_eventStatus" style="width:100%;" required>
+                <option value="">--Select Status--</option>
+                <option value="planned">Planned</option>
+                <option value="held">Held</option>
+                <option value="not_held">Not Held</option>
+              </select>
+              <div class="mb-2"></div>
+              Type *:
+              <select class="form-control select2" id="slc_eventType" name="slc_eventType" style="width:100%;" required>
+                <option value="">--Select Type--</option>
+                <option value="call">Call</option>
+                <option value="meeting">Meeting</option>
+                <option value="mobile_call">Mobile Call</option>
+              </select>
+            </form>
+            
+          </div>
+          <div class="modal-footer modal-footer--sticky">
+            <button type="reset" class="btn btn-secondary">clear</button>
+            <button type="submit" class="btn btn-primary" id="btn_saveEvent" form="form_events">Save Event</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="modal_tasks" role="dialog">
+      <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-header modal-header--sticky">
+            <h5 class="modal-title"><i class="fa fa-plus mr-1"></i> Add Tasks</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <form id="form_tasks">
+              <input type="hidden" id="txt_taskId" name="txt_taskId">
+              Subject:
+              <input type="text" class="form-control form-control-sm" id="txt_taskSubject" name="txt_taskSubject" placeholder="Subject *" required>
+              <div class="mb-2"></div>
+              <div class="row">
+                <div class="col-lg-6 col-sm-12">
+                  <table width="100%">
+                    <tbody>
+                      <tr>
+                        <td colspan="2">From</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <input type="date" class="form-control form-control-sm" id="txt_taskStartDate" name="txt_taskStartDate">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <input type="time" class="form-control form-control-sm" id="txt_taskStartTime" name="txt_taskStartTime">
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-lg-6 col-sm-12">
+                  <table width="100%">
+                    <tbody>
+                      <tr>
+                        <td colspan="2">To</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <input type="date" class="form-control form-control-sm" id="txt_taskEndDate" name="txt_taskEndDate">
+                        </td>                        
+                      </tr>
+                      <tr>
+                        <td>
+                          <input type="time" class="form-control form-control-sm" id="txt_taskEndTime" name="txt_taskEndTime">
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="mb-2"></div>
+              Assigned To *:
+              <select class="form-control select2" id="slc_taskAssignedTo" name="slc_taskAssignedTo" style="width:100%;" required>
+                <option value="">--Select User--</option>
+              </select>
+              <div class="mb-2"></div>
+              Status *:
+              <select class="form-control select2" id="slc_taskStatus" name="slc_taskStatus" style="width:100%;" required>
+                <option value="">--Select Status--</option>
+                <option value="not_started">Not Started</option>                
+                <option value="in_progress">In Progress</option>                
+                <option value="completed">Completed</option>                
+                <option value="pending_input">Pending Input</option>                
+                <option value="deferred">Deferred</option>                
+                <option value="planned">Planned</option>                
+              </select>
+            </form>
+
+          </div>
+          <div class="modal-footer modal-footer--sticky">
+            <button type="reset" class="btn btn-secondary">clear</button>
+            <button type="submit" class="btn btn-primary" id="btn_saveTask" form="form_tasks">Save Task</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="modal_holidays" role="dialog">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header modal-header--sticky">
+            <h5 class="modal-title"><i class="fa fa-flag mr-1"></i> Holidays</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            
+
+          </div>
+        </div>
+      </div>
+    </div>
+
 
   </div><!-- /.content -->
 </div>
@@ -182,8 +350,11 @@
 <script src="<?php echo base_url(); ?>assets/AdminLTE/plugins/select2/js/select2.full.min.js"></script>
 
 <!-- FullCalendar -->
-<script src="<?php echo base_url(); ?>assets/AdminLTE/plugins/moment/moment.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/AdminLTE/plugins/fullcalendar/main.js"></script>
+
+<script src="<?php echo base_url(); ?>assets/AdminLTE/plugins/moment/moment-timezone-with-data.js"></script>
+<script src="<?php echo base_url(); ?>assets/AdminLTE/plugins/fullcalendar/fullcalendar.js"></script>
+
+
 
 <!-- Custom Scripts -->
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/portal/{{ $customScripts }}.js"></script>
@@ -207,7 +378,71 @@
     //events
     $('.select2').select2();
 
-    
+    //
+    // ======================================================>
+    //
+
+    CALENDAR.loadCalendars();
+
+    $('#lnk_createCalendar').on('click',function(){
+      CALENDAR.loadTimezones();
+      CALENDAR.clearEvent();
+      $('#modal_calendar').modal('show');
+    }); 
+
+    $('#btn_createCalendar').on('click',function(){
+      CALENDAR.loadTimezones();
+      CALENDAR.clearEvent();
+      $('#modal_calendar').modal('show');
+    });
+
+    $('#form_calendar').on('submit',function(e){
+      e.preventDefault();
+      let calendarId = $('#txt_calendarId').val();
+
+      (calendarId == "")? CALENDAR.addCalendar(this) : CALENDAR.editCalendar(this);
+    });
+
+    $('#lnk_addEvent').on('click',function(){
+      CALENDAR.loadUsers('#slc_eventAssignedTo');
+      CALENDAR.clearTask();
+      $('#modal_events').modal('show');
+    });
+
+    $('#btn_addEvent').on('click',function(){
+      CALENDAR.loadUsers('#slc_eventAssignedTo');
+      CALENDAR.clearTask();
+      $('#modal_events').modal('show');
+    });
+
+    $('#lnk_addTask').on('click',function(){
+      CALENDAR.loadUsers('#slc_taskAssignedTo');
+      $('#modal_tasks').modal('show');
+    });
+
+    $('#btn_addTask').on('click',function(){
+      CALENDAR.loadUsers('#slc_taskAssignedTo');
+      $('#modal_tasks').modal('show');
+    });
+
+    $('#form_events').on('submit',function(e){
+      e.preventDefault();
+      let eventId = $('#txt_eventId').val();
+
+      (eventId == "")? CALENDAR.addEvent(this) : CALENDAR.editEvent(this);
+    });
+
+    $('#form_tasks').on('submit',function(e){
+      e.preventDefault();
+      let taskId = $('#txt_taskId').val();
+
+      (taskId == "")? CALENDAR.addTask(this) : CALENDAR.editTask(this);
+    });
+
+    $('#btn_holidays').on('click',function(){
+      $('#modal_holidays').modal('show');
+    });
+
 
   });
 </script>

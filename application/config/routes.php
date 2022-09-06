@@ -174,6 +174,22 @@ $route['marketing/select-organization-email-template'] = 'portal/OrganizationCon
 $route['upload-pdf'] = 'portal/ContactController/uploadPdf';
 $route['load-sample'] = 'portal/ContactController/loadSample';
 
+//calendar ==============================================================================================================>
+
+$route['load-calendars'] = 'portal/CalendarController/loadCalendars';
+$route['add-calendar'] = 'portal/CalendarController/addCalendar';
+$route['select-calendar'] = 'portal/CalendarController/selectCalendar';
+$route['edit-calendar'] = 'portal/CalendarController/editCalendar';
+$route['remove-calendar'] = 'portal/CalendarController/removeCalendar';
+
+$route['add-event'] = 'portal/EventController/addEvent';
+$route['select-event'] = 'portal/EventController/selectEvent';
+$route['edit-event'] = 'portal/EventController/editEvent';
+
+$route['add-task'] = 'portal/TaskController/addTask';
+$route['select-task'] = 'portal/TaskController/selectTask';
+$route['edit-task'] = 'portal/TaskController/editTask';
+
 //documents =============================================================================================================>
 $route['load-documents'] = 'portal/DocumentController/loadDocuments';
 $route['add-document'] = 'portal/DocumentController/addDocument';
