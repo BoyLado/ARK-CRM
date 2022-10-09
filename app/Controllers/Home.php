@@ -6,6 +6,8 @@ class Home extends BaseController
 {
     public function index()
     {
-        return view('welcome_message');
+        $data['pageTitle'] = "Arkonor LLC | Login";
+        $data['userAuthCode'] = "";
+        return $this->slice->view('login', $data);
     }
 }
