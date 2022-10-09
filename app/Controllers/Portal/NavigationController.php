@@ -163,12 +163,26 @@ class NavigationController extends BaseController
     //     }
     // }
 
-    // public function agenda()
-    // {
-    //     $data['pageTitle'] = "Arkonor LLC | Agenda";
-    //     $data['customScripts'] = 'agenda';
-    //     $this->slice->view('portal.agenda', $data);
-    // }
+    public function agenda()
+    {
+        if($this->session->has('arkonorllc_user_loggedIn'))
+        {
+            if($this->session->get('arkonorllc_user_loggedIn'))
+            {
+                $data['pageTitle'] = "Arkonor LLC | Agenda";
+                $data['customScripts'] = 'agenda';
+                return $this->slice->view('portal.agenda', $data);
+            }
+            else
+            {
+                return redirect()->to(base_url());
+            }
+        }
+        else
+        {
+            return redirect()->to(base_url());
+        }
+    }
 
     public function calendar()
     {
