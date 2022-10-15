@@ -40,6 +40,14 @@
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
         <li class="nav-item">
+          <a href="<?php echo base_url(); ?>/dashboard" id="nav_dashboard" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+              DASHBOARD
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
           <a href="#" id="nav_marketing" class="nav-link">
             <i class="nav-icon fas fa-users"></i>
             <p>

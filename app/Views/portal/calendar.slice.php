@@ -6,10 +6,10 @@
 
 @section('custom_styles')
 <!-- Select2 -->
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/AdminLTE/plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/select2/css/select2.min.css">
 
 <!-- Full Calendar -->
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/AdminLTE/plugins/fullcalendar/fullcalendar.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/fullcalendar/fullcalendar.css">
 
 <style type="text/css">
   /*INTERNAL STYLES*/
@@ -357,15 +357,15 @@
 
 <!-- Plugins -->
 <!-- Select2 -->
-<script src="<?php echo base_url(); ?>assets/AdminLTE/plugins/select2/js/select2.full.min.js"></script>
+<script src="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/select2/js/select2.full.min.js"></script>
 
 <!-- FullCalendar -->
 
-<script src="<?php echo base_url(); ?>assets/AdminLTE/plugins/moment/moment-timezone-with-data.js"></script>
-<script src="<?php echo base_url(); ?>assets/AdminLTE/plugins/fullcalendar/fullcalendar.js"></script>
+<script src="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/moment/moment-timezone-with-data.js"></script>
+<script src="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/fullcalendar/fullcalendar.js"></script>
 
 <!-- Custom Scripts -->
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/portal/{{ $customScripts }}.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>/public/assets/js/portal/{{ $customScripts }}.js"></script>
 
 <script type="text/javascript">
   $(document).ready(function(){

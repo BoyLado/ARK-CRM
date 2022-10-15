@@ -6,10 +6,10 @@
 
 @section('custom_styles')
 <!-- Select2 -->
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/AdminLTE/plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/select2/css/select2.min.css">
 
 <!-- Full Calendar -->
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/AdminLTE/plugins/fullcalendar/main.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/fullcalendar/main.css">
 
 <style type="text/css">
   /*INTERNAL STYLES*/
@@ -134,7 +134,7 @@
                   <div class="info-box shadow-none bg-light mb-0">
                     <span class="info-box-icon">
                       <!-- <i class="far fa-image"></i> -->
-                      <img class="img-square elevation-1" src="<?php echo base_url(); ?>assets/img/document-placeholder.png" alt="User Avatar">
+                      <img class="img-square elevation-1" src="<?php echo base_url(); ?>/public/assets/img/document-placeholder.png" alt="User Avatar">
                     </span>
                     <div class="info-box-content" style="line-height:1.7">
                       <span class="info-box-text" id="lbl_documentTitle" style="font-size: 1.5em;">
@@ -542,8 +542,8 @@
               <table id="tbl_allContacts" class="table display nowrap" style="border: .5px solid #DEE2E6;" width="100%">
                 <thead>
                   <tr>
-                    <th class="p-2"></th>
-                    <th class="p-2" data-priority="1">Salutation</th>
+                    <th class="p-2 pl-4"></th>
+                    <th class="p-2 pl-4" data-priority="1">Salutation</th>
                     <th class="p-2" data-priority="2">First Name</th>
                     <th class="p-2" data-priority="3">Last Name</th>
                     <th class="p-2">Position</th>
@@ -581,8 +581,8 @@
               <table id="tbl_allOrganizations" class="table display nowrap" style="border: .5px solid #DEE2E6;" width="100%">
                 <thead>
                   <tr>
-                    <th class="p-2">ID</th>
-                    <th class="p-2" data-priority="1">Organization Name</th>
+                    <th class="p-2 pl-4"></th>
+                    <th class="p-2 pl-4" data-priority="1">Organization Name</th>
                     <th class="p-2" data-priority="2">Primary Email</th>
                     <th class="p-2" data-priority="3">Website</th>
                     <th class="p-2">State</th>
@@ -628,14 +628,14 @@
 
 <!-- Plugins -->
 <!-- Select2 -->
-<script src="<?php echo base_url(); ?>assets/AdminLTE/plugins/select2/js/select2.full.min.js"></script>
+<script src="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/select2/js/select2.full.min.js"></script>
 
 <!-- FullCalendar -->
-<script src="<?php echo base_url(); ?>assets/AdminLTE/plugins/moment/moment.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/AdminLTE/plugins/fullcalendar/main.js"></script>
+<script src="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/moment/moment.min.js"></script>
+<script src="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/fullcalendar/main.js"></script>
 
 <!-- Custom Scripts -->
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/portal/{{ $customScripts }}.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>/public/assets/js/portal/{{ $customScripts }}.js"></script>
 
 <script type="text/javascript">
   $(document).ready(function(){

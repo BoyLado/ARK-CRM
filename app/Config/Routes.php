@@ -61,6 +61,9 @@ $routes->post('user-change-password', 'IndexController::changePassword');
 $routes->post('user-sign-up', 'IndexController::signUp');
 $routes->get('user-logout', 'IndexController::logout');
 
+$routes->get('contact-unsubscribe/(:num)/(:any)/(:any)','UnsubscribeController::contactUnsubscribe/$1/$2/$3');
+$routes->get('contact-confirmation/(:num)/(:any)/(:any)','UnsubscribeController::contactConfirmation/$1/$2/$3');
+
 $routes->get('sample','IndexController::sample');
 
 
@@ -70,6 +73,8 @@ $routes->get('sample','IndexController::sample');
  * INSIDE NAVIGATION
  * --------------------------------------------------------------------
  */
+//////////////////////////// DASHBOARD ////////////////////////////////
+$routes->get('dashboard', 'Portal\NavigationController::dashboard');
 
 //////////////////////////// MARKETING ////////////////////////////////
 $routes->get('campaigns', 'Portal\NavigationController::campaigns');
@@ -104,7 +109,20 @@ $routes->get('profile', 'portal\NavigationController::profile');
  * --------------------------------------------------------------------
  */
 
+///////////////////////////////////////////////////////////////////////
+//////////////////////////// DASHBOARD ////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+
+$routes->get('dashboard/load-all-campaigns','portal\DashboardController::loadAllCampaigns');
+$routes->get('dashboard/load-all-contacts','portal\DashboardController::loadAllContacts');
+$routes->get('dashboard/load-all-organizations','portal\DashboardController::loadAllOrganizations');
+$routes->get('dashboard/load-all-third-parties','portal\DashboardController::loadAllThirdParties');
+
+
+///////////////////////////////////////////////////////////////////////
 //////////////////////////// CAMPAIGNS ////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+
 $routes->get('marketing/load-campaigns','portal\CampaignController::loadCampaigns');
 $routes->post('marketing/add-campaign','portal\CampaignController::addCampaign');
 $routes->get('marketing/select-campaign','portal\CampaignController::selectCampaign');
@@ -122,18 +140,155 @@ $routes->get('marketing/load-unlink-contacts','portal\CampaignController::loadUn
 $routes->get('marketing/load-selected-organization-campaigns','portal\CampaignController::loadSelectedOrganizationCampaigns');
 $routes->get('marketing/load-unlink-organizations','portal\CampaignController::loadUnlinkOrganizations');
 
+
+//////////////////////////////////////////////////////////////////////
 //////////////////////////// CONTACTS ////////////////////////////////
-$routes->get('marketing/load-contacts', 'Portal\ContactController::loadContacts');
+//////////////////////////////////////////////////////////////////////
+
+$routes->get('marketing/load-contacts','Portal\ContactController::loadContacts');
+$routes->post('marketing/add-contact','portal\ContactController::addContact');
+$routes->get('marketing/select-contact','portal\ContactController::selectContact');
+$routes->post('marketing/edit-contact','portal\ContactController::editContact');
+$routes->post('marketing/remove-contact','portal\ContactController::removeContact');
+
+//contact summary
+$routes->get('marketing/load-contact-summary','portal\ContactController::loadContactSummary');
+
+//contact details
+$routes->get('marketing/load-contact-details','portal\ContactController::loadContactDetails');
+
+//contact activities
+$routes->get('marketing/load-contact-activities','portal\ContactController::loadContactActivities');
+
+//contact email histories
+$routes->get('marketing/load-contact-emails','portal\ContactController::loadContactEmails');
+
+//contact documents
+$routes->get('marketing/load-contact-documents','portal\ContactController::loadContactDocuments');
+$routes->post('marketing/unlink-contact-document','portal\ContactController::unlinkContactDocument');
+$routes->get('marketing/load-unlink-contact-documents','portal\ContactController::loadUnlinkContactDocuments');
+$routes->post('marketing/add-selected-contact-documents','portal\ContactController::addSelectedContactDocuments');
+$routes->post('marketing/add-contact-document','portal\ContactController::addContactDocument');
 
 //contact campaigns
-$routes->post('marketing/add-selected-contact-campaigns', 'portal\ContactController::addSelectedContactCampaigns');
+$routes->get('marketing/load-contact-campaigns','portal\ContactController::loadContactCampaigns');
+$routes->post('marketing/unlink-contact-campaign','portal\ContactController::unlinkContactCampaign');
+$routes->get('marketing/load-unlink-contact-campaigns','portal\ContactController::loadUnlinkContactCampaigns');
+$routes->post('marketing/add-selected-contact-campaigns','portal\ContactController::addSelectedContactCampaigns');
 
+//contact comments
+$routes->get('marketing/load-contact-comments','portal\ContactController::loadContactComments');
+$routes->post('marketing/add-contact-comment','portal\ContactController::addContactComment');
+
+//contact emails
+$routes->get('marketing/select-contact-email-template','portal\ContactController::selectEmailTemplate');
+$routes->post('marketing/send-contact-email','portal\ContactController::sendContactEmail');
+
+
+///////////////////////////////////////////////////////////////////////////
+//////////////////////////// ORGANIZATIONS ////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+$routes->get('marketing/load-organizations','portal\OrganizationController::loadOrganizations');
+$routes->post('marketing/add-organization','portal\OrganizationController::addOrganization');
+$routes->get('marketing/select-organization','portal\OrganizationController::selectOrganization');
+$routes->post('marketing/edit-organization','portal\OrganizationController::editOrganization');
+$routes->post('marketing/remove-organization','portal\OrganizationController::removeOrganization');
+
+//organization summary
+$routes->get('marketing/load-organization-summary','portal\OrganizationController::loadOrganizationSummary');
+
+//organization details
+$routes->get('marketing/load-organization-details','portal\OrganizationController::loadOrganizationDetails');
+
+//organization contacts
+$routes->get('marketing/load-organization-contacts','portal\OrganizationController::loadOrganizationContacts');
+$routes->post('marketing/unlink-organization-contact','portal\OrganizationController::unlinkOrganizationContact');
+$routes->get('marketing/load-unlink-organization-contacts','portal\OrganizationController::loadUnlinkOrganizationContacts');
+$routes->post('marketing/add-selected-organization-contacts','portal\OrganizationController::addSelectedOrganizationContacts');
+
+//organization email histories
+$routes->get('marketing/load-organization-emails','portal\OrganizationController::loadOrganizationEmails');
+
+//organization documents
+$routes->get('marketing/load-organization-documents','portal\OrganizationController::loadOrganizationDocuments');
+$routes->post('marketing/unlink-organization-document','portal\OrganizationController::unlinkOrganizationDocument');
+$routes->get('marketing/load-unlink-organization-documents','portal\OrganizationController::loadUnlinkOrganizationDocuments');
+$routes->post('marketing/add-selected-organization-documents','portal\OrganizationController::addSelectedOrganizationDocuments');
+$routes->post('marketing/add-organization-document','portal\OrganizationController::addOrganizationDocument');
+
+//organization campaigns
+$routes->get('marketing/load-organization-campaigns','portal\OrganizationController::loadOrganizationCampaigns');
+$routes->post('marketing/unlink-organization-campaign','portal\OrganizationController::unlinkOrganizationCampaign');
+$routes->get('marketing/load-unlink-organization-campaigns','portal\OrganizationController::loadUnlinkOrganizationCampaigns');
+$routes->post('marketing/add-selected-organization-campaigns','portal\OrganizationController::addSelectedOrganizationCampaigns');
+
+//organization email 
+$routes->get('marketing/select-organization-email-template','portal\OrganizationController::selectEmailTemplate');
+
+
+///////////////////////////////////////////////////////////////////////
+//////////////////////////// CALENDARS ////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+
+$routes->get('load-calendars','portal\CalendarController::loadCalendars');
+$routes->post('add-calendar','portal\CalendarController::addCalendar');
+$routes->get('select-calendar','portal\CalendarController::selectCalendar');
+$routes->post('edit-calendar','portal\CalendarController::editCalendar');
+$routes->post('remove-calendar','portal\CalendarController::removeCalendar');
+
+$routes->post('add-event','portal\EventController/ad::Event');
+$routes->get('select-event','portal\EventController/se::ectEvent');
+$routes->post('edit-event','portal\EventController/ed::tEvent');
+
+$routes->post('add-task','portal\TaskController/add::ask');
+$routes->get('select-task','portal\TaskController/sel::ctTask');
+$routes->post('edit-task','portal\TaskController/edi::Task');
+
+
+///////////////////////////////////////////////////////////////////////
+//////////////////////////// DOCUMENTS ////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+
+$routes->get('load-documents','portal\DocumentController::loadDocuments');
+$routes->post('add-document','portal\DocumentController::addDocument');
+$routes->get('select-document','portal\DocumentController::selectDocument');
+$routes->post('edit-document','portal\DocumentController::editDocument');
+$routes->post('remove-document','portal\DocumentController::removeDocument');
+
+//document contacts
+$routes->get('load-selected-contact-documents','portal\DocumentController::loadSelectedContactDocuments');
+$routes->get('load-unlink-contacts','portal\DocumentController::loadUnlinkContacts');
+
+//document organizations
+$routes->get('load-selected-organization-documents','portal\DocumentController::loadSelectedOrganizationDocuments');
+$routes->get('load-unlink-organizations','portal\DocumentController::loadUnlinkOrganizations');
+
+
+////////////////////////////////////////////////////////////////////////////
+//////////////////////////// EMAIL TEMPLATE ////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+
+$routes->post('tools/add-category','portal\EmailTemplateController::addCategory');
+$routes->get('tools/load-categories','portal\EmailTemplateController::loadCategories');
+$routes->get('tools/load-templates','portal\EmailTemplateController::loadTemplates');
+$routes->post('tools/add-template','portal\EmailTemplateController::addTemplate');
+$routes->get('tools/select-template','portal\EmailTemplateController::selectTemplate');
+
+
+///////////////////////////////////////////////////////////////////
 //////////////////////////// USERS ////////////////////////////////
+///////////////////////////////////////////////////////////////////
+
 $routes->get('load-users', 'Portal\UserController::loadUsers');
 $routes->post('invite-new-user', 'portal\UserController::inviteNewUser');
 $routes->get('load-pending-invites', 'portal\UserController::loadPendingInvites');
 
+
+/////////////////////////////////////////////////////////////////////
 //////////////////////////// PROFILE ////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+
 $routes->get('load-profile', 'portal\UserController::loadProfile');
 $routes->post('change-profile-picture', 'portal\UserController::changeProfilePicture');
 $routes->get('load-details', 'portal\UserController::loadDetails');

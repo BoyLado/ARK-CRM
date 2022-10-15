@@ -120,8 +120,9 @@ const CAMPAIGN = (function(){
             icon: 'success',
             title: 'Success! <br>New campaign added successfully.',
           });
-          $('#btn_saveCampaign').text('Save Campaign');
-          $('#btn_saveCampaign').prop('disabled',false);
+          setTimeout(function(){
+            window.location.replace(`${baseUrl}/campaigns`);
+          }, 1000);
         }
         else
         {
@@ -130,7 +131,6 @@ const CAMPAIGN = (function(){
             title: 'Error! <br>Database error!'
           });
         }
-        CAMPAIGN.loadCampaigns('table');
       }
     });
   }
@@ -223,10 +223,8 @@ const CAMPAIGN = (function(){
             icon: 'success',
             title: 'Success! <br>New contact added successfully.',
           });
-          $('#btn_saveCampaign').text('Save Campaign');
-          $('#btn_saveCampaign').prop('disabled',false);
           setTimeout(function(){
-            window.location.replace(`${baseUrl}/campaigns`);
+            window.location.replace(`${baseUrl}/campaign-preview/${$('#txt_campaignId').val()}`);
           }, 1000);
         }
         else
@@ -456,7 +454,7 @@ const CAMPAIGN = (function(){
         let tbody = '';
         data.forEach(function(value,key){
           tbody += `<tr>
-                      <td class="p-1"><input type="checkbox" onchange="CAMPAIGN.selectContacts(this)" value="${value['id']}"/></td>
+                      <td class="p-1 pl-4"><input type="checkbox" onchange="CAMPAIGN.selectContacts(this)" value="${value['id']}"/></td>
                       <td class="p-1 pl-4">${value['salutation']}</td>
                       <td class="p-1">${value['first_name']}</td>
                       <td class="p-1">${value['last_name']}</td>
@@ -674,7 +672,7 @@ const CAMPAIGN = (function(){
         data.forEach(function(value,key){
           let website = (value['main_website'] == null)? '---' : `<a href="${baseUrl}/contact-preview/${value['id']}">${value['main_website']}</a>`;
           tbody += `<tr>
-                      <td class="p-1"><input type="checkbox" onchange="CAMPAIGN.selectOrganizations(this)" value="${value['id']}"/></td>
+                      <td class="p-1 pl-4"><input type="checkbox" onchange="CAMPAIGN.selectOrganizations(this)" value="${value['id']}"/></td>
                       <td class="p-1 pl-4">${value['organization_name']}</td>
                       <td class="p-1">${value['primary_email']}</td>
                       <td class="p-1">${website}</td>

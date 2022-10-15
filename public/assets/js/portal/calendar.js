@@ -15,7 +15,7 @@ const CALENDAR = (function(){
   {
     $.ajax({
       /* CalendarController->loadCalendars() */
-      url : `${baseUrl}index.php/load-calendars`,
+      url : `${baseUrl}/load-calendars`,
       method : 'get',
       dataType: 'json',
       success : function(data)
@@ -129,7 +129,7 @@ const CALENDAR = (function(){
 
     $.ajax({
       /* CalendarController->addCalendar() */
-      url : `${baseUrl}index.php/add-calendar`,
+      url : `${baseUrl}/add-calendar`,
       method : 'post',
       dataType: 'json',
       processData: false, // important
@@ -146,7 +146,7 @@ const CALENDAR = (function(){
             title: 'Success! <br>New calendar added successfully.',
           });
           setTimeout(function(){
-            window.location.replace(`${baseUrl}index.php/calendar`);
+            window.location.replace(`${baseUrl}/calendar`);
           }, 1000);
         }
         else
@@ -179,7 +179,7 @@ const CALENDAR = (function(){
   {
     $.ajax({
       /* UserController->loadUsers() */
-      url : `${baseUrl}index.php/load-users`,
+      url : `${baseUrl}/load-users`,
       method : 'get',
       dataType: 'json',
       success : function(data)
@@ -210,7 +210,7 @@ const CALENDAR = (function(){
 
     $.ajax({
       /* EventController->addEvent() */
-      url : `${baseUrl}index.php/add-event`,
+      url : `${baseUrl}/add-event`,
       method : 'post',
       dataType: 'json',
       processData: false, // important
@@ -227,7 +227,7 @@ const CALENDAR = (function(){
             title: 'Success! <br>New event added successfully.',
           });
           setTimeout(function(){
-            window.location.replace(`${baseUrl}index.php/calendar`);
+            window.location.replace(`${baseUrl}/calendar`);
           }, 1000);
         }
         else
@@ -279,7 +279,7 @@ const CALENDAR = (function(){
 
     $.ajax({
       /* TaskController->addTask() */
-      url : `${baseUrl}index.php/add-task`,
+      url : `${baseUrl}/add-task`,
       method : 'post',
       dataType: 'json',
       processData: false, // important
@@ -296,7 +296,7 @@ const CALENDAR = (function(){
             title: 'Success! <br>New tasks added successfully.',
           });
           setTimeout(function(){
-            window.location.replace(`${baseUrl}index.php/calendar`);
+            window.location.replace(`${baseUrl}/calendar`);
           }, 1000);
         }
         else

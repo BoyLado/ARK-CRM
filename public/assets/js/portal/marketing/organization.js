@@ -20,7 +20,7 @@ const ORGANIZATION = (function(){
   {
     $.ajax({
       /* OrganizationController->loadOrganizations() */
-      url : `${baseUrl}index.php/marketing/load-organizations`,
+      url : `${baseUrl}/marketing/load-organizations`,
       method : 'get',
       dataType: 'json',
       success : function(data)
@@ -30,9 +30,9 @@ const ORGANIZATION = (function(){
         {
           let tbody = '';
           data.forEach(function(value,key){
-            let website = (_arrEmptyValues.includes(value['main_website']))? '---' : `<a href="${baseUrl}index.php/contact-preview/${value['id']}">${value['main_website']}</a>`;
+            let website = (_arrEmptyValues.includes(value['main_website']))? '---' : `<a href="${baseUrl}/contact-preview/${value['id']}">${value['main_website']}</a>`;
             tbody += `<tr>
-                        <td class="p-1 pl-4"><a href="${baseUrl}index.php/organization-preview/${value['id']}">${value['organization_name']}</a></td>
+                        <td class="p-1 pl-4"><a href="${baseUrl}/organization-preview/${value['id']}">${value['organization_name']}</a></td>
                         <td class="p-1"><a href="javascript:void(0)" onclick="ORGANIZATION.selectContactEmail(${value['id']},'${value['primary_email']}')">${value['primary_email']}</a></td>
                         <td class="p-1">${website}</td>
                         <td class="p-1">N/A</td>
@@ -40,7 +40,7 @@ const ORGANIZATION = (function(){
                         <td class="p-1">N/A</td>
                         <td class="p-1">${value['assigned_to']}</td>
                         <td class="p-1">
-                          <a href="javascript:void(0)" onclick="ORGANIZATION.selectContact('edit',${value['id']})" class="mr-2">
+                          <a href="javascript:void(0)" onclick="ORGANIZATION.selectOrganization('edit',${value['id']})" class="mr-2">
                             <i class="fa fa-pen"></i>
                           </a>
                           <a href="javascript:void(0)" onclick="ORGANIZATION.removeOrganization(${value['id']})" class="text-red">
@@ -78,7 +78,7 @@ const ORGANIZATION = (function(){
   {
     $.ajax({
       /* UserController->loadUsers() */
-      url : `${baseUrl}index.php/load-users`,
+      url : `${baseUrl}/load-users`,
       method : 'get',
       dataType: 'json',
       success : function(data)
@@ -105,7 +105,7 @@ const ORGANIZATION = (function(){
     let formData = new FormData(thisForm);
     $.ajax({
       /* OrganizationController->addOrganization() */
-      url : `${baseUrl}index.php/marketing/add-organization`,
+      url : `${baseUrl}/marketing/add-organization`,
       method : 'post',
       dataType: 'json',
       processData: false, // important
@@ -123,7 +123,7 @@ const ORGANIZATION = (function(){
           });
 
           setTimeout(function(){
-            window.location.replace(`${baseUrl}index.php/organizations`);
+            window.location.replace(`${baseUrl}/organizations`);
           }, 1000);
         }
         else
@@ -141,7 +141,7 @@ const ORGANIZATION = (function(){
   {
     $.ajax({
       /* OrganizationController->selectOrganization() */
-      url : `${baseUrl}index.php/marketing/select-organization`,
+      url : `${baseUrl}/marketing/select-organization`,
       method : 'get',
       dataType: 'json',
       data : {organizationId : organizationId},
@@ -194,7 +194,7 @@ const ORGANIZATION = (function(){
         {
           let organizationName = `${data['organization_name']}`;
           $('#lnk_organization').text(organizationName);
-          $('#lnk_organization').attr('href',`${baseUrl}index.php/organization-preview/${data['id']}`);
+          $('#lnk_organization').attr('href',`${baseUrl}/organization-preview/${data['id']}`);
 
           $('#lbl_organizationName').text(organizationName);
 
@@ -217,7 +217,7 @@ const ORGANIZATION = (function(){
 
     $.ajax({
       /* OrganizationController->editOrganization() */
-      url : `${baseUrl}index.php/marketing/edit-organization`,
+      url : `${baseUrl}/marketing/edit-organization`,
       method : 'post',
       dataType: 'json',
       processData: false, // important
@@ -233,6 +233,10 @@ const ORGANIZATION = (function(){
             icon: 'success',
             title: 'Success! <br>Organization edited successfully.',
           });
+
+          setTimeout(function(){
+            window.location.replace(`${baseUrl}/organization-preview/${$('#txt_organizationId').val()}`);
+          }, 1000);
         }
         else
         {
@@ -241,7 +245,6 @@ const ORGANIZATION = (function(){
             title: 'Error! <br>Database error!'
           });
         }
-        ORGANIZATION.loadOrganizations('table');
       }
     });
   }
@@ -256,7 +259,7 @@ const ORGANIZATION = (function(){
 
       $.ajax({
         /* OrganizationController->removeOrganization() */
-        url : `${baseUrl}index.php/marketing/remove-organization`,
+        url : `${baseUrl}/marketing/remove-organization`,
         method : 'post',
         dataType: 'json',
         processData: false, // important
@@ -271,7 +274,7 @@ const ORGANIZATION = (function(){
               title: 'Success! <br>Organization removed successfully.',
             });
             setTimeout(function(){
-              window.location.replace(`${baseUrl}index.php/organizations`);
+              window.location.replace(`${baseUrl}/organizations`);
             }, 1000);
           }
           else
@@ -290,7 +293,7 @@ const ORGANIZATION = (function(){
   {
     $.ajax({
       /* EmailTemplateController->loadTemplates() */
-      url : `${baseUrl}index.php/tools/load-templates`,
+      url : `${baseUrl}/tools/load-templates`,
       method : 'get',
       dataType: 'json',
       success : function(data)
@@ -310,7 +313,7 @@ const ORGANIZATION = (function(){
   {
     $.ajax({
       /* OrganizationController->selectEmailTemplate() */
-      url : `${baseUrl}index.php/marketing/select-organization-email-template`,
+      url : `${baseUrl}/marketing/select-organization-email-template`,
       method : 'get',
       dataType: 'json',
       data : {organizationId : organizationId, templateId : templateId},
@@ -332,7 +335,7 @@ const ORGANIZATION = (function(){
   {
     $.ajax({
       /* OrganizationController->loadOrganizationSummary() */
-      url : `${baseUrl}index.php/marketing/load-organization-summary`,
+      url : `${baseUrl}/marketing/load-organization-summary`,
       method : 'get',
       dataType: 'json',
       data : {organizationId : organizationId},
@@ -353,7 +356,7 @@ const ORGANIZATION = (function(){
   {
     $.ajax({
       /* OrganizationController->loadOrganizationDetails() */
-      url : `${baseUrl}index.php/marketing/load-organization-details`,
+      url : `${baseUrl}/marketing/load-organization-details`,
       method : 'get',
       dataType: 'json',
       data : {organizationId : organizationId},
@@ -412,7 +415,7 @@ const ORGANIZATION = (function(){
   {
     $.ajax({
       /* OrganizationController->loadOrganizationContacts() */
-      url : `${baseUrl}index.php/marketing/load-organization-contacts`,
+      url : `${baseUrl}/marketing/load-organization-contacts`,
       method : 'get',
       dataType: 'json',
       data : {organizationId:organizationId},
@@ -425,10 +428,10 @@ const ORGANIZATION = (function(){
           tbody += `<tr>
                       <td class="p-1">${value['id']}</td>
                       <td class="p-1 pl-4">${value['salutation']}</td>
-                      <td class="p-1"><a href="${baseUrl}index.php/contact-preview/${value['id']}">${value['first_name']}</a></td>
-                      <td class="p-1"><a href="${baseUrl}index.php/contact-preview/${value['id']}">${value['last_name']}</a></td>
+                      <td class="p-1"><a href="${baseUrl}/contact-preview/${value['id']}">${value['first_name']}</a></td>
+                      <td class="p-1"><a href="${baseUrl}/contact-preview/${value['id']}">${value['last_name']}</a></td>
                       <td class="p-1">Leader</td>
-                      <td class="p-1"><a href="${baseUrl}index.php/organization-preview/${value['organization_id']}">${value['organization_name']}</a></td>
+                      <td class="p-1"><a href="${baseUrl}/organization-preview/${value['organization_id']}">${value['organization_name']}</a></td>
                       <td class="p-1"><a href="javascript:void(0)" onclick="CONTACTS.selectContactEmail(${value['id']},'${value['primary_email']}')">${value['primary_email']}</a></td>
                       <td class="p-1">Juan</td>
                       <td class="p-1">
@@ -487,7 +490,7 @@ const ORGANIZATION = (function(){
 
       $.ajax({
         /* OrganizationController->unlinkOrganizationContact() */
-        url : `${baseUrl}index.php/marketing/unlink-organization-contact`,
+        url : `${baseUrl}/marketing/unlink-organization-contact`,
         method : 'post',
         dataType: 'json',
         processData: false, // important
@@ -529,7 +532,7 @@ const ORGANIZATION = (function(){
   {
     $.ajax({
       /* OrganizationController->loadUnlinkOrganizationContacts() */
-      url : `${baseUrl}index.php/marketing/load-unlink-organization-contacts`,
+      url : `${baseUrl}/marketing/load-unlink-organization-contacts`,
       method : 'get',
       dataType: 'json',
       data : {organizationId:organizationId},
@@ -540,7 +543,7 @@ const ORGANIZATION = (function(){
         let tbody = '';
         data.forEach(function(value,key){
           tbody += `<tr>
-                      <td class="p-1"><input type="checkbox" onchange="ORGANIZATION.selectContacts(this)" value="${value['id']}"/></td>
+                      <td class="p-1 pl-4"><input type="checkbox" onchange="ORGANIZATION.selectContacts(this)" value="${value['id']}"/></td>
                       <td class="p-1 pl-4">${value['salutation']}</td>
                       <td class="p-1">${value['first_name']}</td>
                       <td class="p-1">${value['last_name']}</td>
@@ -594,7 +597,7 @@ const ORGANIZATION = (function(){
 
     $.ajax({
       /* OrganizationController->addSelectedOrganizationContacts() */
-      url : `${baseUrl}index.php/marketing/add-selected-organization-contacts`,
+      url : `${baseUrl}/marketing/add-selected-organization-contacts`,
       method : 'post',
       dataType: 'json',
       processData: false, // important
@@ -628,7 +631,7 @@ const ORGANIZATION = (function(){
   {
     $.ajax({
       /* OrganizationController->loadOrganizationEmails() */
-      url : `${baseUrl}index.php/marketing/load-organization-emails`,
+      url : `${baseUrl}/marketing/load-organization-emails`,
       method : 'get',
       dataType: 'json',
       data : {organizationId : organizationId},
@@ -689,7 +692,7 @@ const ORGANIZATION = (function(){
   {
     $.ajax({
       /* OrganizationController->loadOrganizationDocuments() */
-      url : `${baseUrl}index.php/marketing/load-organization-documents`,
+      url : `${baseUrl}/marketing/load-organization-documents`,
       method : 'get',
       dataType: 'json',
       data : {organizationId : organizationId},
@@ -775,7 +778,7 @@ const ORGANIZATION = (function(){
 
       $.ajax({
         /* OrganizationController->unlinkOrganizationDocument() */
-        url : `${baseUrl}index.php/marketing/unlink-organization-document`,
+        url : `${baseUrl}/marketing/unlink-organization-document`,
         method : 'post',
         dataType: 'json',
         processData: false, // important
@@ -816,7 +819,7 @@ const ORGANIZATION = (function(){
   {
     $.ajax({
       /* OrganizationController->loadUnlinkOrganizationDocuments() */
-      url : `${baseUrl}index.php/marketing/load-unlink-organization-documents`,
+      url : `${baseUrl}/marketing/load-unlink-organization-documents`,
       method : 'get',
       dataType: 'json',
       data : {organizationId:organizationId},
@@ -836,7 +839,7 @@ const ORGANIZATION = (function(){
             fileLink = `<a href="${baseUrl}assets/uploads/documents/${value['file_name']}" target="_blank">${value['file_name'].substring(0, 20)}...</a>`;
           }
           tbody += `<tr>
-                      <td class="p-1"><input type="checkbox" onchange="ORGANIZATION.selectDocuments(this)" value="${value['id']}"/></td>
+                      <td class="p-1 pl-4"><input type="checkbox" onchange="ORGANIZATION.selectDocuments(this)" value="${value['id']}"/></td>
                       <td class="p-1 pl-4">${value['title']}</td>
                       <td class="p-1">${fileLink}</td>
                       <td class="p-1">${value['created_date']}</td>
@@ -888,7 +891,7 @@ const ORGANIZATION = (function(){
 
     $.ajax({
       /* OrganizationController->addSelectedOrganizationDocuments() */
-      url : `${baseUrl}index.php/marketing/add-selected-organization-documents`,
+      url : `${baseUrl}/marketing/add-selected-organization-documents`,
       method : 'post',
       dataType: 'json',
       processData: false, // important
@@ -933,7 +936,7 @@ const ORGANIZATION = (function(){
 
     $.ajax({
       /* OrganizationController->addOrganizationDocument() */
-      url : `${baseUrl}index.php/marketing/add-organization-document`,
+      url : `${baseUrl}/marketing/add-organization-document`,
       method : 'post',
       dataType: 'json',
       processData: false, // important
@@ -969,7 +972,7 @@ const ORGANIZATION = (function(){
   {
     $.ajax({
       /* OrganizationController->loadOrganizationCampaigns() */
-      url : `${baseUrl}index.php/marketing/load-organization-campaigns`,
+      url : `${baseUrl}/marketing/load-organization-campaigns`,
       method : 'get',
       dataType: 'json',
       data : {organizationId : organizationId},
@@ -1038,7 +1041,7 @@ const ORGANIZATION = (function(){
   {
     $.ajax({
       /* OrganizationController->loadUnlinkOrganizationCampaigns() */
-      url : `${baseUrl}index.php/marketing/load-unlink-organization-campaigns`,
+      url : `${baseUrl}/marketing/load-unlink-organization-campaigns`,
       method : 'get',
       dataType: 'json',
       data : {organizationId:organizationId},
@@ -1049,7 +1052,7 @@ const ORGANIZATION = (function(){
         let tbody = '';
         data.forEach(function(value,key){
           tbody += `<tr>
-                      <td class="p-1"><input type="checkbox" onchange="ORGANIZATION.selectCampaigns(this)" value="${value['id']}"/></td>
+                      <td class="p-1 pl-4"><input type="checkbox" onchange="ORGANIZATION.selectCampaigns(this)" value="${value['id']}"/></td>
                       <td class="p-1 pl-4">${value['campaign_name']}</td>
                       <td class="p-1">${value['assigned_to_name']}</td>
                       <td class="p-1">${value['campaign_status']}</td>
@@ -1111,7 +1114,7 @@ const ORGANIZATION = (function(){
 
     $.ajax({
       /* OrganizationController->addSelectedOrganizationCampaigns() */
-      url : `${baseUrl}index.php/marketing/add-selected-organization-campaigns`,
+      url : `${baseUrl}/marketing/add-selected-organization-campaigns`,
       method : 'post',
       dataType: 'json',
       processData: false, // important
@@ -1150,7 +1153,7 @@ const ORGANIZATION = (function(){
 
       $.ajax({
         /* OrganizationController->unlinkOrganizationCampaign() */
-        url : `${baseUrl}index.php/marketing/unlink-organization-campaign`,
+        url : `${baseUrl}/marketing/unlink-organization-campaign`,
         method : 'post',
         dataType: 'json',
         processData: false, // important

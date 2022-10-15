@@ -46,10 +46,10 @@
           <div class="col-sm-12">
             <h6 class="mt-1 float-left">
               <span>
-                <a href="<?php echo base_url(); ?>index.php/contacts" class="text-muted">Contacts</a> -
+                <a href="<?php echo base_url(); ?>/contacts" class="text-muted">Contacts</a> -
               </span> 
               <small>
-                <a href="<?php echo base_url(); ?>index.php/contacts" class="text-muted">All</a>
+                <a href="<?php echo base_url(); ?>/contacts" class="text-muted">All</a>
               </small> 
               @if($contactId != "")
               <small> - 
@@ -960,7 +960,7 @@
                       <h6>Comments</h6>
                       <div class="card-comments p-2" id="div_loadComments" style="background: none;">
                         <div class="card-comment p-1">
-                          <img class="img-circle img-sm" src="<?php echo base_url(); ?>assets/img/avatar.jpg" alt="User Image">
+                          <img class="img-circle img-sm" src="<?php echo base_url(); ?>/public/assets/img/avatar.jpg" alt="User Image">
                           <div class="comment-text">
                             <span class="username">
                             Maria Gonzales
@@ -975,7 +975,7 @@
                           </div>
                           <div class="ml-3 pt-1">
                             <div class="card-comment p-0">
-                              <img class="img-circle img-sm" src="<?php echo base_url(); ?>assets/img/avatar.jpg" alt="User Image">
+                              <img class="img-circle img-sm" src="<?php echo base_url(); ?>/public/assets/img/avatar.jpg" alt="User Image">
                               <div class="comment-text">
                                 <span class="username">
                                 Maria Gonzales
@@ -990,7 +990,7 @@
                               </div>
                               <div class="ml-3 pt-1">
                                 <div class="card-comment p-0">
-                                  <img class="img-circle img-sm" src="<?php echo base_url(); ?>assets/img/avatar.jpg" alt="User Image">
+                                  <img class="img-circle img-sm" src="<?php echo base_url(); ?>/public/assets/img/avatar.jpg" alt="User Image">
                                   <div class="comment-text">
                                     <span class="username">
                                     Maria Gonzales
@@ -1010,7 +1010,7 @@
                         </div>
 
                         <div class="card-comment p-1">
-                          <img class="img-circle img-sm" src="<?php echo base_url(); ?>assets/img/avatar.jpg" alt="User Image">
+                          <img class="img-circle img-sm" src="<?php echo base_url(); ?>/public/assets/img/avatar.jpg" alt="User Image">
                           <div class="comment-text">
                             <span class="username">
                             Luna Stark
@@ -1389,7 +1389,7 @@
                             <tr>
                               <td class="p-1" width="120px;" valign="middle">Reports To</td>
                               <td class="p-1">
-                                <select class="form-control select2" id="slc_reportsTo" name="slc_reportsTo" style="width:100%;">
+                                <select class="form-control select2" id="slc_reportsTo" name="slc_reportsTo" required style="width:100%;">
                                   <option value="">--Select user--</option>
                                 </select>
                               </td>
@@ -1717,7 +1717,7 @@
                 <table id="tbl_allDocuments" class="table display nowrap" style="border: .5px solid #DEE2E6;" width="100%">
                   <thead>
                     <tr>
-                      <th class="p-2"></th>
+                      <th class="p-2 pl-4"></th>
                       <th class="p-2 pl-4" data-priority="1">Title</th>
                       <th class="p-2" data-priority="2">File</th>
                       <th class="p-2" data-priority="3">Modified Date & Time</th>
@@ -1830,8 +1830,8 @@
                 <table id="tbl_allCampaigns" class="table display nowrap" style="border: .5px solid #DEE2E6;" width="100%">
                   <thead>
                     <tr>
-                      <th class="p-2"></th>
-                      <th class="p-2  pl-4" data-priority="1">Campaign Name</th>
+                      <th class="p-2 pl-4"></th>
+                      <th class="p-2 pl-4" data-priority="1">Campaign Name</th>
                       <th class="p-2" data-priority="2">Assigned To</th>
                       <th class="p-2" data-priority="3">Campaign Status</th>
                       <th class="p-2">Campaign Type</th>
@@ -2094,7 +2094,7 @@
         let formData = new FormData(this);
         $.ajax({
           /*  */
-          url : `${baseUrl}index.php/submit-sample-email`,
+          url : `${baseUrl}/submit-sample-email`,
           method : 'post',
           dataType: 'json',
           processData: false, // important

@@ -15,7 +15,7 @@ const EMAIL_TEMPLATE = (function(){
   {
     $.ajax({
       /* EmailTemplateController->loadCategories() */
-      url : `${baseUrl}index.php/tools/load-categories`,
+      url : `${baseUrl}/tools/load-categories`,
       method : 'get',
       dataType: 'json',
       success : function(data)
@@ -28,7 +28,7 @@ const EMAIL_TEMPLATE = (function(){
             tbody += `<tr>
                         <td class="p-1">${value['category_name']}</td>
                         <td class="p-1" width="40">
-                          <a href="#">
+                          <a href="#" class="text-red">
                             <i class="fa fa-trash"></i>
                           </a>
                         </td>
@@ -61,7 +61,7 @@ const EMAIL_TEMPLATE = (function(){
 
     $.ajax({
       /* EmailTemplateController->addCategory() */
-      url : `${baseUrl}index.php/tools/add-category`,
+      url : `${baseUrl}/tools/add-category`,
       method : 'post',
       dataType: 'json',
       processData: false, // important
@@ -92,7 +92,7 @@ const EMAIL_TEMPLATE = (function(){
   {
     $.ajax({
       /* EmailTemplateController->loadTemplates() */
-      url : `${baseUrl}index.php/tools/load-templates`,
+      url : `${baseUrl}/tools/load-templates`,
       method : 'get',
       dataType: 'json',
       success : function(data)
@@ -115,11 +115,11 @@ const EMAIL_TEMPLATE = (function(){
                         <a href="javascript:void(0)" class="mr-2">
                           <i class="fa fa-pen"></i>
                         </a>
-                        <a href="#" class="mr-2">
-                          <i class="fa fa-trash"></i>
-                        </a>
                         <a href="#">
-                          <i class="fa fa-eye"></i>
+                          <i class="fa fa-eye mr-2"></i>
+                        </a>
+                        <a href="#" class="text-red">
+                          <i class="fa fa-trash"></i>
                         </a>
                       </td>
                     </tr>`;
@@ -146,7 +146,7 @@ const EMAIL_TEMPLATE = (function(){
 
     $.ajax({
       /* EmailTemplateController->addTemplate() */
-      url : `${baseUrl}index.php/tools/add-template`,
+      url : `${baseUrl}/tools/add-template`,
       method : 'post',
       dataType: 'json',
       processData: false, // important

@@ -91,6 +91,7 @@
     <div class="container-fluid">
 
       <input type="hidden" id="txt_campaignId" name="txt_campaignId" value="{{ $campaignId }}">
+      <input type="hidden" id="txt_campaignState" name="txt_campaignState">
 
       @if($campaignId == "")
       <div class="row">
@@ -883,7 +884,7 @@
                 <thead>
                   <tr>
                     <th class="p-2"></th>
-                    <th class="p-2" data-priority="1">Salutation</th>
+                    <th class="p-2 pl-4" data-priority="1">Salutation</th>
                     <th class="p-2" data-priority="2">First Name</th>
                     <th class="p-2" data-priority="3">Last Name</th>
                     <th class="p-2">Position</th>
@@ -921,8 +922,8 @@
               <table id="tbl_allOrganizations" class="table display nowrap" style="border: .5px solid #DEE2E6;" width="100%">
                 <thead>
                   <tr>
-                    <th class="p-2">ID</th>
-                    <th class="p-2" data-priority="1">Organization Name</th>
+                    <th class="p-2"></th>
+                    <th class="p-2 pl-4" data-priority="1">Organization Name</th>
                     <th class="p-2" data-priority="2">Primary Email</th>
                     <th class="p-2" data-priority="3">Website</th>
                     <th class="p-2">State</th>
@@ -1002,6 +1003,7 @@
       $('#lbl_stateCampaign span').text('Add Campaign');
       $('#lbl_stateCampaign i').removeClass('fa-pen');
       $('#lbl_stateCampaign i').addClass('fa-plus');
+      $('#txt_campaignState').val('add');
       $('#modal_campaign').modal('show');
     });
 
@@ -1015,6 +1017,7 @@
       $('#lbl_stateCampaign span').text('Add Campaign');
       $('#lbl_stateCampaign i').removeClass('fa-pen');
       $('#lbl_stateCampaign i').addClass('fa-plus');
+      $('#txt_campaignState').val('add');
       $('#modal_campaign').modal('show');
     });
 
@@ -1024,7 +1027,7 @@
 
     $('#form_campaign').on('submit',function(e){
       e.preventDefault();
-      ($('#txt_campaignId').val() == "")? CAMPAIGN.addCampaign(this) : CAMPAIGN.editCampaign(this);
+      ($('#txt_campaignState').val() == "add")? CAMPAIGN.addCampaign(this) : CAMPAIGN.editCampaign(this);
     });
 
     let campaignId = $('#txt_campaignId').val();
@@ -1044,6 +1047,7 @@
       CAMPAIGN.selectCampaign('load',campaignId);
 
       $('#btn_editCampaign').on('click',function(){
+        $('#txt_campaignState').val('edit');
         CAMPAIGN.selectCampaign('edit',campaignId);
       });
 

@@ -26,7 +26,7 @@ const CONTACTS = (function(){
 		let formData = new FormData(thisForm);
 		$.ajax({
 			/* ContactController->uploadPdf() */
-		  url : `${baseUrl}index.php/upload-pdf`,
+		  url : `${baseUrl}/upload-pdf`,
 		  method : 'post',
 		  dataType: 'json',
 		  processData: false, // important
@@ -52,12 +52,12 @@ const CONTACTS = (function(){
 		    console.log(data);
 		    let tbody = '';
 		    data.forEach(function(value,key){
-		    	let organizationName = (_arrEmptyValues.includes(value['organization_id']))? '---' : `<a href="${baseUrl}index.php/organization-preview/${value['organization_id']}">${value['organization_name']}</a>`;
+		    	let organizationName = (_arrEmptyValues.includes(value['organization_id']))? '---' : `<a href="${baseUrl}/organization-preview/${value['organization_id']}">${value['organization_name']}</a>`;
 		    	tbody += `<tr>
 		    							<td class="p-1">${value['id']}</td>
                       <td class="p-1 pl-4">${value['salutation']}</td>
-                      <td class="p-1"><a href="${baseUrl}index.php/contact-preview/${value['id']}">${value['first_name']}</a></td>
-                      <td class="p-1"><a href="${baseUrl}index.php/contact-preview/${value['id']}">${value['last_name']}</a></td>
+                      <td class="p-1"><a href="${baseUrl}/contact-preview/${value['id']}">${value['first_name']}</a></td>
+                      <td class="p-1"><a href="${baseUrl}/contact-preview/${value['id']}">${value['last_name']}</a></td>
                       <td class="p-1">Leader</td>
                       <td class="p-1">${organizationName}</td>
                       <td class="p-1"><a href="javascript:void(0)" onclick="CONTACTS.selectContactEmail(${value['id']},'${value['primary_email']}')">${value['primary_email']}</a></td>
@@ -98,7 +98,7 @@ const CONTACTS = (function(){
 	{
 	  $.ajax({
 	    /* UserController->loadUsers() */
-	    url : `${baseUrl}index.php/load-users`,
+	    url : `${baseUrl}/load-users`,
 	    method : 'get',
 	    dataType: 'json',
 	    success : function(data)
@@ -124,7 +124,7 @@ const CONTACTS = (function(){
 	{
 	  $.ajax({
 	    /* OrganizationController->loadOrganizations() */
-	    url : `${baseUrl}index.php/marketing/load-organizations`,
+	    url : `${baseUrl}/marketing/load-organizations`,
 	    method : 'get',
 	    dataType: 'json',
 	    success : function(data)
@@ -154,7 +154,7 @@ const CONTACTS = (function(){
 
 		$.ajax({
 			/* ContactController->addContact() */
-		  url : `${baseUrl}index.php/marketing/add-contact`,
+		  url : `${baseUrl}/marketing/add-contact`,
 		  method : 'post',
 		  dataType: 'json',
 		  processData: false, // important
@@ -171,7 +171,7 @@ const CONTACTS = (function(){
 		        title: 'Success! <br>New contact added successfully.',
 		      });
 		      setTimeout(function(){
-            window.location.replace(`${baseUrl}index.php/contacts`);
+            window.location.replace(`${baseUrl}/contacts`);
           }, 1000);
 		    }
 		    else
@@ -190,7 +190,7 @@ const CONTACTS = (function(){
 		CONTACTS.loadUsers(['#slc_reportsTo','#slc_assignedTo']);
 		$.ajax({
 			/* ContactController->selectContact() */
-		  url : `${baseUrl}index.php/marketing/select-contact`,
+		  url : `${baseUrl}/marketing/select-contact`,
 		  method : 'get',
 		  dataType: 'json',
 		  data : {contactId : contactId},
@@ -249,7 +249,7 @@ const CONTACTS = (function(){
 	    	{
 	    		let contactName = `${data['first_name']} ${data['last_name']}`;
 	    		$('#lnk_contact').text(contactName);
-	    		$('#lnk_contact').attr('href',`${baseUrl}index.php/contact-preview/${data['id']}`);
+	    		$('#lnk_contact').attr('href',`${baseUrl}/contact-preview/${data['id']}`);
 
 	    		let contactFullName = `${data['salutation']} ${data['first_name']} ${data['last_name']}`;
 	    		$('#lbl_contactName').text(contactFullName);
@@ -273,7 +273,7 @@ const CONTACTS = (function(){
 
 		$.ajax({
 			/* ContactController->editContact() */
-		  url : `${baseUrl}index.php/marketing/edit-contact`,
+		  url : `${baseUrl}/marketing/edit-contact`,
 		  method : 'post',
 		  dataType: 'json',
 		  processData: false, // important
@@ -290,7 +290,7 @@ const CONTACTS = (function(){
 		        title: 'Success! <br>Contact updated successfully.',
 		      });
 		      setTimeout(function(){
-            window.location.replace(`${baseUrl}index.php/contacts`);
+            window.location.replace(`${baseUrl}/contact-preview/${$('#txt_contactId').val()}`);
           }, 1000);
 		    }
 		    else
@@ -314,7 +314,7 @@ const CONTACTS = (function(){
 
 			$.ajax({
 				/* ContactController->removeContact() */
-			  url : `${baseUrl}index.php/marketing/remove-contact`,
+			  url : `${baseUrl}/marketing/remove-contact`,
 			  method : 'post',
 			  dataType: 'json',
 			  processData: false, // important
@@ -329,7 +329,7 @@ const CONTACTS = (function(){
 			        title: 'Success! <br>Contact removed successfully.',
 			      });
 			      setTimeout(function(){
-	            window.location.replace(`${baseUrl}index.php/contacts`);
+	            window.location.replace(`${baseUrl}/contacts`);
 	          }, 1000);
 			    }
 			    else
@@ -351,7 +351,7 @@ const CONTACTS = (function(){
 	{
 		$.ajax({
 			/* ContactController->loadContactSummary() */
-		  url : `${baseUrl}index.php/marketing/load-contact-summary`,
+		  url : `${baseUrl}/marketing/load-contact-summary`,
 		  method : 'get',
 		  dataType: 'json',
 		  data : {contactId : contactId},
@@ -362,7 +362,7 @@ const CONTACTS = (function(){
     		$('#lbl_firstName').text((_arrEmptyValues.includes(data['first_name']))? '---' : data['first_name']);
     		$('#lbl_lastName').text((_arrEmptyValues.includes(data['last_name']))? '---' : data['last_name']);
     		$('#lbl_position').text((_arrEmptyValues.includes(data['position']))? '---' : data['position']);
-    		let organizationName = `<a href="${baseUrl}index.php/organization-preview/${data['organization_id']}" target="_blank">
+    		let organizationName = `<a href="${baseUrl}/organization-preview/${data['organization_id']}" target="_blank">
     															${data['organization_name']}
     														</a>`;
     		$('#lbl_organizationName').html(organizationName);
@@ -378,7 +378,7 @@ const CONTACTS = (function(){
 	{
 		$.ajax({
 			/* ContactController->loadContactDetails() */
-		  url : `${baseUrl}index.php/marketing/load-contact-details`,
+		  url : `${baseUrl}/marketing/load-contact-details`,
 		  method : 'get',
 		  dataType: 'json',
 		  data : {contactId : contactId},
@@ -386,7 +386,7 @@ const CONTACTS = (function(){
 		  {
 		    console.log(data);
     		// Details
-    		let orgName = (_arrEmptyValues.includes(data['organization_id']))? '---' : `<a href="${baseUrl}index.php/organization-preview/${data['organization_id']}">${data['organization_name']}</a>`;
+    		let orgName = (_arrEmptyValues.includes(data['organization_id']))? '---' : `<a href="${baseUrl}/organization-preview/${data['organization_id']}">${data['organization_name']}</a>`;
     		
     		$('#div_details table:eq(0) tbody tr td:eq(1)').html(`${data['salutation']} ${data['first_name']}`);
     		$('#div_details table:eq(1) tbody tr td:eq(1)').html((_arrEmptyValues.includes(data['last_name']))? '---' : data['last_name']);
@@ -436,7 +436,7 @@ const CONTACTS = (function(){
 	{
 		$.ajax({
 			/* ContactController->loadContactActivities() */
-		  url : `${baseUrl}index.php/marketing/load-contact-activities`,
+		  url : `${baseUrl}/marketing/load-contact-activities`,
 		  method : 'get',
 		  dataType: 'json',
 		  data : {contactId : contactId},
@@ -497,7 +497,7 @@ const CONTACTS = (function(){
 	{
 		$.ajax({
 			/* ContactController->loadContactEmails() */
-		  url : `${baseUrl}index.php/marketing/load-contact-emails`,
+		  url : `${baseUrl}/marketing/load-contact-emails`,
 		  method : 'get',
 		  dataType: 'json',
 		  data : {contactId : contactId},
@@ -558,7 +558,7 @@ const CONTACTS = (function(){
 	{
 		$.ajax({
 			/* ContactController->loadContactDocuments() */
-		  url : `${baseUrl}index.php/marketing/load-contact-documents`,
+		  url : `${baseUrl}/marketing/load-contact-documents`,
 		  method : 'get',
 		  dataType: 'json',
 		  data : {contactId : contactId},
@@ -644,7 +644,7 @@ const CONTACTS = (function(){
 
 			$.ajax({
 				/* ContactController->unlinkContactDocument() */
-			  url : `${baseUrl}index.php/marketing/unlink-contact-document`,
+			  url : `${baseUrl}/marketing/unlink-contact-document`,
 			  method : 'post',
 			  dataType: 'json',
 			  processData: false, // important
@@ -685,7 +685,7 @@ const CONTACTS = (function(){
 	{
 		$.ajax({
 			/* ContactController->loadUnlinkContactDocuments() */
-		  url : `${baseUrl}index.php/marketing/load-unlink-contact-documents`,
+		  url : `${baseUrl}/marketing/load-unlink-contact-documents`,
 		  method : 'get',
 		  dataType: 'json',
 		  data : {contactId:contactId},
@@ -705,7 +705,7 @@ const CONTACTS = (function(){
 		    		fileLink = `<a href="${baseUrl}assets/uploads/documents/${value['file_name']}" target="_blank">${value['file_name'].substring(0, 20)}...</a>`;
 		    	}
 		    	tbody += `<tr>
-	                    <td class="p-1"><input type="checkbox" onchange="CONTACTS.selectDocuments(this)" value="${value['id']}"/></td>
+	                    <td class="p-1 pl-4"><input type="checkbox" onchange="CONTACTS.selectDocuments(this)" value="${value['id']}"/></td>
 	                    <td class="p-1 pl-4">${value['title']}</td>
 	                    <td class="p-1">${fileLink}</td>
 	                    <td class="p-1">${value['created_date']}</td>
@@ -757,7 +757,7 @@ const CONTACTS = (function(){
 
 		$.ajax({
 			/* ContactController->addSelectedContactDocuments() */
-		  url : `${baseUrl}index.php/marketing/add-selected-contact-documents`,
+		  url : `${baseUrl}/marketing/add-selected-contact-documents`,
 		  method : 'post',
 		  dataType: 'json',
 		  processData: false, // important
@@ -802,7 +802,7 @@ const CONTACTS = (function(){
 
 		$.ajax({
 			/* ContactController->addContactDocument() */
-		  url : `${baseUrl}index.php/marketing/add-contact-document`,
+		  url : `${baseUrl}/marketing/add-contact-document`,
 		  method : 'post',
 		  dataType: 'json',
 		  processData: false, // important
@@ -819,7 +819,7 @@ const CONTACTS = (function(){
 		        title: 'Success! <br>New document added successfully.',
 		      });
 		      setTimeout(function(){
-            CONTACT.loadContactDocuments($('#txt_contactId').val());
+            CONTACTS.loadContactDocuments($('#txt_contactId').val());
           }, 1000);
 		    }
 		    else
@@ -838,7 +838,7 @@ const CONTACTS = (function(){
 	{
 		$.ajax({
 			/* ContactController->loadContactCampaigns() */
-		  url : `${baseUrl}index.php/marketing/load-contact-campaigns`,
+		  url : `${baseUrl}/marketing/load-contact-campaigns`,
 		  method : 'get',
 		  dataType: 'json',
 		  data : {contactId : contactId},
@@ -913,7 +913,7 @@ const CONTACTS = (function(){
 
 			$.ajax({
 				/* ContactController->unlinkContactCampaign() */
-			  url : `${baseUrl}index.php/marketing/unlink-contact-campaign`,
+			  url : `${baseUrl}/marketing/unlink-contact-campaign`,
 			  method : 'post',
 			  dataType: 'json',
 			  processData: false, // important
@@ -954,7 +954,7 @@ const CONTACTS = (function(){
 	{
 		$.ajax({
 			/* ContactController->loadUnlinkContactCampaigns() */
-		  url : `${baseUrl}index.php/marketing/load-unlink-contact-campaigns`,
+		  url : `${baseUrl}/marketing/load-unlink-contact-campaigns`,
 		  method : 'get',
 		  dataType: 'json',
 		  data : {contactId:contactId},
@@ -965,7 +965,7 @@ const CONTACTS = (function(){
 		    let tbody = '';
 		    data.forEach(function(value,key){
 		    	tbody += `<tr>
-	                    <td class="p-1"><input type="checkbox" onchange="CONTACTS.selectCampaigns(this)" value="${value['id']}"/></td>
+	                    <td class="p-1 pl-4"><input type="checkbox" onchange="CONTACTS.selectCampaigns(this)" value="${value['id']}"/></td>
 	                    <td class="p-1 pl-4">${value['campaign_name']}</td>
 	                    <td class="p-1">${value['assigned_to_name']}</td>
 	                    <td class="p-1">${value['campaign_status']}</td>
@@ -1018,7 +1018,7 @@ const CONTACTS = (function(){
 
 		$.ajax({
 			/* ContactController->addSelectedContactCampaigns() */
-		  url : `${baseUrl}index.php/marketing/add-selected-contact-campaigns`,
+		  url : `${baseUrl}/marketing/add-selected-contact-campaigns`,
 		  method : 'post',
 		  dataType: 'json',
 		  processData: false, // important
@@ -1053,7 +1053,7 @@ const CONTACTS = (function(){
 	{
 		$.ajax({
 			/* ContactController->loadContactComments() */
-		  url : `${baseUrl}index.php/marketing/load-contact-comments`,
+		  url : `${baseUrl}/marketing/load-contact-comments`,
 		  method : 'get',
 		  dataType: 'json',
 		  data : {contactId : contactId},
@@ -1073,7 +1073,7 @@ const CONTACTS = (function(){
 
 		$.ajax({
 			/* ContactController->addContactComment() */
-		  url : `${baseUrl}index.php/marketing/add-contact-comment`,
+		  url : `${baseUrl}/marketing/add-contact-comment`,
 		  method : 'post',
 		  dataType: 'json',
 		  processData: false, // important
@@ -1136,7 +1136,7 @@ const CONTACTS = (function(){
 	{
 		$.ajax({
 		  /* EmailTemplateController->loadTemplates() */
-		  url : `${baseUrl}index.php/tools/load-templates`,
+		  url : `${baseUrl}/tools/load-templates`,
 		  method : 'get',
 		  dataType: 'json',
 		  success : function(data)
@@ -1156,7 +1156,7 @@ const CONTACTS = (function(){
 	{
 		$.ajax({
 		  /* ContactController->selectEmailTemplate() */
-		  url : `${baseUrl}index.php/marketing/select-contact-email-template`,
+		  url : `${baseUrl}/marketing/select-contact-email-template`,
 		  method : 'get',
 		  dataType: 'json',
 		  data : {contactId : contactId, templateId : templateId},
@@ -1187,7 +1187,7 @@ const CONTACTS = (function(){
 
 		$.ajax({
 			/* ContactController->sendContactEmail() */
-		  url : `${baseUrl}index.php/marketing/send-contact-email`,
+		  url : `${baseUrl}/marketing/send-contact-email`,
 		  method : 'post',
 		  dataType: 'json',
 		  processData: false, // important
@@ -1203,6 +1203,10 @@ const CONTACTS = (function(){
 		        icon: 'success',
 		        title: 'Success! <br>Message sent successfully.',
 		      });
+
+		      setTimeout(function(){
+            window.location.replace(`${baseUrl}/contact-preview/${$('#txt_contactId').val()}`);
+          }, 1000);
 		    }
 		    else
 		    {

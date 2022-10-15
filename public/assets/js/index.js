@@ -41,7 +41,7 @@ const INDEX = (function(){
 		      });
 
           setTimeout(function(){
-            window.location.replace(`${baseUrl}/contacts`);
+            window.location.replace(`${baseUrl}/dashboard`);
           }, 1000);
         }
         else

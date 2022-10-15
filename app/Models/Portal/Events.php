@@ -39,4 +39,66 @@ class Events extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+
+    ////////////////////////////////////////////////////////////
+    ///// CalendarController->loadCalendars()
+    ////////////////////////////////////////////////////////////
+    public function loadEvents()
+    {
+        $columns = [
+            'a.id',
+            'a.subject',
+            'a.event_timezone',
+            'a.start_date',
+            'a.start_time',
+            'a.end_date',
+            'a.end_time',
+            'a.status',
+            'a.type',
+            'a.created_by',
+            'a.created_date',
+            'a.updated_by',
+            'a.updated_date'
+        ];
+
+        $builder = $this->db->table('events a')->select($columns);
+        $query = $builder->get();
+        return  $query->getResultArray();
+    }
+
+    //
+    // EventController->addEvent()
+    //
+    public function addEvent($arrData)
+    {
+        try {
+          $this->db->trans_start();
+            $this->db->insert('events',$arrData);
+          $this->db->trans_complete();
+          return ($this->db->trans_status() === TRUE)? 1 : 0;
+        } catch (PDOException $e) {
+          throw $e;
+        }
+    }
+
+    public function selectEvent()
+    {
+
+    }
+
+    //
+    // EventController->editEvent()
+    //
+    public function editEvent($arrData,$eventId)
+    {
+        try {
+          $this->db->trans_start();
+            $this->db->update('events',$arrData,['id'=>$eventId]);
+          $this->db->trans_complete();
+          return ($this->db->trans_status() === TRUE)? 1 : 0;
+        } catch (PDOException $e) {
+          throw $e;
+        }
+    }
 }
