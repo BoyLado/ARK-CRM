@@ -42,36 +42,6 @@ class Campaigns extends Model
 
 
 
-    
-
-    
-
-    
-
-    
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     ////////////////////////////////////////////////////////////
     ///// CampaignController->loadCampaigns()
     ////////////////////////////////////////////////////////////
@@ -94,18 +64,19 @@ class Campaigns extends Model
         return  $query->getResultArray();
     }
 
-    /*
-        CampaignController->addCampaign()
-    */
+    ////////////////////////////////////////////////////////////
+    ///// CampaignController->addCampaign()
+    ////////////////////////////////////////////////////////////
     public function addCampaign($arrData)
     {
         try {
-          $this->db->trans_start();
-            $this->db->insert('campaigns',$arrData);
-          $this->db->trans_complete();
-          return ($this->db->trans_status() === TRUE)? 1 : 0;
+            $this->db->transStart();
+                $builder = $this->db->table('campaigns');
+                $builder->insert($arrData);
+            $this->db->transComplete();
+            return ($this->db->transStatus() === TRUE)? 1 : 0;
         } catch (PDOException $e) {
-          throw $e;
+            throw $e;
         }
     }
 
@@ -149,34 +120,37 @@ class Campaigns extends Model
         return  $query->getRowArray();
     }
 
-    /*
-        CampaignController->editCampaign()
-    */
+    ////////////////////////////////////////////////////////////
+    ///// CampaignController->editCampaign()
+    ////////////////////////////////////////////////////////////
     public function editCampaign($arrData, $campaignId)
     {
         try {
-          $this->db->trans_start();
-            $this->db->update('campaigns',$arrData,['id'=>$campaignId]);
-          $this->db->trans_complete();
-          return ($this->db->trans_status() === TRUE)? 1 : 0;
+            $this->db->transStart();
+                $builder = $this->db->table('campaigns');
+                $builder->where(['id'=>$campaignId]);
+                $builder->update($arrData);
+            $this->db->transComplete();
+            return ($this->db->transStatus() === TRUE)? 1 : 0;
         } catch (PDOException $e) {
-          throw $e;
+            throw $e;
         }
     }
 
-    /*
-        CampaignController->removeCampaign()
-    */
+    ////////////////////////////////////////////////////////////
+    ///// CampaignController->removeCampaign()
+    ////////////////////////////////////////////////////////////
     public function removeCampaign($campaignId)
     {
         try {
-          $this->db->trans_start();
-            $this->db->where('id',$campaignId);
-            $this->db->delete('campaigns');
-          $this->db->trans_complete();
-          return ($this->db->trans_status() === TRUE)? 1 : 0;
+            $this->db->transStart();
+                $builder = $this->db->table('campaigns');
+                $builder->where(['id'=>$campaignId]);
+                $builder->delete();
+            $this->db->transComplete();
+            return ($this->db->transStatus() === TRUE)? 1 : 0;
         } catch (PDOException $e) {
-          throw $e;
+            throw $e;
         }
     }
 
@@ -251,9 +225,9 @@ class Campaigns extends Model
         return  $query->getResultArray();
     }
 
-    /*
-        ContactController->loadUnlinkContactCampaigns()
-    */
+    ////////////////////////////////////////////////////////////
+    ///// ContactController->loadUnlinkContactCampaigns()
+    ////////////////////////////////////////////////////////////
     public function loadUnlinkContactCampaigns($arrCampaignIds)
     {
         $columns = [
@@ -268,15 +242,13 @@ class Campaigns extends Model
             'a.created_date'
         ];
 
+        $builder = $this->db->table('campaigns a')->select($columns);
         if(count($arrCampaignIds) > 0)
         {
-            $this->db->where_not_in('a.id',$arrCampaignIds);
+            $builder->whereNotIn('a.id',$arrCampaignIds);
         }
-
-        $this->db->select($columns);
-        $this->db->from('campaigns a');
-        $data = $this->db->get()->result_array();
-    return $data;
+        $query = $builder->get();
+        return  $query->getResultArray();
     }
 
 
@@ -319,9 +291,9 @@ class Campaigns extends Model
         return  $query->getResultArray();
     }
 
-    /*
-        OrganizationController->loadUnlinkOrganizationCampaigns()
-    */
+    ////////////////////////////////////////////////////////////
+    ///// OrganizationController->loadUnlinkOrganizationCampaigns()
+    ////////////////////////////////////////////////////////////
     public function loadUnlinkOrganizationCampaigns($arrCampaignIds)
     {
         $columns = [
@@ -335,21 +307,19 @@ class Campaigns extends Model
             'a.created_by',
             'a.created_date'
         ];
-
+        
+        $builder = $this->db->table('campaigns a')->select($columns);
         if(count($arrCampaignIds) > 0)
         {
-            $this->db->where_not_in('a.id',$arrCampaignIds);
+            $builder->whereNotIn('a.id',$arrCampaignIds);
         }
-
-        $this->db->select($columns);
-        $this->db->from('campaigns a');
-        $data = $this->db->get()->result_array();
-    return $data;
+        $query = $builder->get();
+        return  $query->getResultArray();
     }
 
-    /*
-        CampaignController->loadUnlinkOrganizations()
-    */
+    ////////////////////////////////////////////////////////////
+    ///// CampaignController->loadUnlinkOrganizations()
+    ////////////////////////////////////////////////////////////
     public function loadOrganizationCampaigns($campaignId)
     {
         $columns = [
@@ -357,11 +327,10 @@ class Campaigns extends Model
             'a.organization_id'
         ];
 
-        $this->db->where('a.campaign_id',$campaignId);
-        $this->db->select($columns);
-        $this->db->from('organization_campaigns a');
-        $data = $this->db->get()->result_array();
-    return $data;
+        $builder = $this->db->table('organization_campaigns a')->select($columns);
+        $builder->where('a.campaign_id',$campaignId);
+        $query = $builder->get();
+        return  $query->getResultArray();
     }
 
 }

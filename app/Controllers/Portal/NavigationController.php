@@ -8,7 +8,10 @@ class NavigationController extends BaseController
 {
     public function __construct()
     {
-        $this->campaigns = model('Portal/Campaigns');
+        $this->campaigns        = model('Portal/Campaigns');
+        $this->contacts         = model('Portal/Contacts');
+        $this->organizations    = model('Portal/Organizations');
+        $this->documents        = model('Portal/Documents');
     }
 
     public function dashboard()
@@ -18,7 +21,8 @@ class NavigationController extends BaseController
             if($this->session->get('arkonorllc_user_loggedIn'))
             {
                 $data['pageTitle'] = "Arkonor LLC | Dashboard";
-                return $this->slice->view('portal.marketing.campaign', $data);
+                $data['customScripts'] = 'dashboard';
+                return $this->slice->view('portal.dashboard', $data);
             }
             else
             {
@@ -107,22 +111,36 @@ class NavigationController extends BaseController
         }
     }
 
-    // public function contactPreview($contactId)
-    // {
-    //     $result = $this->contacts->selectContact($contactId);
-    //     if($result != null)
-    //     {
-    //         $data['pageTitle'] = "Arkonor LLC | Contacts Preview";
-    //         $data['customScripts'] = 'contacts';
-    //         $data['contactId'] = $contactId;
-    //         $this->slice->view('portal.marketing.contact', $data);
-    //     }
-    //     else
-    //     {
-    //         $data['pageTitle'] = "Arkonor LLC | 404 Page";
-    //         $this->slice->view('404', $data);
-    //     }
-    // }
+    public function contactPreview($contactId)
+    {
+        if($this->session->has('arkonorllc_user_loggedIn'))
+        {
+            if($this->session->get('arkonorllc_user_loggedIn'))
+            {
+                $result = $this->contacts->selectContact($contactId);
+                if($result != null)
+                {
+                    $data['pageTitle'] = "Arkonor LLC | Contacts Preview";
+                    $data['customScripts'] = 'contacts';
+                    $data['contactId'] = $contactId;
+                    return $this->slice->view('portal.marketing.contact', $data);
+                }
+                else
+                {
+                    $data['pageTitle'] = "Arkonor LLC | 404 Page";
+                    return view('404', $data);
+                }
+            }
+            else
+            {
+                return redirect()->to(base_url());
+            }
+        }
+        else
+        {
+            return redirect()->to(base_url());
+        }
+    }
 
     public function organizations()
     {
@@ -131,7 +149,7 @@ class NavigationController extends BaseController
             if($this->session->get('arkonorllc_user_loggedIn'))
             {
                 $data['pageTitle'] = "Arkonor LLC | Organizations";
-                $data['customScripts'] = 'organizations';
+                $data['customScripts'] = 'organization';
                 $data['organizationId'] = "";
                 return $this->slice->view('portal.marketing.organization', $data);
             }
@@ -146,22 +164,37 @@ class NavigationController extends BaseController
         }
     }
 
-    // public function organizationPreview($organizationId)
-    // {
-    //     $result = $this->organizations->selectOrganization($organizationId);
-    //     if($result != null)
-    //     {
-    //         $data['pageTitle'] = "Arkonor LLC | Organization Preview";
-    //         $data['customScripts'] = 'organization';
-    //         $data['organizationId'] = $organizationId;
-    //         $this->slice->view('portal.marketing.organization', $data);
-    //     }
-    //     else
-    //     {
-    //         $data['pageTitle'] = "Arkonor LLC | 404 Page";
-    //         $this->slice->view('404', $data);
-    //     }
-    // }
+    public function organizationPreview($organizationId)
+    {
+        if($this->session->has('arkonorllc_user_loggedIn'))
+        {
+            if($this->session->get('arkonorllc_user_loggedIn'))
+            {
+                $result = $this->organizations->selectOrganization($organizationId);
+
+                if($result != null)
+                {
+                    $data['pageTitle'] = "Arkonor LLC | Organization Preview";
+                    $data['customScripts'] = 'organization';
+                    $data['organizationId'] = $organizationId;
+                    return $this->slice->view('portal.marketing.organization', $data);
+                }
+                else
+                {
+                    $data['pageTitle'] = "Arkonor LLC | 404 Page";
+                    return view('404', $data);
+                }
+            }
+            else
+            {
+                return redirect()->to(base_url());
+            }
+        }
+        else
+        {
+            return redirect()->to(base_url());
+        }
+    }
 
     public function agenda()
     {
@@ -227,13 +260,37 @@ class NavigationController extends BaseController
         }
     }
 
-    // public function documentPreview($documentId)
-    // {
-    //     $data['pageTitle'] = "Arkonor LLC | Document Preview";
-    //     $data['customScripts'] = 'documents';
-    //     $data['documentId'] = $documentId;
-    //     $this->slice->view('portal.documents', $data);
-    // }
+    public function documentPreview($documentId)
+    {
+        if($this->session->has('arkonorllc_user_loggedIn'))
+        {
+            if($this->session->get('arkonorllc_user_loggedIn'))
+            {
+                $result = $this->documents->selectDocument($documentId);
+
+                if($result != null)
+                {
+                    $data['pageTitle'] = "Arkonor LLC | Document Preview";
+                    $data['customScripts'] = 'documents';
+                    $data['documentId'] = $documentId;
+                    return $this->slice->view('portal.documents', $data);
+                }
+                else
+                {
+                    $data['pageTitle'] = "Arkonor LLC | 404 Page";
+                    return view('404', $data);
+                }
+            }
+            else
+            {
+                return redirect()->to(base_url());
+            }
+        }
+        else
+        {
+            return redirect()->to(base_url());
+        }
+    }
 
     public function emailTemplate()
     {

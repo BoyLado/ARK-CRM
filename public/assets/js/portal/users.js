@@ -34,7 +34,7 @@ const USERS = (function(){
                         <a href="javascript:void(0)" onclick="CONTACTS.selectContact(${value['id']})" class="mr-2">
                           <i class="fa fa-pen"></i>
                         </a>
-                        <a href="javascript:void(0)" onclick="CONTACTS.removeContact(${value['id']})">
+                        <a href="javascript:void(0)" onclick="CONTACTS.removeContact(${value['id']})" class="text-red">
                           <i class="fa fa-trash"></i>
                         </a>
                       </td>

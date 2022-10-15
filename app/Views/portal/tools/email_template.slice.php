@@ -6,7 +6,7 @@
 
 @section('custom_styles')
 <!-- Select2 -->
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/AdminLTE/plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/select2/css/select2.min.css">
 
 <style type="text/css">
   /*INTERNAL STYLES*/
@@ -212,9 +212,21 @@
               </button> -->
 
               <hr>
-              <label class="col-form-label text-muted" for="inputError">
-                <i class="fa fa-info-circle"></i> Possible Subtitutions 
-              </label>
+              <div class="card shadow-none">
+                <div class="card-header p-0">
+                  <label class="col-form-label text-muted" for="inputError">
+                    <i class="fa fa-info-circle"></i> Possible Subtitutions 
+                  </label>
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                </div>
+                <div class="card-body p-0" style="display: block;">
+                  __salutation__<br>
+                  __first_name__<br>
+                  __last_name__<br>
+                </div>
+              </div>
             </form>
 
           </div>
@@ -252,10 +264,10 @@
 
 <!-- Plugins -->
 <!-- Select2 -->
-<script src="<?php echo base_url(); ?>assets/AdminLTE/plugins/select2/js/select2.full.min.js"></script>
+<script src="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/select2/js/select2.full.min.js"></script>
 
 <!-- Custom Scripts -->
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/portal/tools/{{ $customScripts }}.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>/public/assets/js/portal/tools/{{ $customScripts }}.js"></script>
 
 <script type="text/javascript">
   $(document).ready(function(){

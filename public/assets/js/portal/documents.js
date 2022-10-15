@@ -20,7 +20,7 @@ const DOCUMENTS = (function(){
   {
     $.ajax({
       /* DocumentController->loadDocuments() */
-      url : `${baseUrl}index.php/load-documents`,
+      url : `${baseUrl}/load-documents`,
       method : 'get',
       dataType: 'json',
       success : function(data)
@@ -39,7 +39,7 @@ const DOCUMENTS = (function(){
           {
             fileLink = `<a href="${baseUrl}assets/uploads/documents/${value['file_name']}" target="_blank">${value['file_name'].substring(0, 20)}...</a>`;
           }
-          let documentPreview = `<a href="${baseUrl}index.php/document-preview/${value['id']}">${value['title']}</a>`;
+          let documentPreview = `<a href="${baseUrl}/document-preview/${value['id']}">${value['title']}</a>`;
           tbody += `<tr>
                       <td class="p-1">${value['id']}</td>
                       <td class="p-1 pl-4">${documentPreview}</td>
@@ -93,7 +93,7 @@ const DOCUMENTS = (function(){
 
       $.ajax({
         /* DocumentController->removeDocument() */
-        url : `${baseUrl}index.php/remove-document`,
+        url : `${baseUrl}/remove-document`,
         method : 'post',
         dataType: 'json',
         processData: false, // important
@@ -108,7 +108,7 @@ const DOCUMENTS = (function(){
               title: 'Success! <br>Document removed successfully.',
             });
             setTimeout(function(){
-              window.location.replace(`${baseUrl}index.php/documents`);
+              window.location.replace(`${baseUrl}/documents`);
             }, 1000);
           }
           else
@@ -136,7 +136,7 @@ const DOCUMENTS = (function(){
   {
     $.ajax({
       /* UserController->loadUsers() */
-      url : `${baseUrl}index.php/load-users`,
+      url : `${baseUrl}/load-users`,
       method : 'get',
       dataType: 'json',
       success : function(data)
@@ -164,7 +164,7 @@ const DOCUMENTS = (function(){
 
     $.ajax({
       /* DocumentController->addDocument() */
-      url : `${baseUrl}index.php/add-document`,
+      url : `${baseUrl}/add-document`,
       method : 'post',
       dataType: 'json',
       processData: false, // important
@@ -182,7 +182,7 @@ const DOCUMENTS = (function(){
           });
 
           setTimeout(function(){
-            window.location.replace(`${baseUrl}index.php/documents`);
+            window.location.replace(`${baseUrl}/documents`);
           }, 1000);
         }
         else
@@ -201,7 +201,7 @@ const DOCUMENTS = (function(){
     // CONTACTS.loadUsers(['#slc_reportsTo','#slc_assignedTo']);
     $.ajax({
       /* DocumentController->selectDocument() */
-      url : `${baseUrl}index.php/select-document`,
+      url : `${baseUrl}/select-document`,
       method : 'get',
       dataType: 'json',
       data : {documentId : documentId},
@@ -237,7 +237,7 @@ const DOCUMENTS = (function(){
         {
           let documentTitle = data['title'];
           $('#lnk_document').text(documentTitle);
-          $('#lnk_document').attr('href',`${baseUrl}index.php/document-preview/${data['id']}`);
+          $('#lnk_document').attr('href',`${baseUrl}/document-preview/${data['id']}`);
 
           $('#lbl_documentTitle').text(documentTitle);
 
@@ -273,7 +273,7 @@ const DOCUMENTS = (function(){
 
     $.ajax({
       /* DocumentController->editDocument() */
-      url : `${baseUrl}index.php/edit-document`,
+      url : `${baseUrl}/edit-document`,
       method : 'post',
       dataType: 'json',
       processData: false, // important
@@ -290,7 +290,7 @@ const DOCUMENTS = (function(){
             title: 'Success! <br>Document updated successfully.',
           });
           setTimeout(function(){
-            window.location.replace(`${baseUrl}index.php/documents`);
+            window.location.replace(`${baseUrl}/document-preview/${$('#txt_documentId').val()}`);
           }, 1000);
         }
         else
@@ -320,7 +320,7 @@ const DOCUMENTS = (function(){
   {
     $.ajax({
       /* DocumentController->selectDocument() */
-      url : `${baseUrl}index.php/select-document`,
+      url : `${baseUrl}/select-document`,
       method : 'get',
       dataType: 'json',
       data : {documentId : documentId},
@@ -356,7 +356,7 @@ const DOCUMENTS = (function(){
   {
     $.ajax({
       /* DocumentController->loadSelectedContactDocuments() */
-      url : `${baseUrl}index.php/load-selected-contact-documents`,
+      url : `${baseUrl}/load-selected-contact-documents`,
       method : 'get',
       dataType: 'json',
       data : {documentId : documentId},
@@ -369,10 +369,10 @@ const DOCUMENTS = (function(){
           tbody += `<tr>
                       <td class="p-1">${value['contact_id']}</td>
                       <td class="p-1 pl-4">${value['salutation']}</td>
-                      <td class="p-1"><a href="${baseUrl}index.php/contact-preview/${value['contact_id']}">${value['first_name']}</a></td>
-                      <td class="p-1"><a href="${baseUrl}index.php/contact-preview/${value['contact_id']}">${value['last_name']}</a></td>
+                      <td class="p-1"><a href="${baseUrl}/contact-preview/${value['contact_id']}">${value['first_name']}</a></td>
+                      <td class="p-1"><a href="${baseUrl}/contact-preview/${value['contact_id']}">${value['last_name']}</a></td>
                       <td class="p-1">${value['position']}</td>
-                      <td class="p-1"><a href="${baseUrl}index.php/organization-preview/${value['organization_id']}">${value['organization_name']}</a></td>
+                      <td class="p-1"><a href="${baseUrl}/organization-preview/${value['organization_id']}">${value['organization_name']}</a></td>
                       <td class="p-1"><a href="javascript:void(0)" onclick="CONTACTS.selectContactEmail(${value['contact_id']},'${value['primary_email']}')">${value['primary_email']}</a></td>
                       <td class="p-1">${value['assigned_to_name']}</td>
                       <td class="p-1">
@@ -431,7 +431,7 @@ const DOCUMENTS = (function(){
 
       $.ajax({
         /* ContactController->unlinkContactDocument() */
-        url : `${baseUrl}index.php/marketing/unlink-contact-document`,
+        url : `${baseUrl}/marketing/unlink-contact-document`,
         method : 'post',
         dataType: 'json',
         processData: false, // important
@@ -472,7 +472,7 @@ const DOCUMENTS = (function(){
   {
     $.ajax({
       /* DocumentController->loadUnlinkContacts() */
-      url : `${baseUrl}index.php/load-unlink-contacts`,
+      url : `${baseUrl}/load-unlink-contacts`,
       method : 'get',
       dataType: 'json',
       data : {documentId:documentId},
@@ -483,7 +483,7 @@ const DOCUMENTS = (function(){
         let tbody = '';
         data.forEach(function(value,key){
           tbody += `<tr>
-                      <td class="p-1"><input type="checkbox" onchange="DOCUMENTS.selectContacts(this)" value="${value['id']}"/></td>
+                      <td class="p-1 pl-4"><input type="checkbox" onchange="DOCUMENTS.selectContacts(this)" value="${value['id']}"/></td>
                       <td class="p-1 pl-4">${value['salutation']}</td>
                       <td class="p-1">${value['first_name']}</td>
                       <td class="p-1">${value['last_name']}</td>
@@ -537,7 +537,7 @@ const DOCUMENTS = (function(){
 
     $.ajax({
       /* ContactController->addSelectedContactDocuments() */
-      url : `${baseUrl}index.php/marketing/add-selected-contact-documents`,
+      url : `${baseUrl}/marketing/add-selected-contact-documents`,
       method : 'post',
       dataType: 'json',
       processData: false, // important
@@ -582,7 +582,7 @@ const DOCUMENTS = (function(){
   {
     $.ajax({
       /* DocumentController->loadSelectedOrganizationDocuments() */
-      url : `${baseUrl}index.php/load-selected-organization-documents`,
+      url : `${baseUrl}/load-selected-organization-documents`,
       method : 'get',
       dataType: 'json',
       data : {documentId : documentId},
@@ -592,10 +592,10 @@ const DOCUMENTS = (function(){
         let count = 0;
         let tbody = '';
         data.forEach(function(value,key){
-          let website = (value['main_website'] == null)? '---' : `<a href="${baseUrl}index.php/contact-preview/${value['id']}">${value['main_website']}</a>`;
+          let website = (value['main_website'] == null)? '---' : `<a href="${baseUrl}/contact-preview/${value['id']}">${value['main_website']}</a>`;
           tbody += `<tr>
                       <td class="p-1">${value['organization_id']}</td>
-                      <td class="p-1 pl-4"><a href="${baseUrl}index.php/organization-preview/${value['organization_id']}">${value['organization_name']}</a></td>
+                      <td class="p-1 pl-4"><a href="${baseUrl}/organization-preview/${value['organization_id']}">${value['organization_name']}</a></td>
                       <td class="p-1"><a href="javascript:void(0)" >${value['primary_email']}</a></td>
                       <td class="p-1">${website}</td>
                       <td class="p-1">N/A</td>
@@ -658,7 +658,7 @@ const DOCUMENTS = (function(){
 
       $.ajax({
         /* OrganizationController->unlinkOrganizationDocument() */
-        url : `${baseUrl}index.php/marketing/unlink-organization-document`,
+        url : `${baseUrl}/marketing/unlink-organization-document`,
         method : 'post',
         dataType: 'json',
         processData: false, // important
@@ -699,7 +699,7 @@ const DOCUMENTS = (function(){
   {
     $.ajax({
       /* DocumentController->loadUnlinkOrganizations() */
-      url : `${baseUrl}index.php/load-unlink-organizations`,
+      url : `${baseUrl}/load-unlink-organizations`,
       method : 'get',
       dataType: 'json',
       data : {documentId:documentId},
@@ -709,9 +709,9 @@ const DOCUMENTS = (function(){
         // Emails
         let tbody = '';
         data.forEach(function(value,key){
-          let website = (value['main_website'] == null)? '---' : `<a href="${baseUrl}index.php/contact-preview/${value['id']}">${value['main_website']}</a>`;
+          let website = (value['main_website'] == null)? '---' : `<a href="${baseUrl}/contact-preview/${value['id']}">${value['main_website']}</a>`;
           tbody += `<tr>
-                      <td class="p-1"><input type="checkbox" onchange="DOCUMENTS.selectOrganizations(this)" value="${value['id']}"/></td>
+                      <td class="p-1 pl-4"><input type="checkbox" onchange="DOCUMENTS.selectOrganizations(this)" value="${value['id']}"/></td>
                       <td class="p-1 pl-4">${value['organization_name']}</td>
                       <td class="p-1">${value['primary_email']}</td>
                       <td class="p-1">${website}</td>
@@ -767,7 +767,7 @@ const DOCUMENTS = (function(){
 
     $.ajax({
       /* OrganizationController->addSelectedOrganizationDocuments() */
-      url : `${baseUrl}index.php/marketing/add-selected-organization-documents`,
+      url : `${baseUrl}/marketing/add-selected-organization-documents`,
       method : 'post',
       dataType: 'json',
       processData: false, // important

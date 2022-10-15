@@ -39,4 +39,39 @@ class Calendars extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    ////////////////////////////////////////////////////////////
+    ///// CalendarController->loadCalendars()
+    ////////////////////////////////////////////////////////////
+    public function loadCalendars()
+    {
+        $columns = [
+            'a.id',
+            'a.calendar_name',
+            'a.timezone',
+            'a.created_by',
+            'a.created_date',
+            'a.updated_by',
+            'a.updated_date'
+        ];
+
+        $builder = $this->db->table('calendars a')->select($columns);
+        $query = $builder->get();
+        return  $query->getResultArray();
+    }
+
+    ////////////////////////////////////////////////////////////
+    ///// CalendarController->addCalendar()
+    ////////////////////////////////////////////////////////////
+    public function addCalendar($arrData)
+    {
+        try {
+            $this->db->transStart();
+                $builder = $this->db->table('calendars')->insert($arrData);
+            $this->db->transComplete();
+            return ($this->db->transStatus() === TRUE)? 1 : 0;
+        } catch (PDOException $e) {
+            throw $e;
+        }
+    }
 }
